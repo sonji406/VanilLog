@@ -1,12 +1,5 @@
-import Button from '@mui/material/Button';
-import ButtonGroup from '@mui/material/ButtonGroup';
+import { useAuthUser } from 'next-firebase-auth';
 
 export default function Home() {
-  return (
-    <div>
-      <Button variant='contained' color='primary'>
-        Hello World
-      </Button>
-    </div>
-  );
+  return <div>메인화면</div>;
 }
