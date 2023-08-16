@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
-import dbConnect from '../../../../lib/dbConnect';
-import User from '../../../../models/User';
+import User from '@models/User';
+import dbConnect from '@lib/dbConnect';
 
 //예제 코드
 export async function GET(req) {
