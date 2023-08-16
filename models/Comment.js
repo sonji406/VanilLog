@@ -20,4 +20,4 @@ const CommentSchema = new mongoose.Schema(
 );
 
 export default mongoose.models.Comment ||
-  mongoose.model('comment', CommentSchema);
+  mongoose.model('Comment', CommentSchema);
