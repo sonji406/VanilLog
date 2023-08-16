@@ -23,16 +23,17 @@ export const GET = async (request) => {
     const page = searchParams.get('page');
     const limit = searchParams.get('limit');
 
-    if (!mongoose.Types.ObjectId.isValid(userId)) {
+    if (!!userId && !mongoose.Types.ObjectId.isValid(userId)) {
       throw { message: 'userId 규격이 일치하지 않습니다', status: 401 };
     }
 
-    if (!userId || !page || !limit) {
+    if (!page || !limit) {
       throw { message: '조회에 필요한 파라미터가 부족합니다', status: 400 };
     }
 
+    const findOption = userId ? { author: userId } : {};
     // 작성자별 포스트 목록 가져오기(페이지네이션 적용)
-    const posts = await Post.find({ author: userId }, null, {
+    const posts = await Post.find(findOption, null, {
       skip: (page - 1) * limit,
       limit,
     }).exec();
