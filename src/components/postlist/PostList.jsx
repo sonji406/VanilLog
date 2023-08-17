@@ -6,9 +6,8 @@ import Link from 'next/link';
 
 import { useSearchParams } from 'next/navigation';
 import { PostItem } from './PostItem';
-import { Pagination } from './Pagination';
 
-function PostList({ userId }) {
+function PostList({ loggedInUserId, blogUserId }) {
   const parms = useSearchParams();
 
   const page = parms.get('page') ? parms.get('page') : 1;
@@ -22,7 +21,7 @@ function PostList({ userId }) {
     const fetchData = async () => {
       try {
         const response = await axios.get('/api/v1/posts', {
-          params: { userId, page, limit },
+          params: { blogUserId, page, limit },
         });
 
         if (response.data.status === 'success') {
@@ -44,7 +43,7 @@ function PostList({ userId }) {
     if (page && limit) {
       fetchData();
     }
-  }, [userId, page, limit]);
+  }, [blogUserId, page, limit]);
 
   const totalPage = Math.ceil(totalPosts / limit);
   const pageNumbers = [];
@@ -54,14 +53,16 @@ function PostList({ userId }) {
   }
 
   return (
-    <div>
-      <div>
-        <Link href='/post'>
-          <button>포스트 작성하기</button>
+    <div className='w-screen px-5'>
+      <div className='my-4'>
+        <Link href={`/post/${loggedInUserId}/editor`}>
+          <button className='text-xl text-white font-bold bg-[#0044ff] rounded-lg hover:bg-[#0000ff] py-2 px-8'>
+            포스트 작성하기
+          </button>
         </Link>
       </div>
       {error && <div>{error}</div>}
-      <div className='flex flex-row gap-x-8 gap-y-4 place-items-left text-center'>
+      <div className='flex flex-wrap gap-x-8 gap-y-4 justify-center'>
         {posts.length > 0 &&
           posts.map((post) => {
             const imageContent = post.content.find(
@@ -79,14 +80,20 @@ function PostList({ userId }) {
             );
           })}
       </div>
-      <div>
+
+      <div className='flex justify-center my-5'>
         {pageNumbers.map((number) => (
           <Link
             key={number}
-            href={`/posts/${userId}/?page=${number}&limit=${limit}`}
+            href={`/posts/${blogUserId}/?page=${number}&limit=${limit}`}
             passHref
           >
-            <Pagination pageNumber={number}></Pagination>
+            <button
+              type='button'
+              className='text-xl text-white font-bold bg-[#0044ff] rounded-lg hover:bg-[#0000ff] py-2 px-3 mx-1'
+            >
+              {number}
+            </button>
           </Link>
         ))}
       </div>

@@ -1,11 +1,16 @@
 'use client';
 
-import { PostList } from '@src/components/postlist/PostList';
+import { PostList } from '@src/components/postList/PostList';
 
 export default function Posts({ params }) {
+  const loggedInUserId = '로그인유저아이디';
+  const blogUserId = params.userId;
   return (
     <>
-      <PostList userId={params.userId} />
+      <PostList
+        loggedInUserId={loggedInUserId}
+        blogUserId={blogUserId.userId}
+      />
     </>
   );
 }
