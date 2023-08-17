@@ -40,7 +40,7 @@ async function GET(request) {
     successResponse.data = posts;
 
     const totalPosts = await Post.countDocuments(findOption);
-    successResponse.totalPosts = totalPosts; // 전체 게시물 수 추가
+    successResponse.totalPosts = totalPosts;
 
     return NextResponse.json(successResponse);
   } catch (error) {
