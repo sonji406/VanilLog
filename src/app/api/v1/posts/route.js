@@ -23,9 +23,6 @@ async function GET(request) {
     const page = searchParams.get('page');
     const limit = searchParams.get('limit');
 
-    // 에러 메시지 상수화
-
-    // throw 객체 보다 에러 클래스? 직접 만들면(라이브러리 사용하거나 http-errors)
     if (!!userId && !mongoose.Types.ObjectId.isValid(userId)) {
       throw { message: 'userId 규격이 일치하지 않습니다', status: 401 };
     }

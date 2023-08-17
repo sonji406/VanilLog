@@ -15,7 +15,6 @@ const handler = NextAuth({
   },
   callbacks: {
     async jwt({ token, account, profile, trigger }) {
-      // token 제외 나머지 데이터는 처음 로그인할때만 들어옴
       if (account) {
         token.accessToken = account.access_token;
         token.id = profile.id;
@@ -48,12 +47,10 @@ const handler = NextAuth({
       return token;
     },
     async session({ session, user, token }) {
-      // jwt 사용시 토큰을 대신 리턴
       return token;
     },
   },
   secret: process.env.NEXTAUTH_SECRET,
 });
 
-// export default NextAuth(authOptions);
 export { handler as GET, handler as POST };
