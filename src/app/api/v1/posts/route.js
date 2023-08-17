@@ -20,8 +20,8 @@ async function GET(request) {
   try {
     const { searchParams } = new URL(request.url);
     const userId = searchParams.get('userId');
-    const page = parseInt(searchParams.get('page'), 10);
-    const limit = parseInt(searchParams.get('limit'), 10);
+    const page = searchParams.get('page');
+    const limit = searchParams.get('limit');
 
     if (!!userId && !mongoose.Types.ObjectId.isValid(userId)) {
       throw { message: 'userId 규격이 일치하지 않습니다', status: 401 };
