@@ -7,10 +7,7 @@ export default function Posts({ params }) {
   const blogUserId = params.userId;
   return (
     <>
-      <PostList
-        loggedInUserId={loggedInUserId}
-        blogUserId={blogUserId.userId}
-      />
+      <PostList loggedInUserId={loggedInUserId} blogUserId={blogUserId} />
     </>
   );
 }
