@@ -47,4 +47,4 @@ async function GET(request) {
   }
 }
 
-export default GET;
+export { GET };
