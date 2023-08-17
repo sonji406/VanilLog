@@ -14,10 +14,9 @@ const handler = NextAuth({
     strategy: 'jwt',
   },
   callbacks: {
-    async jwt({ token, account, profile, trigger }) {
+    async jwt({ token, account, trigger }) {
       if (account) {
         token.accessToken = account.access_token;
-        token.id = profile.id;
       }
 
       /*
@@ -26,11 +25,12 @@ const handler = NextAuth({
       */
       if (trigger === 'signIn') {
         await dbConnect();
-        const isUserExist = await User.exists({ nickname: token.name });
+        const isUserExist = await User.exists({ email: token.email });
 
         if (!isUserExist) {
           const newUser = new User({
             nickname: token.name,
+            email: token.email,
             socialLoginType: account ? account.provider : undefined,
             profileImage: token.picture,
             blogPosts: [],
@@ -46,7 +46,7 @@ const handler = NextAuth({
 
       return token;
     },
-    async session({ session, user, token }) {
+    async session({ token }) {
       return token;
     },
   },
