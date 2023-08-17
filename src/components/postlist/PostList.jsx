@@ -11,7 +11,6 @@ function PostList({ userId, page, limit }) {
     : { page: page, limit: limit };
 
   const [posts, setPosts] = useState([]);
-  const [totalPosts, setTotalPosts] = useState(0);
   const [error, setError] = useState(null);
 
   useEffect(() => {
@@ -42,10 +41,11 @@ function PostList({ userId, page, limit }) {
     }
   }, [userId, page, limit]);
 
-  const totalPages = Math.ceil(totalPosts / limit);
+  const totalPosts = posts.length;
+  const totalPage = Math.ceil(totalPosts / limit);
   const pageNumbers = [];
 
-  for (let i = 1; i <= totalPages; i++) {
+  for (let i = 1; i <= totalPage; i++) {
     pageNumbers.push(i);
   }
 
