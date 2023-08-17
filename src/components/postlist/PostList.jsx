@@ -46,9 +46,6 @@ function PostList({ userId }) {
     }
   }, [userId, page, limit]);
 
-  console.log(posts);
-  console.log('totalPosts', posts.length);
-
   const totalPage = Math.ceil(totalPosts / limit);
   const pageNumbers = [];
 
