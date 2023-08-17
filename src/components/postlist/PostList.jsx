@@ -26,11 +26,11 @@ function PostList({ userId, page, limit }) {
           setTotalPosts(response.data.data.length);
         }
 
-        if (response.data.status === '500') {
-          setError('포스트를 불러오는 중 문제가 발생했습니다.');
+        if (response.data.status === '401') {
+          setError(response.data.message);
         }
         if (response.data.status === '400') {
-          setError('URL이 올바르지 않습니다.');
+          setError(response.data.message);
         }
       } catch (e) {
         setError('포스트를 불러오는 중 문제가 발생했습니다.');
