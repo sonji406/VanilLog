@@ -8,7 +8,7 @@ import { NextResponse } from 'next/server';
  * @URL /api/v1/posts?userId=:userId&page={page_number}&limit={items_per_page}
  * @param request
  */
-export const GET = async (request) => {
+async function GET(request) {
   await dbConnect();
   const successResponse = {
     status: 'success',
@@ -45,4 +45,6 @@ export const GET = async (request) => {
     failureResponse.message = error.message;
     return NextResponse.json(failureResponse);
   }
-};
+}
+
+export default GET;
