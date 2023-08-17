@@ -59,7 +59,7 @@ function PostList({ userId }) {
   return (
     <div>
       <div>
-        <Link href='/post:userid'>
+        <Link href='/post'>
           <button>포스트 작성하기</button>
         </Link>
       </div>
