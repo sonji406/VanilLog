@@ -3,26 +3,31 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Link from 'next/link';
-import Image from 'next/image';
 
-function PostList({ userId, page, limit }) {
-  const queryParams = userId
-    ? { userId: userId, page: page, limit: limit }
-    : { page: page, limit: limit };
+import { useSearchParams } from 'next/navigation';
+import { PostItem } from './PostItem';
+import { Pagination } from './Pagination';
+
+function PostList({ userId }) {
+  const parms = useSearchParams();
+
+  const page = parms.get('page') ? parms.get('page') : 1;
+  const limit = parms.get('limit') ? parms.get('limit') : 10;
 
   const [posts, setPosts] = useState([]);
+  const [totalPosts, setTotalPosts] = useState(0);
   const [error, setError] = useState(null);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await axios.get('/api/v1/posts', {
-          params: queryParams,
+          params: { userId, page, limit },
         });
 
         if (response.data.status === 'success') {
           setPosts(response.data.data);
-          setTotalPosts(response.data.data.length);
+          setTotalPosts(response.data.totalPosts);
         }
 
         if (response.data.status === '401') {
@@ -41,7 +46,9 @@ function PostList({ userId, page, limit }) {
     }
   }, [userId, page, limit]);
 
-  const totalPosts = posts.length;
+  console.log(posts);
+  console.log('totalPosts', posts.length);
+
   const totalPage = Math.ceil(totalPosts / limit);
   const pageNumbers = [];
 
@@ -70,35 +77,19 @@ function PostList({ userId, page, limit }) {
 
             return (
               <Link key={post._id} href={`/posts/${post.author}/${post._id}`}>
-                <div className='w-56 h-56 flex flex-col items-center justify-center bg-slate-300'>
-                  {imageContent ? (
-                    <div className='h-4/5'>
-                      <Image
-                        src={imageContent.value}
-                        alt={textValue}
-                        width={224}
-                        height={224}
-                      />
-                    </div>
-                  ) : (
-                    <div className='h-4/5 flex items-center justify-center'>
-                      <span className='text-lg font-bold'>No Image</span>
-                    </div>
-                  )}
-                  <div className='flex items-center justify-center h-1/5 w-full bg-slate-400'>
-                    <span className='inline-block truncate w-48'>
-                      {textValue}
-                    </span>
-                  </div>
-                </div>
+                <PostItem post={post} />
               </Link>
             );
           })}
       </div>
       <div>
         {pageNumbers.map((number) => (
-          <Link key={number} href={`/?page=${number}&limit=${limit}`}>
-            <a>{number}</a>
+          <Link
+            key={number}
+            href={`/posts/${userId}/?page=${number}&limit=${limit}`}
+            passHref
+          >
+            <Pagination pageNumber={number}></Pagination>
           </Link>
         ))}
       </div>
