@@ -11,6 +11,7 @@ function PostList({ userId, page, limit }) {
     : { page: page, limit: limit };
 
   const [posts, setPosts] = useState([]);
+  const [totalPosts, setTotalPosts] = useState(0);
   const [error, setError] = useState(null);
 
   useEffect(() => {
@@ -22,6 +23,7 @@ function PostList({ userId, page, limit }) {
 
         if (response.data.status === 'success') {
           setPosts(response.data.data);
+          setTotalPosts(response.data.data.length);
         }
 
         if (response.data.status === '500') {
@@ -40,6 +42,13 @@ function PostList({ userId, page, limit }) {
     }
   }, [userId, page, limit]);
 
+  const totalPages = Math.ceil(totalPosts / limit);
+  const pageNumbers = [];
+
+  for (let i = 1; i <= totalPages; i++) {
+    pageNumbers.push(i);
+  }
+
   return (
     <div>
       <div>
@@ -47,6 +56,7 @@ function PostList({ userId, page, limit }) {
           <button>포스트 작성하기</button>
         </Link>
       </div>
+      {error && <div>{error}</div>}
       <div className='flex flex-row gap-x-8 gap-y-4 place-items-left text-center'>
         {posts.length > 0 &&
           posts.map((post) => {
@@ -85,7 +95,13 @@ function PostList({ userId, page, limit }) {
             );
           })}
       </div>
-      {error && <div>{error}</div>}
+      <div>
+        {pageNumbers.map((number) => (
+          <Link key={number} href={`/?page=${number}&limit=${limit}`}>
+            <a>{number}</a>
+          </Link>
+        ))}
+      </div>
     </div>
   );
 }
