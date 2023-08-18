@@ -6,30 +6,12 @@ import dbConnect from '@lib/dbConnect';
 import User from '@models/User';
 import { ERROR_MESSAGES, ERROR_CODES } from '@utils/errors';
 import { sendErrorResponse } from '@utils/response';
+import { validateUserId } from '@utils/validateUserId';
+import { findUserById } from '@utils/findUserById';
 
 function getUserIdFromUrl(url) {
   const urlParts = url.split('/');
   return urlParts[urlParts.length - 1];
-}
-
-function validateUserId(userId) {
-  if (!mongoose.Types.ObjectId.isValid(userId)) {
-    throw createError(
-      ERROR_CODES.INVALID_USER_ID,
-      ERROR_MESSAGES.INVALID_USER_ID,
-    );
-  }
-}
-
-async function findUserById(userId) {
-  const user = await User.findOne({ _id: userId }).lean().exec();
-  if (!user) {
-    throw createError(
-      ERROR_CODES.USER_NOT_FOUND,
-      ERROR_MESSAGES.USER_NOT_FOUND,
-    );
-  }
-  return user;
 }
 
 /**

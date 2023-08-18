@@ -6,6 +6,7 @@ import dbConnect from '@lib/dbConnect';
 import Post from '@models/Post';
 import { ERROR_MESSAGES, ERROR_CODES } from '@utils/errors';
 import { sendErrorResponse } from '@utils/response';
+import { validateUserId } from '@utils/validateUserId';
 
 /**
  * 포스트 목록 조회 API
@@ -24,11 +25,8 @@ async function GET(request) {
     const page = searchParams.get('page');
     const limit = searchParams.get('limit');
 
-    if (!!userId && !mongoose.Types.ObjectId.isValid(userId)) {
-      throw createError(
-        ERROR_CODES.INVALID_USER_ID,
-        ERROR_MESSAGES.INVALID_USER_ID,
-      );
+    if (userId) {
+      validateUserId(userId);
     }
 
     if (!page || !limit) {
