@@ -42,6 +42,9 @@ async function GET(request) {
     }).exec();
     successResponse.data = posts;
 
+    const totalPosts = await Post.countDocuments(findOption);
+    successResponse.totalPosts = totalPosts;
+
     return NextResponse.json(successResponse);
   } catch (error) {
     return sendErrorResponse(error);
