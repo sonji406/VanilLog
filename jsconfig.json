@@ -4,7 +4,8 @@
     "paths": {
       "@src/*": ["./src/*"],
       "@lib/*": ["lib/*"],
-      "@models/*": ["models/*"]
+      "@models/*": ["models/*"],
+      "@utils/*": ["utils/*"]
     }
   }
 }

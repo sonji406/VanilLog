@@ -1,7 +1,12 @@
+import mongoose from 'mongoose';
+import createError from 'http-errors';
+import { NextResponse } from 'next/server';
+
 import dbConnect from '@lib/dbConnect';
 import Post from '@models/Post';
-import mongoose from 'mongoose';
-import { NextResponse } from 'next/server';
+import { ERROR_MESSAGES, ERROR_CODES } from '@utils/errors';
+import { sendErrorResponse } from '@utils/response';
+import { validateUserId } from '@utils/validateUserId';
 
 /**
  * 포스트 목록 조회 API
@@ -13,9 +18,6 @@ async function GET(request) {
   const successResponse = {
     status: 'success',
   };
-  const failureResponse = {
-    status: 500,
-  };
 
   try {
     const { searchParams } = new URL(request.url);
@@ -23,16 +25,17 @@ async function GET(request) {
     const page = searchParams.get('page');
     const limit = searchParams.get('limit');
 
-    if (!!userId && !mongoose.Types.ObjectId.isValid(userId)) {
-      throw { message: 'userId 규격이 일치하지 않습니다', status: 401 };
+    if (userId) {
+      validateUserId(userId);
     }
 
     if (!page || !limit) {
-      throw { message: '조회에 필요한 파라미터가 부족합니다', status: 400 };
+      throw createError(
+        ERROR_CODES.MISSING_PARAMETERS,
+        ERROR_MESSAGES.MISSING_PARAMETERS,
+      );
     }
-
     const findOption = userId ? { author: userId } : {};
-    // 작성자별 포스트 목록 가져오기(페이지네이션 적용)
     const posts = await Post.find(findOption, null, {
       skip: (page - 1) * limit,
       limit,
@@ -44,9 +47,7 @@ async function GET(request) {
 
     return NextResponse.json(successResponse);
   } catch (error) {
-    failureResponse.status = error.status;
-    failureResponse.message = error.message;
-    return NextResponse.json(failureResponse);
+    return sendErrorResponse(error);
   }
 }
 
