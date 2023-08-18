@@ -8,10 +8,10 @@ import { useSearchParams } from 'next/navigation';
 import { PostItem } from './PostItem';
 
 function PostList({ loggedInUserId, blogUserId }) {
-  const parms = useSearchParams();
+  const params = useSearchParams();
 
-  const page = parms.get('page') ? parms.get('page') : 1;
-  const limit = parms.get('limit') ? parms.get('limit') : 10;
+  const page = params.get('page') || 1;
+  const limit = params.get('limit') || 10;
 
   const [posts, setPosts] = useState([]);
   const [totalPosts, setTotalPosts] = useState(0);
