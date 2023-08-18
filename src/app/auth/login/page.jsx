@@ -1,6 +1,7 @@
 'use client';
+
 import Link from 'next/link';
-import { signIn, signOut } from 'next-auth/react';
+import { signIn } from 'next-auth/react';
 
 function LoginPage() {
   const callbackUrl = 'http://localhost:3000';
@@ -18,7 +19,6 @@ function LoginPage() {
         >
           google login
         </button>
-        <button onClick={() => signOut()}>Sign out</button>
       </div>
       <div className='my-8'>
         <Link href='/'>
