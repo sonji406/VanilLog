@@ -5,7 +5,7 @@
       "@src/*": ["./src/*"],
       "@lib/*": ["lib/*"],
       "@models/*": ["models/*"],
-      "@utils/*": ["utils/*"]
+      "@utils/*": ["./src/app/utils/*"]
     }
   }
 }

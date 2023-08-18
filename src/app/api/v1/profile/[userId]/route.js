@@ -1,48 +1,54 @@
+import mongoose from 'mongoose';
+import createError from 'http-errors';
+import { NextResponse } from 'next/server';
+
 import dbConnect from '@lib/dbConnect';
 import User from '@models/User';
-import mongoose from 'mongoose';
-import { NextResponse } from 'next/server';
-import createError from 'http-errors';
 import { ERROR_MESSAGES, ERROR_CODES } from '@utils/errors';
 import { sendErrorResponse } from '@utils/response';
+
+function getUserIdFromUrl(url) {
+  const urlParts = url.split('/');
+  return urlParts[urlParts.length - 1];
+}
+
+function validateUserId(userId) {
+  if (!mongoose.Types.ObjectId.isValid(userId)) {
+    throw createError(
+      ERROR_CODES.INVALID_USER_ID,
+      ERROR_MESSAGES.INVALID_USER_ID,
+    );
+  }
+}
+
+async function findUserById(userId) {
+  const user = await User.findOne({ _id: userId }).lean().exec();
+  if (!user) {
+    throw createError(
+      ERROR_CODES.USER_NOT_FOUND,
+      ERROR_MESSAGES.USER_NOT_FOUND,
+    );
+  }
+  return user;
+}
 
 /**
  * 유저 프로필 조회 API
  * @URL /api/v1/profile/:userId
  * @param request
  */
-function getUserIdFromUrl(url) {
-  const urlParts = url.split('/');
-  return urlParts[urlParts.length - 1];
-}
-
 async function GET(request) {
   await dbConnect();
-  const successResponse = {
-    status: 'success',
-  };
 
   try {
     const userId = getUserIdFromUrl(request.url);
+    validateUserId(userId);
+    const userProfile = await findUserById(userId);
 
-    if (!mongoose.Types.ObjectId.isValid(userId)) {
-      throw createError(
-        ERROR_CODES.INVALID_USER_ID,
-        ERROR_MESSAGES.INVALID_USER_ID,
-      );
-    }
-
-    const userProfile = await User.findOne({ _id: userId }).exec();
-    if (!userProfile) {
-      throw createError(
-        ERROR_CODES.USER_NOT_FOUND,
-        ERROR_MESSAGES.USER_NOT_FOUND,
-      );
-    }
-
-    successResponse.data = userProfile;
-
-    return NextResponse.json(successResponse);
+    return NextResponse.json({
+      status: 'success',
+      data: userProfile,
+    });
   } catch (error) {
     return sendErrorResponse(error);
   }
@@ -56,12 +62,9 @@ async function GET(request) {
 async function PUT(request) {
   await dbConnect();
 
-  const successResponse = {
-    status: 'success',
-  };
-
   try {
     const userId = getUserIdFromUrl(request.url);
+    validateUserId(userId);
 
     const bodyData = await request.text();
     const parsedData = JSON.parse(bodyData);
@@ -74,14 +77,7 @@ async function PUT(request) {
       );
     }
 
-    if (!mongoose.Types.ObjectId.isValid(userId)) {
-      throw createError(
-        ERROR_CODES.INVALID_USER_ID,
-        ERROR_MESSAGES.INVALID_USER_ID,
-      );
-    }
-
-    const existingUser = await User.findOne({ nickname: nickname }).exec();
+    const existingUser = await User.findOne({ nickname }).lean().exec();
     if (existingUser && String(existingUser._id) !== userId) {
       throw createError(
         ERROR_CODES.DUPLICATE_NICKNAME,
@@ -89,14 +85,7 @@ async function PUT(request) {
       );
     }
 
-    const userProfile = await User.findOne({ _id: userId }).exec();
-
-    if (!userProfile) {
-      throw createError(
-        ERROR_CODES.USER_NOT_FOUND,
-        ERROR_MESSAGES.USER_NOT_FOUND,
-      );
-    }
+    const userProfile = await findUserById(userId);
 
     if (userProfile.nickname === nickname) {
       throw createError(
@@ -105,14 +94,14 @@ async function PUT(request) {
       );
     }
 
-    userProfile.nickname = nickname;
-    await userProfile.save();
+    await User.findByIdAndUpdate(userId, { nickname }).exec();
 
-    successResponse.data = {
-      message: '닉네임이 성공적으로 업데이트되었습니다',
-    };
-
-    return NextResponse.json(successResponse);
+    return NextResponse.json({
+      status: 'success',
+      data: {
+        message: '닉네임이 성공적으로 업데이트되었습니다',
+      },
+    });
   } catch (error) {
     return sendErrorResponse(error);
   }
