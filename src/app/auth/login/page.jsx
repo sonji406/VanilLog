@@ -1,6 +1,10 @@
+'use client';
+
 import Link from 'next/link';
+import { signIn } from 'next-auth/react';
 
 function LoginPage() {
+  const callbackUrl = 'http://localhost:3000';
   return (
     <div className='text-center font-sans'>
       <div className='mt-32 mb-20'>
@@ -9,7 +13,10 @@ function LoginPage() {
         </Link>
       </div>
       <div>
-        <button className='text-xl text-white font-bold bg-[#0044ff] rounded-lg hover:bg-[#0000ff] py-2 px-8'>
+        <button
+          onClick={() => signIn('google', { callbackUrl })}
+          className='text-xl text-white font-bold bg-[#0044ff] rounded-lg hover:bg-[#0000ff] py-2 px-8'
+        >
           google login
         </button>
       </div>
@@ -24,4 +31,4 @@ function LoginPage() {
   );
 }
 
-export { LoginPage };
+export default LoginPage;
