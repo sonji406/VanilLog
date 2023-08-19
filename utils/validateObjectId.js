@@ -1,12 +1,12 @@
 import mongoose from 'mongoose';
 import createError from 'http-errors';
-import { ERROR_MESSAGES, ERROR_CODES } from '@utils/errors';
+import { errors } from '@utils/errors';
 
 export function validateObjectId(userId) {
   if (!mongoose.Types.ObjectId.isValid(userId)) {
     throw createError(
-      ERROR_CODES.INVALID_USER_ID,
-      ERROR_MESSAGES.INVALID_USER_ID,
+      errors.INVALID_USER_ID.STATUS_CODE,
+      errors.INVALID_USER_ID.MESSAGE,
     );
   }
 }

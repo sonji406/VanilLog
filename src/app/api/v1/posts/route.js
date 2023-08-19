@@ -4,7 +4,7 @@ import { NextResponse } from 'next/server';
 
 import dbConnect from '@lib/dbConnect';
 import Post from '@models/Post';
-import { ERROR_MESSAGES, ERROR_CODES } from '@utils/errors';
+import { errors } from '@utils/errors';
 import { sendErrorResponse } from '@utils/response';
 import { validateObjectId } from '@utils/validateObjectId';
 
@@ -31,8 +31,8 @@ async function GET(request) {
 
     if (!page || !limit) {
       throw createError(
-        ERROR_CODES.MISSING_PARAMETERS,
-        ERROR_MESSAGES.MISSING_PARAMETERS,
+        errors.MISSING_PARAMETERS.STATUS_CODE,
+        errors.MISSING_PARAMETERS.MESSAGE,
       );
     }
     const findOption = userId ? { author: userId } : {};
