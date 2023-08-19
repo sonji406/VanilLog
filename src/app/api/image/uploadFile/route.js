@@ -88,7 +88,6 @@ async function POST(request) {
       },
     });
   } catch (error) {
-    console.log(error);
     return NextResponse.json({
       error: 'Error uploading the image',
       statue: 500,

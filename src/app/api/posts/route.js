@@ -17,8 +17,6 @@ async function POST(request, response) {
   try {
     const { title, content, author } = await request.json();
 
-    console.log({ title, content, author });
-
     if (!title || !content || !author) {
       throw { message: '값이 누락되었습니다.', status: 400 };
     }
