@@ -1,13 +1,16 @@
 'use client';
 
-import React, { useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
+import { useRouter } from 'next/navigation';
 import axios from 'axios';
 import EditorJS from '@editorjs/editorjs';
 import ImageTool from '@editorjs/image';
-import LinkTool from '@editorjs/link';
 
 function Editor({ title }) {
   const ref = useRef(null);
+  const router = useRouter();
+
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     const editor = new EditorJS({
@@ -23,7 +26,7 @@ function Editor({ title }) {
     };
   }, []);
 
-  const save = () => {
+  const postSave = () => {
     if (ref.current) {
       ref.current
         .save()
@@ -37,22 +40,21 @@ function Editor({ title }) {
 
           const postData = {
             title: title,
-            category: 'Sample Category',
-            author: '60d021446bbf4b001c8917e9', // Sample ObjectID for author
+            author: '60d021446bbf4b001c8917e9',
             content: content,
           };
 
           axios
-            .post('/api/v1/posts', postData)
+            .post('/api/posts', postData)
             .then((response) => {
-              console.log('Post saved:', response.data);
+              router.push('/');
             })
             .catch((error) => {
-              console.error('Saving failed1: ', error);
+              setError('저장에 실패하였습니다. 다시 시도해주세요.');
             });
         })
         .catch((error) => {
-          console.error('Saving failed2: ', error);
+          setError('저장에 실패하였습니다. 다시 시도해주세요.');
         });
     }
   };
@@ -61,7 +63,7 @@ function Editor({ title }) {
     <div>
       <div id='editorjs' />
       <div className='border-t-2 border-gray-300'>
-        <button onClick={save} className='w-full bg-gray-200'>
+        <button onClick={postSave} className='w-full bg-gray-200'>
           Save
         </button>
       </div>
