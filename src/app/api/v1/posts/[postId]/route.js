@@ -1,22 +1,22 @@
 import mongoose from 'mongoose';
 import createError from 'http-errors';
 import { NextResponse } from 'next/server';
+import { JSDOM } from 'jsdom';
+import createDOMPurify from 'dompurify';
 
 import dbConnect from '@lib/dbConnect';
 import Post from '@models/Post';
 import { ERROR_MESSAGES, ERROR_CODES } from '@utils/errors';
 import { sendErrorResponse } from '@utils/response';
 
+const window = new JSDOM('').window;
+const DOMPurify = createDOMPurify(window);
+
 function getPostIdFromUrl(url) {
   const urlParts = url.split('/');
   return urlParts[urlParts.length - 1];
 }
 
-/**
- * 블로그 포스트 수정 API
- * @URL /api/v1/post/:postId
- * @param request
- */
 async function PUT(request) {
   await dbConnect();
 
@@ -36,7 +36,11 @@ async function PUT(request) {
     } catch {
       throw createError(ERROR_CODES.INVALID_JSON, ERROR_MESSAGES.INVALID_JSON);
     }
-    const { title, content } = parsedData;
+    let { title, content } = parsedData;
+
+    // Sanitize the title and content
+    title = DOMPurify.sanitize(title);
+    content = DOMPurify.sanitize(content);
 
     if (!title || !content) {
       throw createError(
