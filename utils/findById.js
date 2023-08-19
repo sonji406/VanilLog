@@ -5,5 +5,5 @@ export async function findById(schema, id, error) {
   if (!result) {
     throw createError(error.STATUS_CODE, error.MESSAGE);
   }
-  return post;
+  return result;
 }
