@@ -51,4 +51,47 @@ async function GET(request) {
   }
 }
 
-export { GET };
+/**
+ * 포스트 생성 API
+ * @URL /api/v1/posts
+ * @param request
+ */
+async function POST(request) {
+  await dbConnect();
+
+  const successResponse = {
+    status: 'success',
+  };
+
+  try {
+    const { title, content, author } = await request.json();
+
+    if (!title || !content || !author) {
+      throw createError(
+        ERROR_CODES.MISSING_PARAMETERS,
+        ERROR_MESSAGES.MISSING_POST_PARAMETERS,
+      );
+    }
+
+    if (author) {
+      validateUserId(author);
+    }
+
+    const _id = new mongoose.Types.ObjectId();
+
+    const post = await Post.create({
+      _id,
+      title,
+      author,
+      content,
+    });
+
+    successResponse.data = post;
+
+    return NextResponse.json(successResponse);
+  } catch (error) {
+    return sendErrorResponse(error);
+  }
+}
+
+export { GET, POST };
