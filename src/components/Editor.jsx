@@ -15,6 +15,18 @@ function Editor({ title }) {
   useEffect(() => {
     const editor = new EditorJS({
       holder: 'editorjs',
+      tools: {
+        image: {
+          class: ImageTool,
+          config: {
+            endpoints: {
+              byFile: 'http://localhost:3000/api/image/uploadFile',
+            },
+            types: 'image/*',
+            captionPlaceholder: 'Enter caption',
+          },
+        },
+      },
     });
 
     ref.current = editor;
