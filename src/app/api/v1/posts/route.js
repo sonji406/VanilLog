@@ -6,7 +6,7 @@ import dbConnect from '@lib/dbConnect';
 import Post from '@models/Post';
 import { ERROR_MESSAGES, ERROR_CODES } from '@utils/errors';
 import { sendErrorResponse } from '@utils/response';
-import { validateUserId } from '@utils/validateUserId';
+import { validateObjectId } from '@utils/validateObjectId';
 
 /**
  * 포스트 목록 조회 API
@@ -26,7 +26,7 @@ async function GET(request) {
     const limit = searchParams.get('limit');
 
     if (userId) {
-      validateUserId(userId);
+      validateObjectId(userId);
     }
 
     if (!page || !limit) {

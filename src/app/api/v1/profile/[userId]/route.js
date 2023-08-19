@@ -6,7 +6,7 @@ import dbConnect from '@lib/dbConnect';
 import User from '@models/User';
 import { ERROR_MESSAGES, ERROR_CODES } from '@utils/errors';
 import { sendErrorResponse } from '@utils/response';
-import { validateUserId } from '@utils/validateUserId';
+import { validateObjectId } from '@utils/validateObjectId';
 import { findUserById } from '@utils/findUserById';
 
 function getUserIdFromUrl(url) {
@@ -24,7 +24,7 @@ async function GET(request) {
 
   try {
     const userId = getUserIdFromUrl(request.url);
-    validateUserId(userId);
+    validateObjectId(userId);
     const userProfile = await findUserById(userId);
 
     return NextResponse.json({
@@ -46,7 +46,7 @@ async function PUT(request) {
 
   try {
     const userId = getUserIdFromUrl(request.url);
-    validateUserId(userId);
+    validateObjectId(userId);
 
     const bodyData = await request.text();
     const parsedData = JSON.parse(bodyData);
