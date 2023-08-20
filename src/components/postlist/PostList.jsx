@@ -10,11 +10,11 @@ import { useSession } from 'next-auth/react';
 
 function PostList({ blogUserId }) {
   const params = useSearchParams();
-  const { data } = useSession();
-  const loggedInUserId = data?.mongoId;
-
   const page = params.get('page') || 1;
   const limit = params.get('limit') || 10;
+
+  const { data } = useSession;
+  const loggedInUserId = data?.mongoId;
 
   const [posts, setPosts] = useState([]);
   const [totalPosts, setTotalPosts] = useState(0);
@@ -24,7 +24,7 @@ function PostList({ blogUserId }) {
     const fetchData = async () => {
       try {
         const response = await axios.get('/api/v1/posts', {
-          params: { userId: blogUserId, page, limit },
+          params: { blogUserId, page, limit },
         });
 
         if (response.data.status === 'success') {
