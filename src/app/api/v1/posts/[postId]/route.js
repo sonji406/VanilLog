@@ -17,6 +17,11 @@ function getPostIdFromUrl(url) {
   return urlParts[urlParts.length - 1];
 }
 
+/**
+ * 블로그 포스트 수정 API
+ * @URL /api/v1/post/:postId
+ * @param request
+ */
 async function PUT(request) {
   await dbConnect();
 
@@ -36,13 +41,21 @@ async function PUT(request) {
     } catch {
       throw createError(ERROR_CODES.INVALID_JSON, ERROR_MESSAGES.INVALID_JSON);
     }
+
     let { title, content } = parsedData;
 
-    // Sanitize the title and content
     title = DOMPurify.sanitize(title);
-    content = DOMPurify.sanitize(content);
 
-    if (!title || !content) {
+    if (content && content.blocks && Array.isArray(content.blocks)) {
+      content.blocks = content.blocks.map((block) => {
+        if (block.type === 'paragraph') {
+          block.data.text = DOMPurify.sanitize(block.data.text);
+        } else if (block.type === 'image') {
+          block.data.caption = DOMPurify.sanitize(block.data.caption);
+        }
+        return block;
+      });
+    } else {
       throw createError(
         ERROR_CODES.MISSING_POST_FIELDS,
         ERROR_MESSAGES.MISSING_POST_FIELDS,
