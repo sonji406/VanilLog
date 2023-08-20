@@ -9,12 +9,10 @@ const PostSchema = new mongoose.Schema(
       ref: 'User',
       required: true,
     },
-    content: [
-      {
-        type: { type: String, required: true },
-        value: { type: mongoose.Schema.Types.Mixed, required: true },
-      },
-    ],
+    content: {
+      type: mongoose.Schema.Types.Mixed,
+      required: true,
+    },
     comments: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Comment' }],
   },
   { timestamps: true },
