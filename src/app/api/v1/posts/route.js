@@ -4,9 +4,9 @@ import { NextResponse } from 'next/server';
 
 import dbConnect from '@lib/dbConnect';
 import Post from '@models/Post';
-import { ERROR_MESSAGES, ERROR_CODES } from '@utils/errors';
+import { errors } from '@utils/errors';
 import { sendErrorResponse } from '@utils/response';
-import { validateUserId } from '@utils/validateUserId';
+import { validateObjectId } from '@utils/validateObjectId';
 
 /**
  * 포스트 목록 조회 API
@@ -15,6 +15,7 @@ import { validateUserId } from '@utils/validateUserId';
  */
 async function GET(request) {
   await dbConnect();
+
   const successResponse = {
     status: 'success',
   };
@@ -26,13 +27,13 @@ async function GET(request) {
     const limit = searchParams.get('limit');
 
     if (userId) {
-      validateUserId(userId);
+      validateObjectId(userId);
     }
 
     if (!page || !limit) {
       throw createError(
-        ERROR_CODES.MISSING_PARAMETERS,
-        ERROR_MESSAGES.MISSING_PARAMETERS,
+        errors.MISSING_PARAMETERS.STATUS_CODE,
+        errors.MISSING_PARAMETERS.MESSAGE,
       );
     }
     const findOption = userId ? { author: userId } : {};
@@ -59,36 +60,27 @@ async function GET(request) {
 async function POST(request) {
   await dbConnect();
 
-  const successResponse = {
-    status: 'success',
-  };
-
   try {
     const { title, content, author } = await request.json();
 
     if (!title || !content || !author) {
       throw createError(
-        ERROR_CODES.MISSING_PARAMETERS,
-        ERROR_MESSAGES.MISSING_POST_PARAMETERS,
+        errors.MISSING_PARAMETERS.STATUS_CODE,
+        errors.MISSING_PARAMETERS.MESSAGE,
       );
     }
 
     if (author) {
-      validateUserId(author);
+      validateObjectId(author);
     }
 
-    const _id = new mongoose.Types.ObjectId();
-
     const post = await Post.create({
-      _id,
       title,
       author,
       content,
     });
 
-    successResponse.data = post;
-
-    return NextResponse.json(successResponse);
+    return NextResponse.json({ status: 'success', data: post });
   } catch (error) {
     return sendErrorResponse(error);
   }
