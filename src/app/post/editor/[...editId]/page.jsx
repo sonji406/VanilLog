@@ -12,7 +12,7 @@ const Editor = dynamic(() => import('@src/components/Editor'), {
 function PostEditPage({ params }) {
   const [title, setTitle] = useState('');
   const [content, setContent] = useState({});
-  const [error, setError] = useState(null);
+  const [loadError, setLoadError] = useState(null);
 
   const [userId, postId] = params.editId;
 
@@ -23,7 +23,7 @@ function PostEditPage({ params }) {
   };
 
   const setSaveError = (error) => {
-    setError(error);
+    setLoadError(error);
   };
 
   useEffect(() => {
@@ -38,10 +38,10 @@ function PostEditPage({ params }) {
           }
 
           if (response.data.status !== 'success') {
-            setError(response.data.message);
+            setLoadError(response.data.message);
           }
         } catch (e) {
-          setError('포스트를 불러오는 중 문제가 발생하였습니다.');
+          setLoadError('포스트를 불러오는 중 문제가 발생하였습니다.');
         }
       };
 
@@ -69,7 +69,7 @@ function PostEditPage({ params }) {
             title={title}
             content={content}
             isEditing={isEditing}
-            saveError={error}
+            saveError={loadError}
             setSaveError={setSaveError}
           />
         </div>
