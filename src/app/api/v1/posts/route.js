@@ -40,7 +40,6 @@ async function GET(request) {
       .limit(limit)
       .lean()
       .exec();
-    successResponse.data = posts;
 
     const totalPosts = await Post.countDocuments(findOption);
 

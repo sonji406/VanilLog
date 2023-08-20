@@ -24,7 +24,7 @@ function PostList({ blogUserId }) {
     const fetchData = async () => {
       try {
         const response = await axios.get('/api/v1/posts', {
-          params: { blogUserId, page, limit },
+          params: { userId: blogUserId, page, limit },
         });
 
         if (response.data.status === 'success') {
