@@ -40,9 +40,7 @@ function PostList({ loggedInUserId, blogUserId }) {
       }
     };
 
-    if (page && limit) {
-      fetchData();
-    }
+    fetchData();
   }, [blogUserId, page, limit]);
 
   const totalPage = Math.ceil(totalPosts / limit);
