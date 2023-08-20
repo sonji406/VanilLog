@@ -3,7 +3,6 @@
 import { useEffect, useState } from 'react';
 import dynamic from 'next/dynamic';
 import axios from 'axios';
-import Navbar from '@src/components/Navbar';
 
 const Editor = dynamic(() => import('@src/components/Editor'), {
   ssr: false,
@@ -52,7 +51,6 @@ function PostEditPage({ params }) {
   return (
     <>
       <div className='flex justify-center'>
-        <Navbar />
         <div className='w-[800px] text-center mt-6'>
           <div className='flex items-center justify-center border-2 border-black'>
             <input
