@@ -53,7 +53,7 @@ function PostList({ loggedInUserId, blogUserId }) {
   return (
     <div className='w-screen px-5'>
       <div className='my-4'>
-        <Link href={`/post/${loggedInUserId}/editor`}>
+        <Link href={`/post/editor/${loggedInUserId}`}>
           <button className='text-xl text-white font-bold bg-[#0044ff] rounded-lg hover:bg-[#0000ff] py-2 px-8'>
             포스트 작성하기
           </button>
@@ -63,14 +63,6 @@ function PostList({ loggedInUserId, blogUserId }) {
       <div className='flex flex-wrap gap-x-8 gap-y-4 justify-center'>
         {posts.length > 0 &&
           posts.map((post) => {
-            const imageContent = post.content.find(
-              (content) => content.type === 'image',
-            );
-            const textContent = post.content.find(
-              (content) => content.type === 'text',
-            );
-            const textValue = textContent ? textContent.value : '';
-
             return (
               <Link key={post._id} href={`/posts/${post.author}/${post._id}`}>
                 <PostItem post={post} />
