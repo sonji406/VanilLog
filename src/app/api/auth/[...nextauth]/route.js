@@ -25,9 +25,12 @@ const handler = NextAuth({
       */
       if (trigger === 'signIn') {
         await dbConnect();
-        const isUserExist = await User.exists({ email: token.email });
+        // const isUserExist = await User.exists({ email: token.email });
+        let loginUser = await User.findOne({ email: token.email })
+          .lean()
+          .exec();
 
-        if (!isUserExist) {
+        if (!loginUser) {
           const newUser = new User({
             nickname: token.name,
             email: token.email,
@@ -37,10 +40,14 @@ const handler = NextAuth({
             comments: [],
           });
           try {
-            await newUser.save();
+            loginUser = await newUser.save();
           } catch (error) {
             throw error;
           }
+        }
+
+        if (!token.mongoId) {
+          token.mongoId = loginUser._id;
         }
       }
 
