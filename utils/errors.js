@@ -33,6 +33,16 @@ const POST_NOT_FOUND = {
   MESSAGE: '해당 포스트를 찾을 수 없습니다.',
 };
 
+const USER_NOT_LOGGED_IN = {
+  STATUS_CODE: 401,
+  MESSAGE: '해당 포스트의 작성자일 경우 로그인 후 이용 가능합니다.',
+};
+
+const NOT_POST_AUTHOR = {
+  STATUS_CODE: 403,
+  MESSAGE: '포스트의 작성자가 아닙니다.',
+};
+
 export const errors = {
   INVALID_USER_ID,
   USER_NOT_FOUND,
@@ -41,4 +51,6 @@ export const errors = {
   MISSING_NICKNAME,
   MISSING_PARAMETERS,
   POST_NOT_FOUND,
+  USER_NOT_LOGGED_IN,
+  NOT_POST_AUTHOR,
 };
