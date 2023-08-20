@@ -4,7 +4,7 @@ import { NextResponse } from 'next/server';
 
 import dbConnect from '@lib/dbConnect';
 import Post from '@models/Post';
-import { errors } from '@utils/errors';
+import { ERRORS } from '@utils/errors';
 import { sendErrorResponse } from '@utils/response';
 import { validateObjectId } from '@utils/validateObjectId';
 
@@ -15,9 +15,6 @@ import { validateObjectId } from '@utils/validateObjectId';
  */
 async function GET(request) {
   await dbConnect();
-  const successResponse = {
-    status: 'success',
-  };
 
   try {
     const { searchParams } = new URL(request.url);
@@ -31,24 +28,59 @@ async function GET(request) {
 
     if (!page || !limit) {
       throw createError(
-        errors.MISSING_PARAMETERS.STATUS_CODE,
-        errors.MISSING_PARAMETERS.MESSAGE,
+        ERRORS.MISSING_PARAMETERS.STATUS_CODE,
+        ERRORS.MISSING_PARAMETERS.MESSAGE,
       );
     }
+
     const findOption = userId ? { author: userId } : {};
     const posts = await Post.find(findOption, null, {
       skip: (page - 1) * limit,
       limit,
     }).exec();
-    successResponse.data = posts;
 
     const totalPosts = await Post.countDocuments(findOption);
-    successResponse.totalPosts = totalPosts;
 
-    return NextResponse.json(successResponse);
+    return NextResponse.json({
+      status: 'success',
+      data: posts,
+      totalPosts: totalPosts,
+    });
   } catch (error) {
     return sendErrorResponse(error);
   }
 }
 
-export { GET };
+/**
+ * 포스트 생성 API
+ * @URL /api/v1/posts
+ * @param request
+ */
+async function POST(request) {
+  await dbConnect();
+
+  try {
+    const { title, content, author } = await request.json();
+
+    if (!title || !content || !author) {
+      throw createError(
+        ERRORS.MISSING_PARAMETERS.STATUS_CODE,
+        ERRORS.MISSING_PARAMETERS.MESSAGE,
+      );
+    }
+
+    validateObjectId(author);
+
+    const post = await Post.create({
+      title,
+      author,
+      content,
+    });
+
+    return NextResponse.json({ status: 'success', data: post });
+  } catch (error) {
+    return sendErrorResponse(error);
+  }
+}
+
+export { GET, POST };

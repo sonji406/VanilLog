@@ -33,7 +33,7 @@ const POST_NOT_FOUND = {
   MESSAGE: '해당 포스트를 찾을 수 없습니다.',
 };
 
-export const errors = {
+export const ERRORS = {
   INVALID_USER_ID,
   USER_NOT_FOUND,
   DUPLICATE_NICKNAME,
