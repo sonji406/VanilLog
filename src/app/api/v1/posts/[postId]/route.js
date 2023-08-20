@@ -1,20 +1,76 @@
-import mongoose from 'mongoose';
-import createError from 'http-errors';
 import { NextResponse } from 'next/server';
+import { getSession } from 'next-auth/react';
 import { JSDOM } from 'jsdom';
 import createDOMPurify from 'dompurify';
 
-import dbConnect from '@lib/dbConnect';
-import Post from '@models/Post';
-import { ERROR_MESSAGES, ERROR_CODES } from '@utils/errors';
+import { errors } from '@utils/errors';
 import { sendErrorResponse } from '@utils/response';
+import { validateObjectId } from '@utils/validateObjectId';
+import { findById } from '@utils/findById';
+import { getLastPartOfUrl } from '@utils/getLastPartOfUrl';
+import Post from '@models/Post';
+import dbConnect from '@lib/dbConnect';
 
 const window = new JSDOM('').window;
 const DOMPurify = createDOMPurify(window);
 
-function getPostIdFromUrl(url) {
-  const urlParts = url.split('/');
-  return urlParts[urlParts.length - 1];
+/**
+ * 블로그 포스트 조회 API
+ * @URL /api/v1/posts/:postId
+ * @param request
+ */
+async function GET(request) {
+  await dbConnect();
+
+  try {
+    const postId = getLastPartOfUrl(request.url);
+    validateObjectId(postId);
+    const post = await findById(Post, postId, errors.POST_NOT_FOUND);
+
+    return NextResponse.json({
+      status: 'success',
+      data: post,
+    });
+  } catch (error) {
+    return sendErrorResponse(error);
+  }
+}
+
+/**
+ * 블로그 포스트 삭제 API
+ * @URL /api/v1/posts/:postId
+ * @param request
+ */
+async function DELETE(request) {
+  await dbConnect();
+
+  try {
+    const postId = getLastPartOfUrl(request.url);
+    validateObjectId(postId);
+    const session = await getSession({ req: request });
+    if (!session) {
+      throw new Error(errors.USER_NOT_LOGGED_IN.MESSAGE);
+    }
+    const post = await findById(Post, postId, errors.POST_NOT_FOUND);
+    if (post.author.toString() !== session.user.id) {
+      throw new Error(errors.NOT_POST_AUTHOR.MESSAGE);
+    }
+    const deletedPost = await Post.findByIdAndDelete(postId);
+
+    if (!deletedPost) {
+      throw new Error(errors.POST_NOT_FOUND.MESSAGE);
+    }
+
+    return NextResponse.json({
+      status: 'success',
+      data: {
+        message: '포스트가 성공적으로 삭제되었습니다',
+        post: deletedPost,
+      },
+    });
+  } catch (error) {
+    return sendErrorResponse(error);
+  }
 }
 
 /**
@@ -26,41 +82,38 @@ async function PUT(request) {
   await dbConnect();
 
   try {
-    const postId = getPostIdFromUrl(request.url);
-
-    if (!mongoose.Types.ObjectId.isValid(postId)) {
-      throw createError(
-        ERROR_CODES.INVALID_POSTID,
-        ERROR_MESSAGES.INVALID_POSTID,
-      );
+    const postId = getLastPartOfUrl(request.url);
+    validateObjectId(postId);
+    const session = await getSession({ req: request });
+    if (!session) {
+      throw new Error(errors.USER_NOT_LOGGED_IN.MESSAGE);
     }
-
+    const post = await findById(Post, postId, errors.POST_NOT_FOUND);
+    if (post.author.toString() !== session.user.id) {
+      throw new Error(errors.NOT_POST_AUTHOR.MESSAGE);
+    }
     let parsedData;
     try {
       parsedData = JSON.parse(await request.text());
     } catch {
-      throw createError(ERROR_CODES.INVALID_JSON, ERROR_MESSAGES.INVALID_JSON);
+      throw new Error(errors.INVALID_JSON.MESSAGE);
     }
 
     let { title, content } = parsedData;
-
     title = DOMPurify.sanitize(title);
 
-    if (content && content.blocks && Array.isArray(content.blocks)) {
-      content.blocks = content.blocks.map((block) => {
-        if (block.type === 'paragraph') {
-          block.data.text = DOMPurify.sanitize(block.data.text);
-        } else if (block.type === 'image') {
-          block.data.caption = DOMPurify.sanitize(block.data.caption);
-        }
-        return block;
-      });
-    } else {
-      throw createError(
-        ERROR_CODES.MISSING_POST_FIELDS,
-        ERROR_MESSAGES.MISSING_POST_FIELDS,
-      );
+    if (!content || !content.blocks || !Array.isArray(content.blocks)) {
+      throw new Error(errors.MISSING_POST_FIELDS.MESSAGE);
     }
+
+    content.blocks = content.blocks.map((block) => {
+      if (block.type === 'paragraph') {
+        block.data.text = DOMPurify.sanitize(block.data.text);
+      } else if (block.type === 'image') {
+        block.data.caption = DOMPurify.sanitize(block.data.caption);
+      }
+      return block;
+    });
 
     const updatedPost = await Post.findByIdAndUpdate(
       postId,
@@ -69,10 +122,7 @@ async function PUT(request) {
     );
 
     if (!updatedPost) {
-      throw createError(
-        ERROR_CODES.POST_NOT_FOUND,
-        ERROR_MESSAGES.POST_NOT_FOUND,
-      );
+      throw new Error(errors.POST_NOT_FOUND.MESSAGE);
     }
 
     return NextResponse.json({
@@ -87,4 +137,4 @@ async function PUT(request) {
   }
 }
 
-export { PUT };
+export { GET, DELETE, PUT };
