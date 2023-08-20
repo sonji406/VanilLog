@@ -11,6 +11,7 @@
     "format": "prettier --cache --write ."
   },
   "dependencies": {
+    "@aws-sdk/client-s3": "^3.395.0",
     "axios": "^1.4.0",
     "dompurify": "^3.0.5",
     "eslint": "8.47.0",
@@ -24,6 +25,9 @@
     "react-dom": "18.2.0"
   },
   "devDependencies": {
+    "@editorjs/editorjs": "^2.27.2",
+    "@editorjs/image": "^2.8.1",
+    "@editorjs/link": "^2.5.0",
     "autoprefixer": "^10.4.15",
     "eslint-config-prettier": "^9.0.0",
     "husky": "^8.0.3",
