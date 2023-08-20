@@ -1,7 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
-    domains: ['cdn.pixabay.com'],
+    domains: ['vanillog-bucket.s3.amazonaws.com'],
   },
 };
 
