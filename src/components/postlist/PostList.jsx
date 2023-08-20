@@ -6,12 +6,15 @@ import Link from 'next/link';
 
 import { useSearchParams } from 'next/navigation';
 import { PostItem } from './PostItem';
+import { useSession } from 'next-auth/react';
 
-function PostList({ loggedInUserId, blogUserId }) {
+function PostList({ blogUserId }) {
   const params = useSearchParams();
-
   const page = params.get('page') || 1;
   const limit = params.get('limit') || 10;
+
+  const { data } = useSession;
+  const loggedInUserId = data?.mongoId;
 
   const [posts, setPosts] = useState([]);
   const [totalPosts, setTotalPosts] = useState(0);

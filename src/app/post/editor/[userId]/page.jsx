@@ -11,22 +11,23 @@ const Editor = dynamic(() => import('@src/components/Editor'), {
 function PostEditPage({ params }) {
   const [title, setTitle] = useState('');
   const [content, setContent] = useState({});
-  const [loadError, setLoadError] = useState(null);
+  const [error, setError] = useState(null);
 
-  const [userId, postId] = params.editId;
+  const userId = params.userId;
+  const postId = params.postId || null;
 
-  const isEditing = Boolean(postId);
+  const isModify = Boolean(postId);
 
   const handleTitleChange = (event) => {
     setTitle(event.target.value);
   };
 
   const setSaveError = (error) => {
-    setLoadError(error);
+    setError(error);
   };
 
   useEffect(() => {
-    if (isEditing) {
+    if (isModify) {
       const fetchData = async () => {
         try {
           const response = await axios.get(`/api/v1/posts/${postId}`);
@@ -37,16 +38,16 @@ function PostEditPage({ params }) {
           }
 
           if (response.data.status !== 'success') {
-            setLoadError(response.data.message);
+            setError(response.data.message);
           }
         } catch (e) {
-          setLoadError('포스트를 불러오는 중 문제가 발생하였습니다.');
+          setError('포스트를 불러오는 중 문제가 발생하였습니다.');
         }
       };
 
       fetchData();
     }
-  }, [isEditing, postId]);
+  }, [isModify, postId]);
 
   return (
     <>
@@ -66,9 +67,9 @@ function PostEditPage({ params }) {
             postId={postId}
             title={title}
             content={content}
-            isEditing={isEditing}
-            saveError={loadError}
-            setSaveError={setSaveError}
+            isModify={isModify}
+            error={error}
+            setError={setSaveError}
           />
         </div>
       </div>

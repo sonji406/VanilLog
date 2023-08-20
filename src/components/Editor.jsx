@@ -6,15 +6,7 @@ import axios from 'axios';
 import EditorJS from '@editorjs/editorjs';
 import ImageTool from '@editorjs/image';
 
-function Editor({
-  author,
-  postId,
-  title,
-  content,
-  saveError,
-  setSaveError,
-  isEditing,
-}) {
+function Editor({ author, postId, title, content, error, setError, isModify }) {
   const ref = useRef(null);
   const router = useRouter();
 
@@ -46,34 +38,34 @@ function Editor({
   }, [content]);
 
   const postSave = async () => {
-    if (!title || !content.blocks.length) {
-      setSaveError('제목과 내용을 모두 작성해주세요.');
+    const outputData = await ref.current.save();
+
+    if (!title || !outputData.blocks.length) {
+      setError('제목과 내용을 모두 작성해주세요.');
       return;
     }
 
-    if (ref.current) {
-      try {
-        const outputData = await ref.current.save();
-        const postData = {
-          title: title,
-          author: author,
-          content: outputData,
-        };
+    const postData = {
+      title,
+      author,
+      content: outputData,
+    };
 
-        if (isEditing) {
-          await axios.put(`/api/v1/posts/${postId}`, postData);
-        } else {
-          await axios.post('/api/v1/posts', postData);
-        }
-
+    try {
+      if (isModify) {
+        await axios.put(`/api/v1/posts/${postId}`, postData);
         router.push('/');
-      } catch (error) {
-        if (isEditing) {
-          setSaveError('수정에 실패하였습니다. 다시 시도해주세요.');
-        } else {
-          setSaveError('저장에 실패하였습니다. 다시 시도해주세요.');
-        }
+        return;
       }
+
+      await axios.post('/api/v1/posts', postData);
+      router.push('/');
+    } catch {
+      const errorMessage = isModify
+        ? '수정에 실패하였습니다. 다시 시도해주세요.'
+        : '저장에 실패하였습니다. 다시 시도해주세요.';
+
+      setError(errorMessage);
     }
   };
 
@@ -90,7 +82,7 @@ function Editor({
           Save
         </button>
       </div>
-      <div className='text-red-700 p-4'>{saveError}</div>
+      <div className='text-red-700 p-4'>{error}</div>
     </>
   );
 }
