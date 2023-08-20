@@ -25,7 +25,6 @@ const handler = NextAuth({
       */
       if (trigger === 'signIn') {
         await dbConnect();
-        // const isUserExist = await User.exists({ email: token.email });
         let loginUser = await User.findOne({ email: token.email })
           .lean()
           .exec();
