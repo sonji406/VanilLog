@@ -46,6 +46,11 @@ function Editor({
   }, [content]);
 
   const postSave = async () => {
+    if (!title || !content.blocks.length) {
+      setSaveError('제목과 내용을 모두 작성해주세요.');
+      return;
+    }
+
     if (ref.current) {
       try {
         const outputData = await ref.current.save();
