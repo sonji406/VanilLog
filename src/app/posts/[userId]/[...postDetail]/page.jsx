@@ -4,6 +4,7 @@ import axios from 'axios';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
+import { useSession } from 'next/auth/client';
 import { errors } from '@utils/errors';
 
 export default function PostDetailPage({ params }) {
@@ -12,6 +13,8 @@ export default function PostDetailPage({ params }) {
   const [post, setPost] = useState(null);
   const [commentText, setCommentText] = useState('');
   const [errorMessage, setErrorMessage] = useState(null);
+  const [session, loading] = useSession();
+
 
   useEffect(() => {
     const fetchPost = async () => {
@@ -120,7 +123,7 @@ export default function PostDetailPage({ params }) {
           })}
         </div>
 
-        {post.author.$oid === userId && (
+        {!loading && session?.mongoId === post.author.$oid && (
           <div className='flex justify-end mb-8 space-x-4'>
             <button className='bg-logo text-white py-2 px-4 rounded'>
               수정하기
