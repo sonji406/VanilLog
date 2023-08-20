@@ -27,7 +27,7 @@ function Editor({
           class: ImageTool,
           config: {
             endpoints: {
-              byFile: 'http://localhost:3000/api/image/uploadFile',
+              byFile: 'http://localhost:3000/api/v1/image/uploadFile',
             },
             types: 'image/*',
             captionPlaceholder: 'Enter caption',
