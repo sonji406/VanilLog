@@ -4,7 +4,7 @@ import { NextResponse } from 'next/server';
 
 import dbConnect from '@lib/dbConnect';
 import User from '@models/User';
-import { errors } from '@utils/errors';
+import { ERRORS } from '@utils/errors';
 import { sendErrorResponse } from '@utils/response';
 import { validateObjectId } from '@utils/validateObjectId';
 import { findUserById } from '@utils/findUserById';
@@ -54,16 +54,16 @@ async function PUT(request) {
 
     if (!nickname) {
       throw createError(
-        errors.MISSING_NICKNAME.STATUS_CODE,
-        errors.MISSING_NICKNAME.MESSAGE,
+        ERRORS.MISSING_NICKNAME.STATUS_CODE,
+        ERRORS.MISSING_NICKNAME.MESSAGE,
       );
     }
 
     const existingUser = await User.findOne({ nickname }).lean().exec();
     if (existingUser && String(existingUser._id) !== userId) {
       throw createError(
-        errors.DUPLICATE_NICKNAME.STATUS_CODE,
-        errors.DUPLICATE_NICKNAME.MESSAGE,
+        ERRORS.DUPLICATE_NICKNAME.STATUS_CODE,
+        ERRORS.DUPLICATE_NICKNAME.MESSAGE,
       );
     }
 
@@ -71,8 +71,8 @@ async function PUT(request) {
 
     if (userProfile.nickname === nickname) {
       throw createError(
-        errors.SAME_NICKNAME.STATUS_CODE,
-        errors.SAME_NICKNAME.MESSAGE,
+        ERRORS.SAME_NICKNAME.STATUS_CODE,
+        ERRORS.SAME_NICKNAME.MESSAGE,
       );
     }
 

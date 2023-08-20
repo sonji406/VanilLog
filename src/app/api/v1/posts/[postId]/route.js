@@ -1,15 +1,17 @@
 import { NextResponse } from 'next/server';
-import { getSession } from 'next-auth/react';
+
 import { JSDOM } from 'jsdom';
 import createDOMPurify from 'dompurify';
 
-import { errors } from '@utils/errors';
+import { ERRORS } from '@utils/errors';
 import { sendErrorResponse } from '@utils/response';
-import { validateObjectId } from '@utils/validateObjectId';
 import { findById } from '@utils/findById';
-import { getLastPartOfUrl } from '@utils/getLastPartOfUrl';
+import {
+  handleDBOperations,
+  extractAndValidateId,
+  isLoggedInAndIsAuthor,
+} from '@utils/postDbAuthHandlers';
 import Post from '@models/Post';
-import dbConnect from '@lib/dbConnect';
 
 const window = new JSDOM('').window;
 const DOMPurify = createDOMPurify(window);
@@ -20,12 +22,11 @@ const DOMPurify = createDOMPurify(window);
  * @param request
  */
 async function GET(request) {
-  await dbConnect();
+  await handleDBOperations();
 
   try {
-    const postId = getLastPartOfUrl(request.url);
-    validateObjectId(postId);
-    const post = await findById(Post, postId, errors.POST_NOT_FOUND);
+    const postId = extractAndValidateId(request.url);
+    const post = await findById(Post, postId, ERRORS.POST_NOT_FOUND);
 
     return NextResponse.json({
       status: 'success',
@@ -41,26 +42,19 @@ async function GET(request) {
  * @URL /api/v1/posts/:postId
  * @param request
  */
+
 async function DELETE(request) {
-  await dbConnect();
+  await handleDBOperations();
 
   try {
-    const postId = getLastPartOfUrl(request.url);
-    validateObjectId(postId);
+    const postId = extractAndValidateId(request.url);
 
-    const session = await getSession({ req: request });
-    if (!session) {
-      throw new Error(errors.USER_NOT_LOGGED_IN.MESSAGE);
-    }
-
-    const post = await findById(Post, postId, errors.POST_NOT_FOUND);
-    if (post.author.toString() !== session.mongoId) {
-      throw new Error(errors.NOT_POST_AUTHOR.MESSAGE);
-    }
+    const post = await findById(Post, postId, ERRORS.POST_NOT_FOUND);
+    await isLoggedInAndIsAuthor(request, post.author);
 
     const deletedPost = await Post.findByIdAndDelete(postId);
     if (!deletedPost) {
-      throw new Error(errors.POST_NOT_FOUND.MESSAGE);
+      throw new Error(ERRORS.POST_NOT_FOUND.MESSAGE);
     }
 
     return NextResponse.json({
@@ -81,34 +75,26 @@ async function DELETE(request) {
  * @param request
  */
 async function PUT(request) {
-  await dbConnect();
+  await handleDBOperations();
 
   let parsedData;
   try {
     parsedData = JSON.parse(await request.text());
   } catch {
-    return sendErrorResponse(errors.INVALID_JSON.MESSAGE);
+    return sendErrorResponse(ERRORS.INVALID_JSON.MESSAGE);
   }
 
   try {
-    const postId = getLastPartOfUrl(request.url);
-    validateObjectId(postId);
+    const postId = extractAndValidateId(request.url);
 
-    const session = await getSession({ req: request });
-    if (!session) {
-      throw new Error(errors.USER_NOT_LOGGED_IN.MESSAGE);
-    }
-
-    const post = await findById(Post, postId, errors.POST_NOT_FOUND);
-    if (post.author.toString() !== session.mongoId) {
-      throw new Error(errors.NOT_POST_AUTHOR.MESSAGE);
-    }
+    const post = await findById(Post, postId, ERRORS.POST_NOT_FOUND);
+    await isLoggedInAndIsAuthor(request, post.author);
 
     let { title, content } = parsedData;
     title = DOMPurify.sanitize(title);
 
     if (!content || !content.blocks || !Array.isArray(content.blocks)) {
-      throw new Error(errors.MISSING_POST_FIELDS.MESSAGE);
+      throw new Error(ERRORS.MISSING_POST_FIELDS.MESSAGE);
     }
 
     content.blocks = content.blocks.map((block) => {
@@ -127,7 +113,7 @@ async function PUT(request) {
     );
 
     if (!updatedPost) {
-      throw new Error(errors.POST_NOT_FOUND.MESSAGE);
+      throw new Error(ERRORS.POST_NOT_FOUND.MESSAGE);
     }
 
     return NextResponse.json({

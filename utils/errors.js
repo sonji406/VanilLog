@@ -43,7 +43,7 @@ const NOT_POST_AUTHOR = {
   MESSAGE: '포스트의 작성자가 아닙니다.',
 };
 
-export const errors = {
+export const ERRORS = {
   INVALID_USER_ID,
   USER_NOT_FOUND,
   DUPLICATE_NICKNAME,
