@@ -43,7 +43,7 @@ async function GET(request) {
     const findOption = userId ? { author: userId } : {};
     const posts = await Post.find(findOption, null, {
       skip: (page - 1) * limit,
-      limit: Number(limit),
+      limit,
     }).exec();
     successResponse.data = posts;
 

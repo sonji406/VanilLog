@@ -52,11 +52,10 @@ async function DELETE(request) {
       throw new Error(errors.USER_NOT_LOGGED_IN.MESSAGE);
     }
     const post = await findById(Post, postId, errors.POST_NOT_FOUND);
-    if (post.author.toString() !== session.user.id) {
+    if (post.author.toString() !== session.mongoId) {
       throw new Error(errors.NOT_POST_AUTHOR.MESSAGE);
     }
     const deletedPost = await Post.findByIdAndDelete(postId);
-
     if (!deletedPost) {
       throw new Error(errors.POST_NOT_FOUND.MESSAGE);
     }
@@ -89,10 +88,11 @@ async function PUT(request) {
       throw new Error(errors.USER_NOT_LOGGED_IN.MESSAGE);
     }
     const post = await findById(Post, postId, errors.POST_NOT_FOUND);
-    if (post.author.toString() !== session.user.id) {
+    if (post.author.toString() !== session.mongoId) {
       throw new Error(errors.NOT_POST_AUTHOR.MESSAGE);
     }
     let parsedData;
+
     try {
       parsedData = JSON.parse(await request.text());
     } catch {
@@ -101,7 +101,6 @@ async function PUT(request) {
 
     let { title, content } = parsedData;
     title = DOMPurify.sanitize(title);
-
     if (!content || !content.blocks || !Array.isArray(content.blocks)) {
       throw new Error(errors.MISSING_POST_FIELDS.MESSAGE);
     }
