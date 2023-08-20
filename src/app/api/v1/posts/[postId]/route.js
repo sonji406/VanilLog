@@ -47,14 +47,17 @@ async function DELETE(request) {
   try {
     const postId = getLastPartOfUrl(request.url);
     validateObjectId(postId);
+
     const session = await getSession({ req: request });
     if (!session) {
       throw new Error(errors.USER_NOT_LOGGED_IN.MESSAGE);
     }
+
     const post = await findById(Post, postId, errors.POST_NOT_FOUND);
     if (post.author.toString() !== session.mongoId) {
       throw new Error(errors.NOT_POST_AUTHOR.MESSAGE);
     }
+
     const deletedPost = await Post.findByIdAndDelete(postId);
     if (!deletedPost) {
       throw new Error(errors.POST_NOT_FOUND.MESSAGE);
@@ -80,27 +83,30 @@ async function DELETE(request) {
 async function PUT(request) {
   await dbConnect();
 
+  let parsedData;
+  try {
+    parsedData = JSON.parse(await request.text());
+  } catch {
+    return sendErrorResponse(errors.INVALID_JSON.MESSAGE);
+  }
+
   try {
     const postId = getLastPartOfUrl(request.url);
     validateObjectId(postId);
+
     const session = await getSession({ req: request });
     if (!session) {
       throw new Error(errors.USER_NOT_LOGGED_IN.MESSAGE);
     }
+
     const post = await findById(Post, postId, errors.POST_NOT_FOUND);
     if (post.author.toString() !== session.mongoId) {
       throw new Error(errors.NOT_POST_AUTHOR.MESSAGE);
     }
-    let parsedData;
-
-    try {
-      parsedData = JSON.parse(await request.text());
-    } catch {
-      throw new Error(errors.INVALID_JSON.MESSAGE);
-    }
 
     let { title, content } = parsedData;
     title = DOMPurify.sanitize(title);
+
     if (!content || !content.blocks || !Array.isArray(content.blocks)) {
       throw new Error(errors.MISSING_POST_FIELDS.MESSAGE);
     }
