@@ -45,40 +45,30 @@ function Editor({
     };
   }, [content]);
 
-  const postSave = () => {
+  const postSave = async () => {
     if (ref.current) {
-      ref.current
-        .save()
-        .then((outputData) => {
-          const postData = {
-            title: title,
-            author: author,
-            content: outputData,
-          };
+      try {
+        const outputData = await ref.current.save();
+        const postData = {
+          title: title,
+          author: author,
+          content: outputData,
+        };
 
-          if (isEditing) {
-            axios
-              .put(`/api/v1/posts/${postId}`, postData)
-              .then((response) => {
-                router.push('/');
-              })
-              .catch((error) => {
-                setSaveError('수정에 실패하였습니다. 다시 시도해주세요.');
-              });
-          } else {
-            axios
-              .post('/api/v1/posts', postData)
-              .then((response) => {
-                router.push('/');
-              })
-              .catch((error) => {
-                setSaveError('저장에 실패하였습니다. 다시 시도해주세요.');
-              });
-          }
-        })
-        .catch((error) => {
+        if (isEditing) {
+          await axios.put(`/api/v1/posts/${postId}`, postData);
+        } else {
+          await axios.post('/api/v1/posts', postData);
+        }
+
+        router.push('/');
+      } catch (error) {
+        if (isEditing) {
+          setSaveError('수정에 실패하였습니다. 다시 시도해주세요.');
+        } else {
           setSaveError('저장에 실패하였습니다. 다시 시도해주세요.');
-        });
+        }
+      }
     }
   };
 
