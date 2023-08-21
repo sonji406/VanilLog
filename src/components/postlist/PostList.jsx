@@ -51,19 +51,12 @@ function PostList({ blogUserId }) {
 
   return (
     <div className='w-screen px-5'>
-      <div className='my-4'>
-        <Link href={`/post/editor/${loggedInUserId}`}>
-          <button className='text-xl text-white font-bold bg-[#0044ff] rounded-lg hover:bg-[#0000ff] py-2 px-8'>
-            포스트 작성하기
-          </button>
-        </Link>
-      </div>
       {error && <div>{error}</div>}
       <div className='flex flex-wrap gap-x-8 gap-y-4 justify-center'>
         {posts.length > 0 &&
           posts.map((post) => {
             return (
-              <Link key={post._id} href={`/posts/${post.author}/${post._id}`}>
+              <Link key={post._id} href={`/post/${post.author}/${post._id}`}>
                 <PostItem post={post} />
               </Link>
             );
@@ -75,7 +68,11 @@ function PostList({ blogUserId }) {
           {pageNumbers.map((number) => (
             <Link
               key={number}
-              href={`/posts/${blogUserId}/?page=${number}&limit=${limit}`}
+              href={
+                blogUserId
+                  ? `/posts/${blogUserId}?page=${number}&limit=${limit}`
+                  : `/posts?page=${number}&limit=${limit}`
+              }
               passHref
             >
               <button

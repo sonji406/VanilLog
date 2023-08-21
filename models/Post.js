@@ -10,8 +10,8 @@ const PostSchema = new mongoose.Schema(
       required: true,
     },
     content: {
-      type: { type: String, required: true },
-      value: { type: mongoose.Schema.Types.Mixed, required: true },
+      type: mongoose.Schema.Types.Mixed,
+      required: true,
     },
     comments: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Comment' }],
   },
