@@ -59,6 +59,8 @@ async function POST(request) {
       fileBuffer = Buffer.concat([fileBuffer, chunk]);
     }
 
+    await s3Data.putObject(s3Params);
+
     const fileUrl = `https://${bucketName}.s3.amazonaws.com/${fileName}`;
 
     return NextResponse.json({
