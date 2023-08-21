@@ -3,13 +3,13 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Link from 'next/link';
-
 import { useSearchParams } from 'next/navigation';
-import { PostItem } from './PostItem';
 import { useSession } from 'next-auth/react';
+import { PostItem } from './PostItem';
 
 function PostList({ blogUserId }) {
   const params = useSearchParams();
+
   const page = params.get('page') || 1;
   const limit = params.get('limit') || 10;
 
@@ -27,17 +27,13 @@ function PostList({ blogUserId }) {
           params: { userId: blogUserId, page, limit },
         });
 
-        if (response.data.status === 'success') {
-          setPosts(response.data.data);
-          setTotalPosts(response.data.totalPosts);
+        if (response.data.status !== 'success') {
+          setError(response.data.message);
+          return;
         }
 
-        if (response.data.status === '401') {
-          setError(response.data.message);
-        }
-        if (response.data.status === '400') {
-          setError(response.data.message);
-        }
+        setPosts(response.data.data);
+        setTotalPosts(response.data.totalPosts);
       } catch (e) {
         setError('포스트를 불러오는 중 문제가 발생했습니다.');
       }
