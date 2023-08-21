@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import { S3 } from '@aws-sdk/client-s3';
+import createError from 'http-errors';
 import { ERRORS } from '@utils/errors';
 import { sendErrorResponse } from '@utils/response';
 
@@ -25,11 +26,9 @@ function GET(request) {
 
     s3Data.getSignedUrl('putObject', s3Params, (err, data) => {
       if (err) {
-        return resolve(
-          NextResponse.json({
-            status: '500',
-            message: 'signed URL 생성 오류입니다.',
-          }),
+        throw createError(
+          ERRORS.SIGNED_URL_CREATION_ERROR.STATUS_CODE,
+          ERRORS.SIGNED_URL_CREATION_ERROR.MESSAGE,
         );
       }
 
@@ -71,10 +70,7 @@ async function POST(request) {
       },
     });
   } catch (error) {
-    return NextResponse.json({
-      status: '500',
-      message: '이미지 업로드 중 오류 발생',
-    });
+    return sendErrorResponse(error);
   }
 }
 

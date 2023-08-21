@@ -33,6 +33,11 @@ const POST_NOT_FOUND = {
   MESSAGE: '해당 포스트를 찾을 수 없습니다.',
 };
 
+const SIGNED_URL_CREATION_ERROR = {
+  STATUS_CODE: '500',
+  MESSAGE: 'signed URL 생성 오류입니다.',
+};
+
 export const ERRORS = {
   INVALID_USER_ID,
   USER_NOT_FOUND,
@@ -41,4 +46,5 @@ export const ERRORS = {
   MISSING_NICKNAME,
   MISSING_PARAMETERS,
   POST_NOT_FOUND,
+  SIGNED_URL_CREATION_ERROR,
 };
