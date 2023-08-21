@@ -13,6 +13,7 @@ export default function PostDetailPage({ params }) {
   const [post, setPost] = useState(null);
   const [commentText, setCommentText] = useState('');
   const [errorMessage, setErrorMessage] = useState(null);
+  const [showModal, setShowModal] = useState(false);
   const { data: session } = useSession();
 
   const handleError = (error) => {
@@ -82,6 +83,32 @@ export default function PostDetailPage({ params }) {
           </button>
         </div>
       )}
+
+      {showModal && (
+        <div className='fixed top-0 left-0 w-full h-full flex items-center justify-center z-50'>
+          <div className='bg-white p-8 rounded-lg shadow-md'>
+            <h3 className='mb-4'>이 포스트를 삭제하시겠습니까?</h3>
+            <div className='flex justify-end'>
+              <button
+                onClick={() => {
+                  setShowModal(false);
+                  handleDelete();
+                }}
+                className='bg-red-500 text-white py-2 px-4 rounded mr-2'
+              >
+                확인
+              </button>
+              <button
+                onClick={() => setShowModal(false)}
+                className='py-2 px-4 rounded'
+              >
+                취소
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
       <div className='bg-white rounded-lg shadow-xl p-8 mx-auto max-w-3xl'>
         <div className='mb-8'>
           <h2 className='text-xl font-semibold'>제목</h2>
@@ -116,18 +143,20 @@ export default function PostDetailPage({ params }) {
 
         {userId === session?.mongoId && (
           <div className='flex justify-end mb-8 space-x-4'>
-            <button className='bg-logo text-white py-2 px-4 rounded'>
+            <button
+              onClick={() => router.push(`/post/editor/${userId}/${postId}`)}
+              className='bg-logo text-white py-2 px-4 rounded'
+            >
               수정하기
             </button>
             <button
-              onClick={handleDelete}
+              onClick={() => setShowModal(true)}
               className='bg-red-500 text-white py-2 px-4 rounded'
             >
               삭제하기
             </button>
           </div>
         )}
-
         <h2 className='text-xl font-semibold mt-6 mb-4'>댓글</h2>
         {post.comments && post.comments.length ? (
           post.comments.map((comment) => (
