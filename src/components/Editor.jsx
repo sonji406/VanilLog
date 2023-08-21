@@ -11,30 +11,32 @@ function Editor({ author, postId, title, content, error, setError, isModify }) {
   const router = useRouter();
 
   useEffect(() => {
-    const editor = new EditorJS({
-      holder: 'editorjs',
-      data: content,
-      tools: {
-        image: {
-          class: ImageTool,
-          config: {
-            endpoints: {
-              byFile: 'http://localhost:3000/api/v1/image/uploadFile',
+    const initEditor = async () => {
+      if (ref.current) {
+        await ref.current.isReady;
+        ref.current.render(content);
+        return;
+      }
+
+      ref.current = new EditorJS({
+        holder: 'editorjs',
+        data: content,
+        tools: {
+          image: {
+            class: ImageTool,
+            config: {
+              endpoints: {
+                byFile: 'http://localhost:3000/api/v1/image/uploadFile',
+              },
+              types: 'image/*',
+              captionPlaceholder: 'Enter caption',
             },
-            types: 'image/*',
-            captionPlaceholder: 'Enter caption',
           },
         },
-      },
-    });
-
-    ref.current = editor;
-
-    return () => {
-      if (ref.current) {
-        ref.current.destroy();
-      }
+      });
     };
+
+    initEditor();
   }, [content]);
 
   const postSave = async () => {
@@ -52,13 +54,15 @@ function Editor({ author, postId, title, content, error, setError, isModify }) {
     };
 
     try {
-      if (isModify) {
-        await axios.put(`/api/v1/posts/${postId}`, postData);
-        router.push(`/posts/${author}`);
+      const response = isModify
+        ? await axios.put(`/api/v1/posts/${postId}`, postData)
+        : await axios.post('/api/v1/posts', postData);
+
+      if (response.data.status !== 'success') {
+        setError(response.data.message);
         return;
       }
 
-      await axios.post('/api/v1/posts', postData);
       router.push(`/posts/${author}`);
     } catch {
       const errorMessage = isModify
