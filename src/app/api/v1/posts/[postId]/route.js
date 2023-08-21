@@ -1,4 +1,9 @@
 import { NextResponse } from 'next/server';
+import { ERRORS } from '@utils/errors';
+import { validateObjectId } from '@utils/validateObjectId';
+import { getLastPartOfUrl } from '@utils/getLastPartOfUrl';
+import { sendErrorResponse } from '@utils/response';
+import { findById } from '@utils/findById';
 
 import { JSDOM } from 'jsdom';
 import createDOMPurify from 'dompurify';
@@ -15,8 +20,15 @@ import Post from '@models/Post';
 
 const window = new JSDOM('').window;
 const DOMPurify = createDOMPurify(window);
+import dbConnect from '@lib/dbConnect';
+import { JSDOM } from 'jsdom';
+import createDOMPurify from 'dompurify';
+
+const window = new JSDOM('').window;
+const DOMPurify = createDOMPurify(window);
 
 /**
+ * 블로그 포스트 조회 API
  * 블로그 포스트 조회 API
  * @URL /api/v1/posts/:postId
  * @param request

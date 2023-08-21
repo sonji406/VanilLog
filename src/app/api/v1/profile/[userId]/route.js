@@ -8,12 +8,12 @@ import { ERRORS } from '@utils/errors';
 import { sendErrorResponse } from '@utils/response';
 import { validateObjectId } from '@utils/validateObjectId';
 import { findUserById } from '@utils/findUserById';
+import { ERRORS } from '@utils/errors';
 
 function getUserIdFromUrl(url) {
   const urlParts = url.split('/');
   return urlParts[urlParts.length - 1];
 }
-
 /**
  * 유저 프로필 조회 API
  * @URL /api/v1/profile/:userId

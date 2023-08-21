@@ -8,6 +8,8 @@ export async function findUserById(userId) {
     throw createError(
       ERRORS.USER_NOT_FOUND.STATUS_CODE,
       ERRORS.USER_NOT_FOUND.MESSAGE,
+      ERRORS.USER_NOT_FOUND.STATUS_CODE,
+      ERRORS.USER_NOT_FOUND.MESSAGE,
     );
   }
   return user;

@@ -34,10 +34,12 @@ async function GET(request) {
     }
 
     const findOption = userId ? { author: userId } : {};
-    const posts = await Post.find(findOption, null, {
-      skip: (page - 1) * limit,
-      limit,
-    }).exec();
+    const posts = await Post.find(findOption)
+      .sort({ createdAt: -1 })
+      .skip((page - 1) * limit)
+      .limit(limit)
+      .lean()
+      .exec();
 
     const totalPosts = await Post.countDocuments(findOption);
 

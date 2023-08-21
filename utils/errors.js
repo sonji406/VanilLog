@@ -33,6 +33,16 @@ const POST_NOT_FOUND = {
   MESSAGE: '해당 포스트를 찾을 수 없습니다.',
 };
 
+const SIGNED_URL_CREATION_ERROR = {
+  STATUS_CODE: '500',
+  MESSAGE: 'signed URL 생성 오류입니다.',
+};
+
+const FILE_NOT_FOUND = {
+  STATUS_CODE: 400, // 예: 400은 잘못된 요청을 나타냅니다.
+  MESSAGE: '요청에서 파일을 찾을 수 없습니다.',
+};
+
 const USER_NOT_LOGGED_IN = {
   STATUS_CODE: 401,
   MESSAGE: '해당 포스트의 작성자일 경우 로그인 후 이용 가능합니다.',
@@ -51,6 +61,8 @@ export const ERRORS = {
   MISSING_NICKNAME,
   MISSING_PARAMETERS,
   POST_NOT_FOUND,
+  SIGNED_URL_CREATION_ERROR,
+  FILE_NOT_FOUND,
   USER_NOT_LOGGED_IN,
   NOT_POST_AUTHOR,
 };
