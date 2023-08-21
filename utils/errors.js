@@ -3,6 +3,11 @@ const INVALID_USER_ID = {
   MESSAGE: 'userId 형식이 일치하지 않습니다.',
 };
 
+const INVALID_JSON = {
+  STATUS_CODE: 400,
+  MESSAGE: '요청한 JSON 형식이 유효하지 않습니다.',
+};
+
 const USER_NOT_FOUND = {
   STATUS_CODE: 404,
   MESSAGE: '유저 정보가 존재하지 않습니다.',
@@ -39,12 +44,23 @@ const SIGNED_URL_CREATION_ERROR = {
 };
 
 const FILE_NOT_FOUND = {
-  STATUS_CODE: 400, // 예: 400은 잘못된 요청을 나타냅니다.
+  STATUS_CODE: 400,
   MESSAGE: '요청에서 파일을 찾을 수 없습니다.',
+};
+
+const USER_NOT_LOGGED_IN = {
+  STATUS_CODE: 401,
+  MESSAGE: '해당 포스트의 작성자일 경우 로그인 후 이용 가능합니다.',
+};
+
+const NOT_POST_AUTHOR = {
+  STATUS_CODE: 403,
+  MESSAGE: '포스트의 작성자가 아닙니다.',
 };
 
 export const ERRORS = {
   INVALID_USER_ID,
+  INVALID_JSON,
   USER_NOT_FOUND,
   DUPLICATE_NICKNAME,
   SAME_NICKNAME,
@@ -53,4 +69,6 @@ export const ERRORS = {
   POST_NOT_FOUND,
   SIGNED_URL_CREATION_ERROR,
   FILE_NOT_FOUND,
+  USER_NOT_LOGGED_IN,
+  NOT_POST_AUTHOR,
 };

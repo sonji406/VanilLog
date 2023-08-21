@@ -1,13 +1,16 @@
+import createDOMPurify from 'dompurify';
 import { NextResponse } from 'next/server';
-import { ERRORS } from '@utils/errors';
-import { validateObjectId } from '@utils/validateObjectId';
-import { getLastPartOfUrl } from '@utils/getLastPartOfUrl';
-import { sendErrorResponse } from '@utils/response';
-import { findById } from '@utils/findById';
+import { JSDOM } from 'jsdom';
+
 import Post from '@models/Post';
 import dbConnect from '@lib/dbConnect';
-import { JSDOM } from 'jsdom';
-import createDOMPurify from 'dompurify';
+import { ERRORS } from '@utils/errors';
+import { sendErrorResponse } from '@utils/response';
+import { validateObjectId } from '@utils/validateObjectId';
+import { findById } from '@utils/findById';
+import { getLastPartOfUrl } from '@utils/getLastPartOfUrl';
+import { getSessionFromRequest } from '@utils/getSessionFromRequest';
+import { verifyPostAuthor } from '@utils/verifyPostAuthor';
 
 const window = new JSDOM('').window;
 const DOMPurify = createDOMPurify(window);
@@ -23,6 +26,7 @@ async function GET(request) {
   try {
     const postId = getLastPartOfUrl(request.url);
     validateObjectId(postId);
+
     const post = await findById(Post, postId, ERRORS.POST_NOT_FOUND);
 
     return NextResponse.json({
@@ -45,8 +49,16 @@ async function DELETE(request) {
   try {
     const postId = getLastPartOfUrl(request.url);
     validateObjectId(postId);
-    const deletedPost = await Post.findByIdAndDelete(postId);
 
+    const session = await getSessionFromRequest(request);
+    if (!session) {
+      throw new Error(ERRORS.USER_NOT_LOGGED_IN.MESSAGE);
+    }
+
+    const post = await findById(Post, postId, ERRORS.POST_NOT_FOUND);
+    verifyPostAuthor(post, session);
+
+    const deletedPost = await Post.findByIdAndDelete(postId);
     if (!deletedPost) {
       throw new Error(ERRORS.POST_NOT_FOUND.MESSAGE);
     }
@@ -75,16 +87,17 @@ async function PUT(request) {
     const postId = getLastPartOfUrl(request.url);
     validateObjectId(postId);
 
-    let parsedData;
-    try {
-      parsedData = JSON.parse(await request.text());
-    } catch {
-      throw new Error(ERRORS.INVALID_JSON.MESSAGE);
+    const session = await getSessionFromRequest(request);
+    if (!session) {
+      throw new Error(ERRORS.USER_NOT_LOGGED_IN.MESSAGE);
     }
+    const post = await findById(Post, postId, ERRORS.POST_NOT_FOUND);
+    verifyPostAuthor(post, session);
+
+    const parsedData = JSON.parse(await request.text());
 
     let { title, content } = parsedData;
     title = DOMPurify.sanitize(title);
-
     if (!content || !content.blocks || !Array.isArray(content.blocks)) {
       throw new Error(ERRORS.MISSING_POST_FIELDS.MESSAGE);
     }
@@ -116,6 +129,9 @@ async function PUT(request) {
       },
     });
   } catch (error) {
+    if (error instanceof SyntaxError) {
+      return sendErrorResponse(ERRORS.INVALID_JSON.MESSAGE);
+    }
     return sendErrorResponse(error);
   }
 }

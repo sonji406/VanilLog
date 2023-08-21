@@ -4,6 +4,7 @@ import { NextResponse } from 'next/server';
 
 import dbConnect from '@lib/dbConnect';
 import User from '@models/User';
+import { ERRORS } from '@utils/errors';
 import { sendErrorResponse } from '@utils/response';
 import { validateObjectId } from '@utils/validateObjectId';
 import { findUserById } from '@utils/findUserById';
