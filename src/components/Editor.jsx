@@ -12,27 +12,28 @@ function Editor({ author, postId, title, content, error, setError, isModify }) {
 
   useEffect(() => {
     const initEditor = async () => {
-      if (!ref.current) {
-        ref.current = new EditorJS({
-          holder: 'editorjs',
-          data: content,
-          tools: {
-            image: {
-              class: ImageTool,
-              config: {
-                endpoints: {
-                  byFile: 'http://localhost:3000/api/v1/image/uploadFile',
-                },
-                types: 'image/*',
-                captionPlaceholder: 'Enter caption',
-              },
-            },
-          },
-        });
-      } else {
+      if (ref.current) {
         await ref.current.isReady;
         ref.current.render(content);
+        return;
       }
+
+      ref.current = new EditorJS({
+        holder: 'editorjs',
+        data: content,
+        tools: {
+          image: {
+            class: ImageTool,
+            config: {
+              endpoints: {
+                byFile: 'http://localhost:3000/api/v1/image/uploadFile',
+              },
+              types: 'image/*',
+              captionPlaceholder: 'Enter caption',
+            },
+          },
+        },
+      });
     };
 
     initEditor();
@@ -53,13 +54,9 @@ function Editor({ author, postId, title, content, error, setError, isModify }) {
     };
 
     try {
-      let response = {};
-
-      if (isModify) {
-        response = await axios.put(`/api/v1/posts/${postId}`, postData);
-      } else {
-        response = await axios.post('/api/v1/posts', postData);
-      }
+      const response = isModify
+        ? await axios.put(`/api/v1/posts/${postId}`, postData)
+        : await axios.post('/api/v1/posts', postData);
 
       if (response.data.status !== 'success') {
         setError(response.data.message);
