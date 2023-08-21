@@ -54,12 +54,12 @@ function Editor({ author, postId, title, content, error, setError, isModify }) {
     try {
       if (isModify) {
         await axios.put(`/api/v1/posts/${postId}`, postData);
-        router.push('/');
+        router.push(`/posts/${author}`);
         return;
       }
 
       await axios.post('/api/v1/posts', postData);
-      router.push('/');
+      router.push(`/posts/${author}`);
     } catch {
       const errorMessage = isModify
         ? '수정에 실패하였습니다. 다시 시도해주세요.'
