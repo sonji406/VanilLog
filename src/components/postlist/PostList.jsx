@@ -13,7 +13,7 @@ function PostList({ blogUserId }) {
   const page = params.get('page') || 1;
   const limit = params.get('limit') || 10;
 
-  const { data } = useSession;
+  const { data } = useSession();
   const loggedInUserId = data?.mongoId;
 
   const [posts, setPosts] = useState([]);
@@ -74,21 +74,30 @@ function PostList({ blogUserId }) {
           })}
       </div>
 
-      <div className='flex justify-center my-5'>
-        {pageNumbers.map((number) => (
-          <Link
-            key={number}
-            href={`/posts/${blogUserId}/?page=${number}&limit=${limit}`}
-            passHref
-          >
-            <button
-              type='button'
-              className='text-xl text-white font-bold bg-[#0044ff] rounded-lg hover:bg-[#0000ff] py-2 px-3 mx-1'
+      <div className='flex justify-between items-center mt-4'>
+        <div className='flex justify-center flex-grow'>
+          {pageNumbers.map((number) => (
+            <Link
+              key={number}
+              href={`/posts/${blogUserId}/?page=${number}&limit=${limit}`}
+              passHref
             >
-              {number}
+              <button
+                type='button'
+                className='text-xl text-white font-bold bg-[#0044ff] rounded-lg hover:bg-[#0000ff] py-2 px-3 mx-1'
+              >
+                {number}
+              </button>
+            </Link>
+          ))}
+        </div>
+        <div>
+          <Link href={`/post/editor/${loggedInUserId}`}>
+            <button className='text-xl text-white font-bold bg-[#0044ff] rounded-lg hover:bg-[#0000ff] py-2 px-8'>
+              포스트 작성하기
             </button>
           </Link>
-        ))}
+        </div>
       </div>
     </div>
   );
