@@ -13,7 +13,7 @@ function PostList({ blogUserId }) {
   const page = params.get('page') || 1;
   const limit = params.get('limit') || 10;
 
-  const { data } = useSession;
+  const { data } = useSession();
   const loggedInUserId = data?.mongoId;
 
   const [posts, setPosts] = useState([]);
@@ -55,6 +55,13 @@ function PostList({ blogUserId }) {
 
   return (
     <div className='w-screen px-5'>
+      <div className='my-4'>
+        <Link href={`/post/editor/${loggedInUserId}`}>
+          <button className='text-xl text-white font-bold bg-[#0044ff] rounded-lg hover:bg-[#0000ff] py-2 px-8'>
+            포스트 작성하기
+          </button>
+        </Link>
+      </div>
       {error && <div>{error}</div>}
       <div className='flex flex-wrap gap-x-8 gap-y-4 justify-center'>
         {posts.length > 0 &&
