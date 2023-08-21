@@ -1,20 +1,21 @@
 import Image from 'next/image';
 
 function PostItem({ post }) {
-  const imageContent = post.content.find((content) => content.type === 'image');
-  const textContent = post.content.find((content) => content.type === 'text');
-  const textValue = textContent ? textContent.value : '';
+  const imageContent = post.content.blocks.find(
+    (block) => block.type === 'image',
+  );
+  const textContent = post.content.blocks.find(
+    (block) => block.type === 'paragraph',
+  );
+
+  const imageUrl = imageContent ? imageContent.data.file.url : '';
+  const textValue = textContent ? textContent.data.text : '';
 
   return (
     <div className='w-56 h-56 flex flex-col items-center justify-center bg-slate-300'>
-      {imageContent ? (
+      {imageUrl ? (
         <div className='h-4/5'>
-          <Image
-            src={imageContent.value}
-            alt={textValue}
-            width={224}
-            height={224}
-          />
+          <Image src={imageUrl} alt={textValue} width={224} height={224} />
         </div>
       ) : (
         <div className='h-4/5 flex items-center justify-center'>
