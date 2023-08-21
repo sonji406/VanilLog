@@ -35,8 +35,9 @@ export default function PostDetailPage({ params }) {
 
       {showModal && (
         <DeleteModal
+          isOpen={showModal}
           onClose={() => setShowModal(false)}
-          onDelete={handleDelete}
+          onConfirm={handleDelete}
         />
       )}
 
@@ -44,7 +45,12 @@ export default function PostDetailPage({ params }) {
         <PostContent title={post.title} content={post.content} />
 
         {userId === session?.mongoId && (
-          <PostActions userId={userId} session={session} postId={postId} />
+          <PostActions
+            userId={userId}
+            session={session}
+            postId={postId}
+            onShowDeleteModal={() => setShowModal(true)}
+          />
         )}
 
         <CommentsSection comments={post.comments} />
