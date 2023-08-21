@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 import { useSession } from 'next-auth/react';
 import { usePost } from '@utils/usePost';
 import { useComments } from '@utils/useComment';
@@ -18,6 +19,7 @@ export default function PostDetailPage({ params }) {
   const { post, errorMessage: postError, handleDelete } = usePost(postId);
   const { errorMessage: commentError } = useComments(postId);
 
+  const router = useRouter();
   const [showModal, setShowModal] = useState(false);
 
   const errorMessage = postError || commentError;
@@ -37,7 +39,7 @@ export default function PostDetailPage({ params }) {
         <DeleteModal
           isOpen={showModal}
           onClose={() => setShowModal(false)}
-          onConfirm={handleDelete}
+          onConfirm={() => handleDelete(router, userId)}
         />
       )}
 

@@ -1,4 +1,3 @@
-import mongoose from 'mongoose';
 import createError from 'http-errors';
 import { NextResponse } from 'next/server';
 

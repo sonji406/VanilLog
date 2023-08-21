@@ -1,43 +1,33 @@
+import createDOMPurify from 'dompurify';
 import { NextResponse } from 'next/server';
-import { ERRORS } from '@utils/errors';
-import { validateObjectId } from '@utils/validateObjectId';
-import { getLastPartOfUrl } from '@utils/getLastPartOfUrl';
-import { sendErrorResponse } from '@utils/response';
-import { findById } from '@utils/findById';
-
+import { getSession } from 'next-auth/react';
 import { JSDOM } from 'jsdom';
-import createDOMPurify from 'dompurify';
 
-import { ERRORS } from '@utils/errors';
-import { sendErrorResponse } from '@utils/response';
-import { findById } from '@utils/findById';
-import {
-  handleDBOperations,
-  extractAndValidateId,
-  isLoggedInAndIsAuthor,
-} from '@utils/postDbAuthHandlers';
 import Post from '@models/Post';
-
-const window = new JSDOM('').window;
-const DOMPurify = createDOMPurify(window);
 import dbConnect from '@lib/dbConnect';
-import { JSDOM } from 'jsdom';
-import createDOMPurify from 'dompurify';
+import { ERRORS } from '@utils/errors';
+import { sendErrorResponse } from '@utils/response';
+import { validateObjectId } from '@utils/validateObjectId';
+import { findById } from '@utils/findById';
+import { getLastPartOfUrl } from '@utils/getLastPartOfUrl';
+import { getSessionFromRequest } from '@utils/getSessionFromRequest';
+import { verifyPostAuthor } from '@utils/verifyPostAuthor';
 
 const window = new JSDOM('').window;
 const DOMPurify = createDOMPurify(window);
 
 /**
  * 블로그 포스트 조회 API
- * 블로그 포스트 조회 API
  * @URL /api/v1/posts/:postId
  * @param request
  */
 async function GET(request) {
-  await handleDBOperations();
+  await dbConnect();
 
   try {
-    const postId = extractAndValidateId(request.url);
+    const postId = getLastPartOfUrl(request.url);
+    validateObjectId(postId);
+
     const post = await findById(Post, postId, ERRORS.POST_NOT_FOUND);
 
     return NextResponse.json({
@@ -54,15 +44,20 @@ async function GET(request) {
  * @URL /api/v1/posts/:postId
  * @param request
  */
-
 async function DELETE(request) {
-  await handleDBOperations();
+  await dbConnect();
 
   try {
-    const postId = extractAndValidateId(request.url);
+    const postId = getLastPartOfUrl(request.url);
+    validateObjectId(postId);
+
+    const session = await getSessionFromRequest(request);
+    if (!session) {
+      throw new Error(ERRORS.USER_NOT_LOGGED_IN.MESSAGE);
+    }
 
     const post = await findById(Post, postId, ERRORS.POST_NOT_FOUND);
-    await isLoggedInAndIsAuthor(request, post.author);
+    verifyPostAuthor(post, session);
 
     const deletedPost = await Post.findByIdAndDelete(postId);
     if (!deletedPost) {
@@ -87,24 +82,23 @@ async function DELETE(request) {
  * @param request
  */
 async function PUT(request) {
-  await handleDBOperations();
-
-  let parsedData;
-  try {
-    parsedData = JSON.parse(await request.text());
-  } catch {
-    return sendErrorResponse(ERRORS.INVALID_JSON.MESSAGE);
-  }
+  await dbConnect();
 
   try {
-    const postId = extractAndValidateId(request.url);
+    const postId = getLastPartOfUrl(request.url);
+    validateObjectId(postId);
 
+    const session = await getSessionFromRequest(request);
+    if (!session) {
+      throw new Error(ERRORS.USER_NOT_LOGGED_IN.MESSAGE);
+    }
     const post = await findById(Post, postId, ERRORS.POST_NOT_FOUND);
-    await isLoggedInAndIsAuthor(request, post.author);
+    verifyPostAuthor(post, session);
+
+    const parsedData = JSON.parse(await request.text());
 
     let { title, content } = parsedData;
     title = DOMPurify.sanitize(title);
-
     if (!content || !content.blocks || !Array.isArray(content.blocks)) {
       throw new Error(ERRORS.MISSING_POST_FIELDS.MESSAGE);
     }
@@ -136,6 +130,9 @@ async function PUT(request) {
       },
     });
   } catch (error) {
+    if (error instanceof SyntaxError) {
+      return sendErrorResponse(ERRORS.INVALID_JSON.MESSAGE);
+    }
     return sendErrorResponse(error);
   }
 }
