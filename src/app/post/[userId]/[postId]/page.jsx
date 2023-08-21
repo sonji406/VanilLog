@@ -4,7 +4,6 @@ import axios from 'axios';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
-import { ERRORS } from '@utils/errors';
 import { useSession } from 'next-auth/react';
 
 export default function PostDetailPage({ params }) {
@@ -16,27 +15,26 @@ export default function PostDetailPage({ params }) {
   const [errorMessage, setErrorMessage] = useState(null);
   const { data: session } = useSession();
 
+  const handleError = (error) => {
+    if (error.response && error.response.data.status !== 'success') {
+      setErrorMessage(error.response.data.message);
+    } else {
+      setErrorMessage('알 수 없는 오류가 발생했습니다.');
+    }
+  };
+
   useEffect(() => {
     const fetchPost = async () => {
       if (!postId) return;
-
       try {
         const response = await axios.get(`/api/v1/posts/${postId}`);
-        setPost(response.data.data);
-
-        return;
-      } catch (error) {
-        const status = error.response?.status;
-        const foundError = Object.values(ERRORS).find(
-          (e) => e.STATUS_CODE === status,
-        );
-
-        if (foundError) {
-          setErrorMessage(foundError.MESSAGE);
-          return;
+        if (response.data.status === 'success') {
+          setPost(response.data.data);
+        } else {
+          handleError(response);
         }
-
-        setErrorMessage('알 수 없는 오류가 발생했습니다.');
+      } catch (error) {
+        handleError(error);
       }
     };
     fetchPost();
@@ -44,47 +42,31 @@ export default function PostDetailPage({ params }) {
 
   const handleDelete = async () => {
     if (!window.confirm('이 포스트를 삭제하시겠습니까?')) return;
-
     try {
-      await axios.delete(`/api/v1/posts/${postId}`);
-      router.push(`/posts/${userId}`);
-      return;
-    } catch (error) {
-      const status = error.response?.status;
-      const foundError = Object.values(ERRORS).find(
-        (e) => e.STATUS_CODE === status,
-      );
-
-      if (foundError) {
-        setErrorMessage(foundError.MESSAGE);
-        return;
+      const response = await axios.delete(`/api/v1/posts/${postId}`);
+      if (response.data.status === 'success') {
+        router.push(`/posts/${userId}`);
+      } else {
+        handleError(response);
       }
-
-      setErrorMessage('알 수 없는 오류가 발생했습니다.');
+    } catch (error) {
+      handleError(error);
     }
   };
 
   const handleCommentSubmit = async () => {
     if (!commentText) return;
-
     try {
-      await axios.post(`/api/v1/posts/${postId}/comment`, {
+      const response = await axios.post(`/api/v1/posts/${postId}/comment`, {
         text: commentText,
       });
-      setCommentText('');
-      return;
-    } catch (error) {
-      const status = error.response?.status;
-      const foundError = Object.values(ERRORS).find(
-        (e) => e.STATUS_CODE === status,
-      );
-
-      if (foundError) {
-        setErrorMessage(foundError.MESSAGE);
-        return;
+      if (response.data.status === 'success') {
+        setCommentText('');
+      } else {
+        handleError(response);
       }
-
-      setErrorMessage('알 수 없는 오류가 발생했습니다.');
+    } catch (error) {
+      handleError(error);
     }
   };
 
@@ -92,6 +74,14 @@ export default function PostDetailPage({ params }) {
 
   return (
     <div className='bg-gray-100 min-h-screen p-10'>
+      {errorMessage && (
+        <div className='bg-red-500 text-white px-4 py-2 rounded mb-6'>
+          {errorMessage}
+          <button onClick={() => setErrorMessage(null)} className='ml-4'>
+            X
+          </button>
+        </div>
+      )}
       <div className='bg-white rounded-lg shadow-xl p-8 mx-auto max-w-3xl'>
         <div className='mb-8'>
           <h2 className='text-xl font-semibold'>제목</h2>
