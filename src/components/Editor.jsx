@@ -11,6 +11,10 @@ function Editor({ author, postId, title, content, error, setError, isModify }) {
   const router = useRouter();
 
   useEffect(() => {
+    if (ref.current) {
+      return;
+    }
+
     const editor = new EditorJS({
       holder: 'editorjs',
       data: content,
@@ -31,7 +35,7 @@ function Editor({ author, postId, title, content, error, setError, isModify }) {
     ref.current = editor;
 
     return () => {
-      if (ref.current) {
+      if (ref.current && typeof ref.current.destroy === 'function') {
         ref.current.destroy();
       }
     };
@@ -52,13 +56,19 @@ function Editor({ author, postId, title, content, error, setError, isModify }) {
     };
 
     try {
+      let response = {};
+
       if (isModify) {
-        await axios.put(`/api/v1/posts/${postId}`, postData);
-        router.push(`/posts/${author}`);
+        response = await axios.put(`/api/v1/posts/${postId}`, postData);
+      } else {
+        response = await axios.post('/api/v1/posts', postData);
+      }
+
+      if (response.data.status !== 'success') {
+        setError(response.data.message);
         return;
       }
 
-      await axios.post('/api/v1/posts', postData);
       router.push(`/posts/${author}`);
     } catch {
       const errorMessage = isModify
