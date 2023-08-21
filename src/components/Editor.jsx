@@ -11,34 +11,31 @@ function Editor({ author, postId, title, content, error, setError, isModify }) {
   const router = useRouter();
 
   useEffect(() => {
-    if (ref.current) {
-      return;
-    }
-
-    const editor = new EditorJS({
-      holder: 'editorjs',
-      data: content,
-      tools: {
-        image: {
-          class: ImageTool,
-          config: {
-            endpoints: {
-              byFile: 'http://localhost:3000/api/v1/image/uploadFile',
+    const initEditor = async () => {
+      if (!ref.current) {
+        ref.current = new EditorJS({
+          holder: 'editorjs',
+          data: content,
+          tools: {
+            image: {
+              class: ImageTool,
+              config: {
+                endpoints: {
+                  byFile: 'http://localhost:3000/api/v1/image/uploadFile',
+                },
+                types: 'image/*',
+                captionPlaceholder: 'Enter caption',
+              },
             },
-            types: 'image/*',
-            captionPlaceholder: 'Enter caption',
           },
-        },
-      },
-    });
-
-    ref.current = editor;
-
-    return () => {
-      if (ref.current && typeof ref.current.destroy === 'function') {
-        ref.current.destroy();
+        });
+      } else {
+        await ref.current.isReady;
+        ref.current.render(content);
       }
     };
+
+    initEditor();
   }, [content]);
 
   const postSave = async () => {
