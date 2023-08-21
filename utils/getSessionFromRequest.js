@@ -1,4 +1,4 @@
-import { getSession } from 'next-auth/react';
+import { getServerSession } from 'next-auth/next';
 
 export async function getSessionFromRequest(request) {
   const req = {
@@ -9,5 +9,5 @@ export async function getSessionFromRequest(request) {
     method: request.method,
   };
 
-  return await getSession({ req });
+  return await getServerSession({ req });
 }

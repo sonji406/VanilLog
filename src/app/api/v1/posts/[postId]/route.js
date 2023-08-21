@@ -1,6 +1,5 @@
 import createDOMPurify from 'dompurify';
 import { NextResponse } from 'next/server';
-import { getSession } from 'next-auth/react';
 import { JSDOM } from 'jsdom';
 
 import Post from '@models/Post';
