@@ -4,17 +4,15 @@ import axios from 'axios';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
-import { useSession } from 'next/auth/client';
-import { errors } from '@utils/errors';
+import { ERRORS } from '@utils/errors';
 
 export default function PostDetailPage({ params }) {
   const router = useRouter();
-  const [userId, postId] = params.postDetail;
+  const userId = params.userId;
+  const postId = params.postId;
   const [post, setPost] = useState(null);
   const [commentText, setCommentText] = useState('');
   const [errorMessage, setErrorMessage] = useState(null);
-  const [session, loading] = useSession();
-
 
   useEffect(() => {
     const fetchPost = async () => {
@@ -26,7 +24,7 @@ export default function PostDetailPage({ params }) {
         return;
       } catch (error) {
         const status = error.response?.status;
-        const foundError = Object.values(errors).find(
+        const foundError = Object.values(ERRORS).find(
           (e) => e.STATUS_CODE === status,
         );
 
@@ -50,7 +48,7 @@ export default function PostDetailPage({ params }) {
       return;
     } catch (error) {
       const status = error.response?.status;
-      const foundError = Object.values(errors).find(
+      const foundError = Object.values(ERRORS).find(
         (e) => e.STATUS_CODE === status,
       );
 
@@ -74,7 +72,7 @@ export default function PostDetailPage({ params }) {
       return;
     } catch (error) {
       const status = error.response?.status;
-      const foundError = Object.values(errors).find(
+      const foundError = Object.values(ERRORS).find(
         (e) => e.STATUS_CODE === status,
       );
 
@@ -123,7 +121,7 @@ export default function PostDetailPage({ params }) {
           })}
         </div>
 
-        {!loading && session?.mongoId === post.author.$oid && (
+        {post.author.$oid === userId && (
           <div className='flex justify-end mb-8 space-x-4'>
             <button className='bg-logo text-white py-2 px-4 rounded'>
               수정하기
