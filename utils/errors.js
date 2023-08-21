@@ -38,6 +38,11 @@ const SIGNED_URL_CREATION_ERROR = {
   MESSAGE: 'signed URL 생성 오류입니다.',
 };
 
+const FILE_NOT_FOUND = {
+  STATUS_CODE: 400, // 예: 400은 잘못된 요청을 나타냅니다.
+  MESSAGE: '요청에서 파일을 찾을 수 없습니다.',
+};
+
 export const ERRORS = {
   INVALID_USER_ID,
   USER_NOT_FOUND,
@@ -47,4 +52,5 @@ export const ERRORS = {
   MISSING_PARAMETERS,
   POST_NOT_FOUND,
   SIGNED_URL_CREATION_ERROR,
+  FILE_NOT_FOUND,
 };

@@ -12,10 +12,10 @@ const s3Data = new S3({
 
 const bucketName = process.env.AWS_S3_BUCKET_NAME;
 
-function GET(request) {
-  const { file: fileName, fileType } = request.query;
+async function GET(request) {
+  try {
+    const { file: fileName, fileType } = request.query;
 
-  return new Promise((resolve) => {
     const s3Params = {
       Bucket: bucketName,
       Key: fileName,
@@ -24,22 +24,28 @@ function GET(request) {
       ACL: 'public-read',
     };
 
-    s3Data.getSignedUrl('putObject', s3Params, (err, data) => {
-      if (err) {
-        throw createError(
-          ERRORS.SIGNED_URL_CREATION_ERROR.STATUS_CODE,
-          ERRORS.SIGNED_URL_CREATION_ERROR.MESSAGE,
-        );
-      }
-
-      resolve(
-        NextResponse.json({
-          signedRequest: data,
-          url: `https://${bucketName}.s3.amazonaws.com/${fileName}`,
-        }),
-      );
+    const signedUrl = await new Promise((resolve, reject) => {
+      s3Data.getSignedUrl('putObject', s3Params, (err, data) => {
+        if (err) {
+          reject(
+            createError(
+              ERRORS.SIGNED_URL_CREATION_ERROR.STATUS_CODE,
+              ERRORS.SIGNED_URL_CREATION_ERROR.MESSAGE,
+            ),
+          );
+        } else {
+          resolve(data);
+        }
+      });
     });
-  });
+
+    return NextResponse.json({
+      signedRequest: signedUrl,
+      url: `https://${bucketName}.s3.amazonaws.com/${fileName}`,
+    });
+  } catch (error) {
+    return sendErrorResponse(error);
+  }
 }
 
 async function POST(request) {
@@ -48,16 +54,28 @@ async function POST(request) {
     const file = formData.get('image');
 
     if (!file) {
-      throw new Error('요청에서 파일을 찾을 수 없습니다.');
+      throw createError(
+        ERRORS.FILE_NOT_FOUND.STATUS_CODE,
+        ERRORS.FILE_NOT_FOUND.MESSAGE,
+      );
     }
 
     const fileName = file.name;
+    const fileType = file.type;
     const fileStream = file.stream();
     let fileBuffer = Buffer.alloc(0);
 
     for await (const chunk of fileStream) {
       fileBuffer = Buffer.concat([fileBuffer, chunk]);
     }
+
+    const s3Params = {
+      Bucket: bucketName,
+      Key: fileName,
+      Body: fileBuffer,
+      ContentType: fileType,
+      ACL: 'public-read',
+    };
 
     await s3Data.putObject(s3Params);
 
