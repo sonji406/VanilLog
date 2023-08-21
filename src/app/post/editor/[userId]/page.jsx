@@ -13,8 +13,8 @@ function PostEditPage({ params }) {
   const [content, setContent] = useState({});
   const [error, setError] = useState(null);
 
-  const userId = params.userId;
-  const postId = params.postId || null;
+  const userId = params[0];
+  const postId = params[1] || null;
 
   const isModify = Boolean(postId);
 
