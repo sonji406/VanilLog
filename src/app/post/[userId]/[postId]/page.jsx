@@ -42,7 +42,6 @@ export default function PostDetailPage({ params }) {
   }, [postId]);
 
   const handleDelete = async () => {
-    if (!window.confirm('이 포스트를 삭제하시겠습니까?')) return;
     try {
       const response = await axios.delete(`/api/v1/posts/${postId}`);
       if (response.data.status === 'success') {
