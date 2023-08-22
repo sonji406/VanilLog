@@ -74,6 +74,7 @@ export default function ProfilePage({ params }) {
             alt='Profile Image'
             width={128}
             height={128}
+            priority
           />
           <button className='bg-logo text-white px-4 py-2 rounded mt-5'>
             사진 업로드/변경
