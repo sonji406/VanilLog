@@ -16,7 +16,6 @@ export default function ProfilePage({ params }) {
     const fetchData = async () => {
       try {
         const response = await axios.get(`/api/v1/profile/${userId}`);
-
         if (response.data.status !== 'success') {
           throw new Error(response.data.message);
         }
@@ -49,7 +48,6 @@ export default function ProfilePage({ params }) {
             alt='.......ex'
             width={128}
             height={128}
-            className='rounded-full mb-3'
           />
           <button className='bg-logo text-white px-4 py-2 rounded'>
             사진 업로드/변경
@@ -58,7 +56,7 @@ export default function ProfilePage({ params }) {
 
         <div className='mb-3'>
           <label className='font-bold'>내 닉네임:</label>
-          <div>{userProfile?.name}</div>
+          <div>{userProfile?.nickname}</div>
         </div>
 
         <div className='mb-3'>
