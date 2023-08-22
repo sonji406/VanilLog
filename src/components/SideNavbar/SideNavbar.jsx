@@ -53,7 +53,7 @@ function SideNavbar() {
           onMouseLeave={() => setIsOpen(false)}
         >
           <ProfileBox profile={profile} error={error} />
-          <div className='mt-8'>{data ? <StatisticsBox /> : <></>}</div>
+          <div className='mt-8'>{data && <StatisticsBox />}</div>
         </nav>
       </div>
     </div>

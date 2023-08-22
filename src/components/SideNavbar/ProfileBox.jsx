@@ -32,7 +32,7 @@ function ProfileBox({ profile, error }) {
               )}
             </div>
           </div>
-          {userId ? (
+          {userId && (
             <>
               <div className='mt-2'>
                 <strong>{nickname}</strong>
@@ -43,8 +43,6 @@ function ProfileBox({ profile, error }) {
                 </button>
               </Link>
             </>
-          ) : (
-            <></>
           )}
         </div>
       </div>
