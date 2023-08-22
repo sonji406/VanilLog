@@ -1,5 +1,6 @@
 'use client';
 
+import Link from 'next/link';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useSession } from 'next-auth/react';
@@ -47,6 +48,13 @@ export default function PostDetailPage({ params }) {
       )}
 
       <div className='bg-white rounded-lg shadow-xl p-8 mx-auto max-w-3xl'>
+        <Link
+          href={`/posts/${userId}`}
+          className='text-blue-600 hover:underline mb-4 block'
+        >
+          작성자의 블로그
+        </Link>
+
         <PostContent title={post.title} content={post.content} />
 
         {userId === session?.mongoId && (
