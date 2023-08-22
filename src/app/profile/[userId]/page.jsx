@@ -13,7 +13,7 @@ import ConnectedSocial from '@src/components/Profile/ConnecterSocial';
 import BlogStatistics from '@src/components/Profile/BlogStatistics';
 
 export default function ProfilePage({ params }) {
-  const [editing, setEditing] = useState(false);
+  const [isEditingNickname, setIsEditingNickname] = useState(false);
   const userId = params.userId;
   const { data: session } = useSession();
   const inputRef = useRef(null);
@@ -22,7 +22,7 @@ export default function ProfilePage({ params }) {
   const { uploadedImage, handleImageUpload } = useImageUpload(userId);
 
   const toggleEditing = () => {
-    setEditing((prevEditing) => !prevEditing);
+    setIsEditingNickname((prevEditing) => !prevEditing);
   };
 
   const { nickname, setNickname, message, updateNickname } = useNicknameUpdate(
@@ -50,7 +50,7 @@ export default function ProfilePage({ params }) {
         />
 
         <NicknameEditor
-          editing={editing}
+          editing={isEditingNickname}
           toggleEditing={toggleEditing}
           nickname={nickname}
           setNickname={setNickname}
