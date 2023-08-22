@@ -17,7 +17,7 @@ const DOMPurify = createDOMPurify(window);
 
 /**
  * 블로그 포스트 조회 API
- * @URL /api/v1/posts/:postId
+ * @URL /api/v1/post/:postId
  * @param request
  */
 async function GET(request) {
@@ -40,7 +40,7 @@ async function GET(request) {
 
 /**
  * 블로그 포스트 삭제 API
- * @URL /api/v1/posts/:postId
+ * @URL /api/v1/post/:postId
  * @param request
  */
 async function DELETE(request) {
