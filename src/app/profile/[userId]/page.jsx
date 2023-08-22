@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useSession } from 'next-auth/react';
 import axios from 'axios';
 import Image from 'next/image';
@@ -14,6 +14,7 @@ export default function ProfilePage({ params }) {
   const [editing, setEditing] = useState(false);
   const [nickname, setNickname] = useState(userProfile?.nickname || '');
   const { data: session } = useSession();
+  const inputRef = useRef(null);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -52,8 +53,45 @@ export default function ProfilePage({ params }) {
         throw new Error(response.data.message);
       }
       setMessage('닉네임이 성공적으로 업데이트되었습니다');
+      toggleEditing();
     } catch (error) {
       setMessage(error.message);
+    }
+  };
+
+  const handleImageUpload = async (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    const formData = new FormData();
+    formData.append('image', file);
+
+    try {
+      const response = await axios.post('/api/v1/image/uploadFile', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+      if (response.data && response.data.file) {
+        const imageUrl = response.data.file.url;
+
+        const updateResponse = await axios.put(
+          `/api/v1/profile/updateImage/${userId}`,
+          {
+            imageUrl: imageUrl,
+          },
+        );
+
+        if (updateResponse.data && updateResponse.data.status === 'success') {
+          const updatedProfile = {
+            ...userProfile,
+            profileImage: imageUrl,
+          };
+          setUserProfile(updatedProfile);
+        }
+      }
+    } catch (error) {
+      error;
     }
   };
 
@@ -69,14 +107,24 @@ export default function ProfilePage({ params }) {
     <div className='flex p-20'>
       <div className='flex-1 pr-10'>
         <div className='mb-10 flex flex-col items-center'>
+          <input
+            type='file'
+            accept='image/*'
+            style={{ display: 'none' }}
+            ref={inputRef}
+            onChange={handleImageUpload}
+          />
           <Image
-            src='/image/profileDefault.png'
+            src={userProfile?.profileImage || '/image/profileDefault.png'}
             alt='Profile Image'
             width={128}
             height={128}
             priority
           />
-          <button className='bg-logo text-white px-4 py-2 rounded mt-5'>
+          <button
+            className='bg-logo text-white px-4 py-2 rounded mt-5'
+            onClick={() => inputRef.current.click()}
+          >
             사진 업로드/변경
           </button>
         </div>
