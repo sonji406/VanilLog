@@ -6,7 +6,7 @@ const UserSchema = new mongoose.Schema(
     nickname: { type: String, required: true },
     email: { type: String, required: true },
     socialLoginType: { type: String, enum: ['facebook', 'google', 'twitter'] },
-    profileImage: { type: String }, // URL or path to profile image
+    profileImage: { type: String },
     blogPosts: [{ type: mongoose.Schema.Types.ObjectId, ref: 'BlogPost' }],
     comments: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Comment' }],
   },
