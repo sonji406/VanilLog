@@ -46,6 +46,7 @@ function Navbar() {
             type='text'
             name='q'
             placeholder='Search...'
+            required
           />
           <input type='hidden' name='page' value='1' />
           <input type='hidden' name='limit' value='10' />
