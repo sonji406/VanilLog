@@ -30,7 +30,7 @@ function PostEditPage({ params }) {
     if (isModify) {
       const fetchData = async () => {
         try {
-          const response = await axios.get(`/api/v1/posts/${postId}`);
+          const response = await axios.get(`/api/v1/post/${postId}`);
 
           if (response.data.status === 'success') {
             setTitle(response.data.data.title);

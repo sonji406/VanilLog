@@ -16,7 +16,7 @@ export const useComments = (postId) => {
   const handleCommentSubmit = async () => {
     if (!commentText) return;
     try {
-      const response = await axios.post(`/api/v1/posts/${postId}/comment`, {
+      const response = await axios.post(`/api/v1/post/${postId}/comment`, {
         text: commentText,
       });
       if (response.data.status === 'success') {

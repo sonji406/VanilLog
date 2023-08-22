@@ -17,7 +17,7 @@ export const usePost = (postId) => {
     const fetchPost = async () => {
       if (!postId) return;
       try {
-        const response = await axios.get(`/api/v1/posts/${postId}`);
+        const response = await axios.get(`/api/v1/post/${postId}`);
         if (response.data.status === 'success') {
           setPost(response.data.data);
         } else {
@@ -32,7 +32,7 @@ export const usePost = (postId) => {
 
   const handleDelete = async (router, userId) => {
     try {
-      const response = await axios.delete(`/api/v1/posts/${postId}`);
+      const response = await axios.delete(`/api/v1/post/${postId}`);
       if (response.data.status === 'success') {
         router.push(`/posts/${userId}`);
       } else {
