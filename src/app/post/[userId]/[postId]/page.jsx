@@ -1,5 +1,6 @@
 'use client';
 
+import Link from 'next/link';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useSession } from 'next-auth/react';
@@ -15,6 +16,7 @@ export default function PostDetailPage({ params }) {
   const userId = params.userId;
   const postId = params.postId;
   const { data: session } = useSession();
+  const [errorMessage, setErrorMessage] = useState(null);
 
   const { post, errorMessage: postError, handleDelete } = usePost(postId);
   const { errorMessage: commentError } = useComments(postId);
@@ -22,7 +24,9 @@ export default function PostDetailPage({ params }) {
   const router = useRouter();
   const [showModal, setShowModal] = useState(false);
 
-  const errorMessage = postError || commentError;
+  if (postError || commentError) {
+    setErrorMessage(postError || commentError);
+  }
 
   if (!post) return <div>포스트를 불러오는 중...</div>;
 
@@ -44,6 +48,13 @@ export default function PostDetailPage({ params }) {
       )}
 
       <div className='bg-white rounded-lg shadow-xl p-8 mx-auto max-w-3xl'>
+        <Link
+          href={`/posts/${userId}`}
+          className='text-blue-600 hover:underline mb-4 block'
+        >
+          작성자의 블로그
+        </Link>
+
         <PostContent title={post.title} content={post.content} />
 
         {userId === session?.mongoId && (

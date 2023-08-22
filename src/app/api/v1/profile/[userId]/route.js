@@ -1,4 +1,3 @@
-import mongoose from 'mongoose';
 import createError from 'http-errors';
 import { NextResponse } from 'next/server';
 
@@ -7,12 +6,10 @@ import User from '@models/User';
 import { ERRORS } from '@utils/errors';
 import { sendErrorResponse } from '@utils/response';
 import { validateObjectId } from '@utils/validateObjectId';
-import { findUserById } from '@utils/findUserById';
+import { findById } from '@utils/findById';
+import { getLastPartOfUrl } from '@utils/getLastPartOfUrl';
+import { getSessionFromRequest } from '@utils/getSessionFromRequest';
 
-function getUserIdFromUrl(url) {
-  const urlParts = url.split('/');
-  return urlParts[urlParts.length - 1];
-}
 /**
  * 유저 프로필 조회 API
  * @URL /api/v1/profile/:userId
@@ -22,9 +19,19 @@ async function GET(request) {
   await dbConnect();
 
   try {
-    const userId = getUserIdFromUrl(request.url);
+    const userId = getLastPartOfUrl(request.url);
     validateObjectId(userId);
-    const userProfile = await findUserById(userId);
+
+    const session = await getSessionFromRequest(request);
+    if (!session) {
+      throw new Error(ERRORS.USER_NOT_LOGGED_IN.MESSAGE);
+    }
+
+    if (session.mongoId !== userId) {
+      throw new Error(ERRORS.UNAUTHORIZED_USER.MESSAGE);
+    }
+
+    const userProfile = await findById(User, userId, ERRORS.USER_NOT_FOUND);
 
     return NextResponse.json({
       status: 'success',
@@ -44,8 +51,17 @@ async function PUT(request) {
   await dbConnect();
 
   try {
-    const userId = getUserIdFromUrl(request.url);
+    const userId = getLastPartOfUrl(request.url);
     validateObjectId(userId);
+
+    const session = await getSessionFromRequest(request);
+    if (!session) {
+      throw new Error(ERRORS.USER_NOT_LOGGED_IN.MESSAGE);
+    }
+
+    if (session.mongoId !== userId) {
+      throw new Error(ERRORS.UNAUTHORIZED_USER.MESSAGE);
+    }
 
     const bodyData = await request.text();
     const parsedData = JSON.parse(bodyData);
@@ -66,7 +82,7 @@ async function PUT(request) {
       );
     }
 
-    const userProfile = await findUserById(userId);
+    const userProfile = await findById(User, userId, ERRORS.USER_NOT_FOUND);
 
     if (userProfile.nickname === nickname) {
       throw createError(
