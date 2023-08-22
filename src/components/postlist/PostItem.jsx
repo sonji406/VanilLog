@@ -14,7 +14,7 @@ function PostItem({ post }) {
   return (
     <div className='w-56 h-56 flex flex-col items-center justify-center bg-slate-300'>
       {imageUrl ? (
-        <div className='h-4/5 w-56 h-56 overflow-hidden relative'>
+        <div className='h-4/5 w-56 h-56 overflow-hidden'>
           <Image src={imageUrl} alt={textValue} width={224} height={224} />
         </div>
       ) : (
