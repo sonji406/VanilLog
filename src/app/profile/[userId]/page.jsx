@@ -53,7 +53,11 @@ export default function ProfilePage({ params }) {
         throw new Error(response.data.message);
       }
       setMessage('닉네임이 성공적으로 업데이트되었습니다');
-      toggleEditing();
+      setUserProfile((prevProfile) => ({
+        ...prevProfile,
+        nickname,
+      }));
+      setEditing(false);
     } catch (error) {
       setMessage(error.message);
     }
@@ -141,16 +145,13 @@ export default function ProfilePage({ params }) {
               />
               <div className='flex justify-between items-center'>
                 <button
-                  onClick={() => {
-                    updateNickname();
-                    toggleEditing();
-                  }}
+                  onClick={updateNickname}
                   className='bg-logo text-white px-4 py-2 rounded'
                 >
                   저장
                 </button>
-                <div className='mt-2 text-sm text-red-600'>{message}</div>
               </div>
+              <div className='mt-2 text-sm text-red-600'>{message}</div>
             </>
           ) : (
             <>
@@ -161,7 +162,15 @@ export default function ProfilePage({ params }) {
               >
                 닉네임 수정하기
               </button>
-              <div className='mt-2 text-sm text-red-600'>{message}</div>
+              <div
+                className={`mt-2 text-sm ${
+                  message.includes('성공적으로')
+                    ? 'text-green-600'
+                    : 'text-red-600'
+                }`}
+              >
+                {message}
+              </div>
             </>
           )}
         </div>

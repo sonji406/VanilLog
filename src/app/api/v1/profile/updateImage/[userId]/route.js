@@ -1,6 +1,7 @@
 import dbConnect from '@lib/dbConnect';
 import User from '@models/User';
 import { ERRORS } from '@utils/errors';
+import { NextResponse } from 'next/server';
 import { sendErrorResponse } from '@utils/response';
 import { getLastPartOfUrl } from '@utils/getLastPartOfUrl';
 import { getSessionFromRequest } from '@utils/getSessionFromRequest';
