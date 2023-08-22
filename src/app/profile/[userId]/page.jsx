@@ -70,7 +70,7 @@ export default function ProfilePage({ params }) {
       <div className='flex-1 pr-10'>
         <div className='mb-10 flex flex-col items-center'>
           <Image
-            src='/path/to/your/profile/image.png'
+            src='/image/profileDefault.png'
             alt='Profile Image'
             width={128}
             height={128}
