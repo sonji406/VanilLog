@@ -9,7 +9,7 @@ export async function generateMetadata({ params }) {
     const userData = user.data.data;
 
     return {
-      title: user.data.nickname,
+      title: userData.nickname,
       description: `${userData.nickname}님의 블로그입니다. 포스트 수 ${userData.blogPosts?.length}`,
     };
   } catch (error) {
