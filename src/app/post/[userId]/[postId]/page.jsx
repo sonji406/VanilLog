@@ -15,6 +15,7 @@ export default function PostDetailPage({ params }) {
   const userId = params.userId;
   const postId = params.postId;
   const { data: session } = useSession();
+  const [errorMessage, setErrorMessage] = useState(null);
 
   const { post, errorMessage: postError, handleDelete } = usePost(postId);
   const { errorMessage: commentError } = useComments(postId);
@@ -22,7 +23,9 @@ export default function PostDetailPage({ params }) {
   const router = useRouter();
   const [showModal, setShowModal] = useState(false);
 
-  const errorMessage = postError || commentError;
+  if (postError || commentError) {
+    setErrorMessage(postError || commentError);
+  }
 
   if (!post) return <div>포스트를 불러오는 중...</div>;
 
