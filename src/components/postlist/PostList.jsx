@@ -77,7 +77,7 @@ function PostList({ blogUserId }) {
             >
               <button
                 type='button'
-                className='text-xl text-white font-bold bg-[#0044ff] rounded-lg hover:bg-[#0000ff] py-2 px-3 mx-1'
+                className='flex justify-center items-center text-xl text-white font-bold bg-blue-500 w-8 h-8 rounded-full hover:bg-[#0044ff] p-2 m-0.5 shadow-md shadow-gray-500'
               >
                 {number}
               </button>
@@ -86,7 +86,7 @@ function PostList({ blogUserId }) {
         </div>
         <div>
           <Link href={`/post/editor/${loggedInUserId}`}>
-            <button className='text-xl text-white font-bold bg-[#0044ff] rounded-lg hover:bg-[#0000ff] py-2 px-8'>
+            <button className='text-xl text-white font-bold bg-blue-500 rounded-lg hover:bg-[#0044ff] py-2 px-8 shadow-md shadow-gray-500'>
               포스트 작성하기
             </button>
           </Link>
