@@ -58,6 +58,11 @@ const NOT_POST_AUTHOR = {
   MESSAGE: '포스트의 작성자가 아닙니다.',
 };
 
+const UNAUTHORIZED_USER = {
+  STATUS_CODE: 403,
+  MESSAGE: '자신의 프로필만 조회할 수 있습니다.',
+};
+
 export const ERRORS = {
   INVALID_USER_ID,
   INVALID_JSON,
@@ -71,4 +76,5 @@ export const ERRORS = {
   FILE_NOT_FOUND,
   USER_NOT_LOGGED_IN,
   NOT_POST_AUTHOR,
+  UNAUTHORIZED_USER,
 };
