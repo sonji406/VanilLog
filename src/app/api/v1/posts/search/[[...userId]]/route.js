@@ -19,7 +19,7 @@ async function GET(request, { params }) {
   try {
     const userId = params.userId ? params.userId[0] : '';
     const { searchParams } = new URL(request.url);
-    const searchValue = decodeURIComponent(searchParams.get('q'));
+    const searchValue = searchParams.get('q');
     const page = searchParams.get('page');
     const limit = searchParams.get('limit');
 
