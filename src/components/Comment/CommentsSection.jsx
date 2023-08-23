@@ -1,3 +1,5 @@
+import Comment from './Comment';
+
 function CommentsSection({
   comments,
   commentText,
@@ -9,10 +11,7 @@ function CommentsSection({
       <h2 className='text-xl font-semibold mt-6 mb-4'>댓글</h2>
       {comments && comments.length ? (
         comments.map((comment) => (
-          <div key={comment._id} className='border-t pt-4'>
-            <p className='mb-2'>{comment.comment}</p>
-            <span className='text-gray-500'>작성자: {comment.author}</span>
-          </div>
+          <Comment key={comment._id} commentInfo={comment} />
         ))
       ) : (
         <p className='text-gray-500 mb-6'>아직 작성된 댓글이 없습니다.</p>
