@@ -6,6 +6,11 @@ import { sendErrorResponse } from '@utils/response';
 import { getLastPartOfUrl } from '@utils/getLastPartOfUrl';
 import { getSessionFromRequest } from '@utils/getSessionFromRequest';
 
+/**
+ * 프로필 이미지 수정 api
+ * @URL /api/v1/profile/updateImage/:userId
+ * @param request
+ */
 async function PUT(request) {
   await dbConnect();
 
