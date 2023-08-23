@@ -1,0 +1,110 @@
+import Comment from '@models/Comment';
+import { isLoggedInUser } from '@utils/isLoggedInUser';
+import { validateObjectId } from '@utils/validateObjectId';
+import createError from 'http-errors';
+import { NextResponse } from 'next/server';
+import dbConnect from '@lib/dbConnect';
+import Post from '@models/Post';
+import User from '@models/User';
+import { ERRORS } from '@utils/errors';
+import { sendErrorResponse } from '@utils/response';
+import { getLastPartOfUrl } from '@utils/getLastPartOfUrl';
+import { getSessionFromRequest } from '@utils/getSessionFromRequest';
+
+/**
+ * 댓글 수정 API
+ * @URL /api/v1/comment/:postId
+ * @param request
+ */
+async function PUT(request, { params }) {
+  try {
+    await dbConnect();
+    const { postId, commentId } = params;
+    const { comment: newMessage } = await request.json();
+
+    if (!postId || !commentId) {
+      throw createError(
+        ERRORS.MISSING_PARAMETERS.STATUS_CODE,
+        ERRORS.MISSING_PARAMETERS.MESSAGE,
+      );
+    }
+
+    validateObjectId(postId);
+    validateObjectId(commentId);
+
+    const currentComment = await Comment.findById(commentId).exec();
+    const commentAuthor = currentComment.author;
+    await isLoggedInUser(request, commentAuthor);
+
+    currentComment.comment = newMessage;
+    await currentComment.save();
+
+    return NextResponse.json({
+      status: 'success',
+      message: '댓글 수정이 완료되었습니다.',
+    });
+  } catch (error) {
+    return sendErrorResponse(error);
+  }
+}
+
+/**
+Delete Comment API
+@URL /api/v1/comment/:postId/:commentId
+@param request
+*/
+async function DELETE(request) {
+  await dbConnect();
+
+  try {
+    const session = await getSessionFromRequest(request);
+    if (!session) {
+      throw new Error(ERRORS.USER_NOT_LOGGED_IN.MESSAGE);
+    }
+    const currentUserId = session.mongoId;
+    const commentId = getLastPartOfUrl(request.url);
+    validateObjectId(commentId);
+
+    const comment = await Comment.findById(commentId);
+
+    if (!comment) {
+      throw createError(
+        ERRORS.COMMENT_NOT_FOUND.STATUS_CODE,
+        ERRORS.COMMENT_NOT_FOUND.MESSAGE,
+      );
+    }
+
+    const postId = comment.blogPost;
+    const authorId = comment.author.toHexString();
+
+    if (currentUserId !== authorId) {
+      throw createError(
+        ERRORS.NOT_COMMENT_AUTHOR.STATUS_CODE,
+        ERRORS.NOT_COMMENT_AUTHOR.MESSAGE,
+      );
+    }
+
+    await Comment.findByIdAndDelete(commentId);
+
+    await Post.findByIdAndUpdate(
+      postId,
+      { $pull: { comments: commentId } },
+      { new: true, useFindAndModify: false },
+    );
+
+    await User.findByIdAndUpdate(
+      authorId,
+      { $pull: { comments: commentId } },
+      { new: true, useFindAndModify: false },
+    );
+
+    return NextResponse.json({
+      status: 'success',
+      message: 'Comment deleted successfully.',
+    });
+  } catch (error) {
+    return sendErrorResponse(error);
+  }
+}
+
+export { PUT, DELETE };
