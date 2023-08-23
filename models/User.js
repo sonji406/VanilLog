@@ -7,7 +7,7 @@ const UserSchema = new mongoose.Schema(
     email: { type: String, required: true },
     socialLoginType: { type: String, enum: ['facebook', 'google', 'twitter'] },
     profileImage: { type: String },
-    blogPosts: [{ type: mongoose.Schema.Types.ObjectId, ref: 'BlogPost' }],
+    blogPosts: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Post' }],
     comments: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Comment' }],
   },
   { timestamps: true },
