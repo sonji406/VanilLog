@@ -47,7 +47,7 @@ export default function PostDetail({ userId, postId }) {
           />
         )}
 
-        <CommentsSection comments={post.comments} />
+        {/* 오류나는 컴포넌트 주석처리 <CommentsSection comments={post.comments} /> */}
       </div>
     </>
   );
