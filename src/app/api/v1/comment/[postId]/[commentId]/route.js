@@ -31,6 +31,7 @@ async function DELETE(request) {
 
     const currentUserId = session.mongoId;
     const commentId = getLastPartOfUrl(request.url);
+
     validateObjectId(commentId);
 
     const comment = await Comment.findById(commentId);
