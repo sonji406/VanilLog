@@ -6,6 +6,7 @@ import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
 import { useSession } from 'next-auth/react';
 import { PostItem } from './PostItem';
+import { postListHref } from '@utils/postListHref';
 
 function PostList({ blogUserId }) {
   const params = useSearchParams();
@@ -83,12 +84,12 @@ function PostList({ blogUserId }) {
           {pageNumbers.map((number) => (
             <Link
               key={number}
-              href={
-                blogUserId
-                  ? `/posts/${blogUserId}?page=${number}&limit=${limit}`
-                  : `/posts?page=${number}&limit=${limit}`
-              }
-              passHref
+              href={`/posts/${postListHref(
+                blogUserId,
+                searchValue,
+                number,
+                limit,
+              )}`}
             >
               <button
                 type='button'
