@@ -33,7 +33,7 @@ async function PUT(request, { params }) {
     validateObjectId(commentId);
 
     const currentComment = await Comment.findById(commentId).exec();
-    const commentAuthor = currentComment.author;
+    const commentAuthor = currentComment.author.toString();
     await isLoggedInUser(request, commentAuthor);
 
     currentComment.comment = newMessage;
@@ -75,7 +75,7 @@ async function DELETE(request) {
     }
 
     const postId = comment.blogPost;
-    const authorId = comment.author.toHexString();
+    const authorId = comment.author.toString();
 
     if (currentUserId !== authorId) {
       throw createError(
