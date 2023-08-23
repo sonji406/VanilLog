@@ -10,6 +10,7 @@ import { PostItem } from './PostItem';
 function PostList({ blogUserId }) {
   const params = useSearchParams();
 
+  const searchValue = params.get('q');
   const page = params.get('page') || 1;
   const limit = params.get('limit') || 10;
 
@@ -20,12 +21,21 @@ function PostList({ blogUserId }) {
   const [totalPosts, setTotalPosts] = useState(0);
   const [error, setError] = useState(null);
 
+  const searchApi = blogUserId
+    ? `/api/v1/posts/search/${blogUserId}`
+    : '/api/v1/posts/search';
+  const postListApi = '/api/v1/posts';
+
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get('/api/v1/posts', {
-          params: { userId: blogUserId, page, limit },
-        });
+        const response = searchValue
+          ? await axios.get(searchApi, {
+              params: { q: searchValue, page, limit },
+            })
+          : await axios.get(postListApi, {
+              params: { userId: blogUserId, page, limit },
+            });
 
         if (response.data.status !== 'success') {
           setError(response.data.message);
@@ -40,7 +50,7 @@ function PostList({ blogUserId }) {
     };
 
     fetchData();
-  }, [blogUserId, page, limit]);
+  }, [blogUserId, page, limit, searchValue, searchApi]);
 
   const totalPage = Math.ceil(totalPosts / limit);
   const pageNumbers = [];
@@ -52,6 +62,11 @@ function PostList({ blogUserId }) {
   return (
     <div className='w-screen px-5'>
       {error && <div>{error}</div>}
+      {searchValue && (
+        <div>
+          {blogUserId && '이 블로그에서'} {searchValue}(으)로 검색한 결과입니다
+        </div>
+      )}
       <div className='flex flex-wrap gap-x-8 gap-y-4 justify-center'>
         {posts.length > 0 &&
           posts.map((post) => {

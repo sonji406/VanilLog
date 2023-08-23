@@ -4,10 +4,15 @@ import { useSession } from 'next-auth/react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { LogoutButton } from './LogoutButton';
+import { usePathname } from 'next/navigation';
+import { getLastPartOfUrl } from '@utils/getLastPartOfUrl';
 
 function Navbar() {
   const { data, status } = useSession();
   const userId = data?.mongoId;
+  const pathname = usePathname();
+  const pattern = /^\/posts\/[0-9a-fA-F]{24}$/;
+  const blogUserId = pattern.test(pathname) ? getLastPartOfUrl(pathname) : '';
 
   if (status === 'loading') {
     return <p>Loading...</p>;
@@ -40,7 +45,11 @@ function Navbar() {
             </Link>
           </>
         )}
-        <form action='/search' method='get' className='flex ml-4'>
+        <form
+          action={blogUserId ? `/posts/${blogUserId}` : '/'}
+          method='get'
+          className='flex ml-4'
+        >
           <input
             className='py-1 bg-[#e0e0e0]'
             type='text'
