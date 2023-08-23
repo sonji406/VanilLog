@@ -43,7 +43,7 @@ async function DELETE(request) {
     }
 
     const postId = comment.blogPost;
-    const authorId = comment.author.toHexString();
+    const authorId = comment.author.toString();
 
     if (currentUserId !== authorId) {
       throw createError(
