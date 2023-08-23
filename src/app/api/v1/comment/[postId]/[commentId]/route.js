@@ -1,15 +1,17 @@
-import Comment from '@models/Comment';
-import { isLoggedInUser } from '@utils/isLoggedInUser';
-import { validateObjectId } from '@utils/validateObjectId';
 import createError from 'http-errors';
 import { NextResponse } from 'next/server';
 import dbConnect from '@lib/dbConnect';
+
 import Post from '@models/Post';
 import User from '@models/User';
+import Comment from '@models/Comment';
+
 import { ERRORS } from '@utils/errors';
 import { sendErrorResponse } from '@utils/response';
+import { validateObjectId } from '@utils/validateObjectId';
 import { getLastPartOfUrl } from '@utils/getLastPartOfUrl';
 import { getSessionFromRequest } from '@utils/getSessionFromRequest';
+import { isLoggedInUser } from '@utils/isLoggedInUser';
 
 /**
  * 댓글 수정 API
@@ -49,20 +51,26 @@ async function PUT(request, { params }) {
 }
 
 /**
-Delete Comment API
-@URL /api/v1/comment/:postId/:commentId
-@param request
-*/
+ * 댓글 삭제 API
+ * @URL /api/v1/comment/:postId/:commentId
+ * @param request
+ */
 async function DELETE(request) {
   await dbConnect();
 
   try {
     const session = await getSessionFromRequest(request);
+
     if (!session) {
-      throw new Error(ERRORS.USER_NOT_LOGGED_IN.MESSAGE);
+      throw createError(
+        ERRORS.COMMENT_USER_NOT_LOGGED_IN.STATUS_CODE,
+        ERRORS.COMMENT_USER_NOT_LOGGED_IN.MESSAGE,
+      );
     }
+
     const currentUserId = session.mongoId;
     const commentId = getLastPartOfUrl(request.url);
+
     validateObjectId(commentId);
 
     const comment = await Comment.findById(commentId);

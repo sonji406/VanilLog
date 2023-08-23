@@ -53,19 +53,24 @@ const USER_NOT_LOGGED_IN = {
   MESSAGE: '해당 포스트의 작성자일 경우 로그인 후 이용 가능합니다.',
 };
 
+const COMMENT_USER_NOT_LOGGED_IN = {
+  STATUS_CODE: 401,
+  MESSAGE: '해당 댓글의 작성자일 경우 로그인 후 이용 가능합니다.',
+};
+
 const NOT_POST_AUTHOR = {
   STATUS_CODE: 403,
   MESSAGE: '포스트의 작성자가 아닙니다.',
 };
 
+const NOT_COMMENT_AUTHOR = {
+  STATUS_CODE: 403,
+  MESSAGE: '댓글의 작성자가 아닙니다.',
+};
+
 const UNAUTHORIZED_USER = {
   STATUS_CODE: 403,
   MESSAGE: '자신의 프로필만 조회할 수 있습니다.',
-};
-
-const NOT_COMMENT_AUTHOR = {
-  STATUS_CODE: 403,
-  MESSAGE: '타 브랜치에서 가져오기.',
 };
 
 export const ERRORS = {
@@ -81,6 +86,7 @@ export const ERRORS = {
   FILE_NOT_FOUND,
   USER_NOT_LOGGED_IN,
   NOT_POST_AUTHOR,
-  UNAUTHORIZED_USER,
   NOT_COMMENT_AUTHOR,
+  UNAUTHORIZED_USER,
+  COMMENT_USER_NOT_LOGGED_IN,
 };
