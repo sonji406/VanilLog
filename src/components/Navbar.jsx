@@ -46,7 +46,7 @@ function Navbar() {
           </>
         )}
         <form
-          action={blogUserId ? `/posts/${blogUserId}` : '/'}
+          action={blogUserId ? `/posts/${blogUserId}` : '/posts/'}
           method='get'
           className='flex ml-4'
         >
