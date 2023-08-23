@@ -9,10 +9,9 @@ export const usePost = (postId) => {
 
   const handleError = (error) => {
     if (error.response && error.response.data.status !== 'success') {
-      setErrorMessage(error.response.data.message);
-    } else {
-      setErrorMessage('알 수 없는 오류가 발생했습니다.');
+      return setErrorMessage(error.response.data.message);
     }
+    return setErrorMessage('알 수 없는 오류가 발생했습니다.');
   };
 
   useEffect(() => {
@@ -21,12 +20,11 @@ export const usePost = (postId) => {
       try {
         const response = await axios.get(`/api/v1/post/${postId}`);
         if (response.data.status === 'success') {
-          setPost(response.data.data);
-        } else {
-          handleError(response);
+          return setPost(response.data.data);
         }
+        return handleError(response);
       } catch (error) {
-        handleError(error);
+        return handleError(error);
       }
     };
     fetchPost();
@@ -36,12 +34,11 @@ export const usePost = (postId) => {
     try {
       const response = await axios.delete(`/api/v1/post/${postId}`);
       if (response.data.status === 'success') {
-        router.push(`/posts/${userId}`);
-      } else {
-        handleError(response);
+        return router.push(`/posts/${userId}`);
       }
+      return handleError(response);
     } catch (error) {
-      handleError(error);
+      return handleError(error);
     }
   };
 

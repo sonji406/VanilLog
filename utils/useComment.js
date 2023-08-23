@@ -12,9 +12,8 @@ export const useComments = (postId) => {
   const handleError = (error) => {
     if (error.response && error.response.data.status !== 'success') {
       setErrorMessage(error.response.data.message);
-    } else {
-      setErrorMessage('알 수 없는 오류가 발생했습니다.');
     }
+    return setErrorMessage('알 수 없는 오류가 발생했습니다.');
   };
 
   const handleCommentSubmit = async () => {
@@ -31,12 +30,12 @@ export const useComments = (postId) => {
         comment: commentText,
         author: commentAuthorId,
       });
+
       if (response.data.status === 'success') {
         setCommentText('');
         return response.data.data;
-      } else {
-        handleError(response);
       }
+      return handleError(response);
     } catch (error) {
       handleError(error);
     }

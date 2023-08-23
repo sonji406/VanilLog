@@ -6,7 +6,6 @@ import { useState } from 'react';
 import DeleteModal from './DeleteModal';
 import PostContent from './PostContent';
 import PostActions from './PostActions';
-import CommentsSection from '../Comment/CommentsSection';
 import ErrorMessageWindow from './ErrorMessageWindow';
 import { usePost } from '@utils/usePost';
 import { useComments } from '@utils/useComment';
