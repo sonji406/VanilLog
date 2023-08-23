@@ -3,6 +3,7 @@ import { NextResponse } from 'next/server';
 
 import dbConnect from '@lib/dbConnect';
 import Post from '@models/Post';
+import User from '@models/User';
 import { ERRORS } from '@utils/errors';
 import { sendErrorResponse } from '@utils/response';
 import { validateObjectId } from '@utils/validateObjectId';
@@ -31,6 +32,10 @@ async function POST(request) {
       title,
       author,
       content,
+    });
+
+    await User.findByIdAndUpdate(author, {
+      $push: { blogPosts: post._id },
     });
 
     return NextResponse.json({ status: 'success', data: post });
