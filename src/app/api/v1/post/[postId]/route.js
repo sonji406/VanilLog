@@ -3,6 +3,7 @@ import { NextResponse } from 'next/server';
 import { JSDOM } from 'jsdom';
 
 import Post from '@models/Post';
+import User from '@models/User';
 import dbConnect from '@lib/dbConnect';
 import { ERRORS } from '@utils/errors';
 import { sendErrorResponse } from '@utils/response';
@@ -62,6 +63,10 @@ async function DELETE(request) {
     if (!deletedPost) {
       throw new Error(ERRORS.POST_NOT_FOUND.MESSAGE);
     }
+
+    await User.findByIdAndUpdate(post.author, {
+      $pull: { blogPosts: post._id },
+    });
 
     return NextResponse.json({
       status: 'success',
