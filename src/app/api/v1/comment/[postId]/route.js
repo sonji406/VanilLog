@@ -20,8 +20,6 @@ async function POST(request) {
 
   try {
     const postId = getLastPartOfUrl(request.url);
-    validateObjectId(postId);
-
     const { comment, author } = await request.json();
 
     if (!comment || !author) {
@@ -31,9 +29,10 @@ async function POST(request) {
       );
     }
 
+    validateObjectId(postId);
     validateObjectId(author);
 
-    const postExists = await Post.findById(postId).lean().exec();
+    const postExists = await Post.exists({ _id: postId });
     if (!postExists) {
       throw createError(
         ERRORS.POST_NOT_FOUND.STATUS_CODE,
@@ -80,8 +79,8 @@ async function GET(request) {
     const postId = getLastPartOfUrl(request.url);
     validateObjectId(postId);
 
-    const postExists = await Post.findById(postId).lean().exec();
-    if (!postExists) {
+    const currentPost = await Post.findById(postId).lean().exec();
+    if (!currentPost) {
       throw createError(
         ERRORS.POST_NOT_FOUND.STATUS_CODE,
         ERRORS.POST_NOT_FOUND.MESSAGE,
@@ -89,7 +88,7 @@ async function GET(request) {
     }
 
     const comments = await Comment.find({
-      _id: { $in: postExists.comments },
+      _id: { $in: currentPost.comments },
     })
       .lean()
       .exec();
