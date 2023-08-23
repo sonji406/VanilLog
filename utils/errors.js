@@ -63,6 +63,11 @@ const UNAUTHORIZED_USER = {
   MESSAGE: '자신의 프로필만 조회할 수 있습니다.',
 };
 
+const NOT_COMMENT_AUTHOR = {
+  STATUS_CODE: 403,
+  MESSAGE: '타 브랜치에서 가져오기.',
+};
+
 export const ERRORS = {
   INVALID_USER_ID,
   INVALID_JSON,
@@ -77,4 +82,5 @@ export const ERRORS = {
   USER_NOT_LOGGED_IN,
   NOT_POST_AUTHOR,
   UNAUTHORIZED_USER,
+  NOT_COMMENT_AUTHOR,
 };
