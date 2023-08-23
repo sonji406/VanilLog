@@ -13,7 +13,7 @@ import { getSessionFromRequest } from '@utils/getSessionFromRequest';
 
 /**
  * 댓글 수정 API
- * @URL /api/v1/comment/:postId
+ * @URL /api/v1/comment/:postId/:commentId
  * @param request
  */
 async function PUT(request, { params }) {
