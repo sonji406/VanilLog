@@ -1,6 +1,5 @@
-import createError from 'http-errors';
 import { NextResponse } from 'next/server';
-
+import createError from 'http-errors';
 import dbConnect from '@lib/dbConnect';
 import Post from '@models/Post';
 import { ERRORS } from '@utils/errors';
@@ -8,16 +7,19 @@ import { sendErrorResponse } from '@utils/response';
 import { validateObjectId } from '@utils/validateObjectId';
 
 /**
- * 포스트 목록 조회 API
- * @URL /api/v1/posts?userId=:userId&page={page_number}&limit={items_per_page}
+ * 포스트 검색 API(메인)
+ * @URL /v1/posts/search?q=검색어&page={page_number}&limit={items_per_page}
+ * 포스트 검색 API (블로그 메인)
+ * @URL /v1/posts/search/:userId?q=검색어&page={page_number}&limit={items_per_page}
  * @param request
  */
-async function GET(request) {
+async function GET(request, { params }) {
   await dbConnect();
 
   try {
+    const userId = params.userId ? params.userId[0] : '';
     const { searchParams } = new URL(request.url);
-    const userId = searchParams.get('userId');
+    const searchValue = searchParams.get('q');
     const page = searchParams.get('page');
     const limit = searchParams.get('limit');
 
@@ -25,14 +27,28 @@ async function GET(request) {
       validateObjectId(userId);
     }
 
-    if (!page || !limit) {
+    if (!searchValue || !page || !limit) {
       throw createError(
         ERRORS.MISSING_PARAMETERS.STATUS_CODE,
         ERRORS.MISSING_PARAMETERS.MESSAGE,
       );
     }
 
-    const findOption = userId ? { author: userId } : {};
+    const keywardMatchOption = { $regex: searchValue, $options: 'i' };
+
+    const findOption = {
+      $or: [
+        { title: keywardMatchOption },
+        {
+          'content.blocks.data.text': keywardMatchOption,
+        },
+      ],
+    };
+
+    if (userId) {
+      findOption.author = userId;
+    }
+
     const posts = await Post.find(findOption)
       .sort({ createdAt: -1 })
       .skip((page - 1) * limit)

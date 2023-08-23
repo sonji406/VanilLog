@@ -55,8 +55,8 @@ function Editor({ author, postId, title, content, error, setError, isModify }) {
 
     try {
       const response = isModify
-        ? await axios.put(`/api/v1/posts/${postId}`, postData)
-        : await axios.post('/api/v1/posts', postData);
+        ? await axios.put(`/api/v1/post/${postId}`, postData)
+        : await axios.post('/api/v1/post', postData);
 
       if (response.data.status !== 'success') {
         setError(response.data.message);
