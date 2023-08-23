@@ -6,7 +6,6 @@ import { useState } from 'react';
 import DeleteModal from './DeleteModal';
 import PostContent from './PostContent';
 import PostActions from './PostActions';
-import CommentsSection from './CommentsSection';
 import ErrorMessageWindow from './ErrorMessageWindow';
 import { usePost } from '@utils/usePost';
 import { useComments } from '@utils/useComment';
@@ -46,8 +45,6 @@ export default function PostDetail({ userId, postId }) {
             onShowDeleteModal={() => setShowModal(true)}
           />
         )}
-
-        {/* 오류나는 컴포넌트 주석처리 <CommentsSection comments={post.comments} /> */}
       </div>
     </>
   );

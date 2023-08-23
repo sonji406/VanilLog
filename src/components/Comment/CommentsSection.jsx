@@ -9,9 +9,9 @@ function CommentsSection({
       <h2 className='text-xl font-semibold mt-6 mb-4'>댓글</h2>
       {comments && comments.length ? (
         comments.map((comment) => (
-          <div key={comment.id} className='border-t pt-4'>
-            <p className='mb-2'>{comment.text}</p>
-            <span className='text-gray-500'>작성자: {comment.author.name}</span>
+          <div key={comment._id} className='border-t pt-4'>
+            <p className='mb-2'>{comment.comment}</p>
+            <span className='text-gray-500'>작성자: {comment.author}</span>
           </div>
         ))
       ) : (
