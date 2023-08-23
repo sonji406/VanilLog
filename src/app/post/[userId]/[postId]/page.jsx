@@ -1,4 +1,5 @@
 import PostDetail from '@src/components/PostDetail/PostDetail';
+import CommentsContainer from '@src/components/Comment/CommentsContainer';
 import { METAINFO } from '@utils/metaInfo';
 import axios from 'axios';
 
@@ -34,6 +35,7 @@ export default function PostDetailPage({ params }) {
   return (
     <div className='bg-gray-100 min-h-screen p-10'>
       <PostDetail userId={userId} postId={postId} />
+      <CommentsContainer postId={postId} />
     </div>
   );
 }
