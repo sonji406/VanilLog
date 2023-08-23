@@ -13,6 +13,7 @@ export const useComments = (postId) => {
     if (error.response && error.response.data.status !== 'success') {
       setErrorMessage(error.response.data.message);
     }
+
     return setErrorMessage('알 수 없는 오류가 발생했습니다.');
   };
 
@@ -20,6 +21,7 @@ export const useComments = (postId) => {
     if (!commentText) return;
 
     const commentAuthorId = session?.mongoId;
+
     if (!commentAuthorId) {
       setErrorMessage('로그인이 필요합니다.');
       return;
@@ -33,8 +35,10 @@ export const useComments = (postId) => {
 
       if (response.data.status === 'success') {
         setCommentText('');
+
         return response.data.data;
       }
+
       return handleError(response);
     } catch (error) {
       handleError(error);

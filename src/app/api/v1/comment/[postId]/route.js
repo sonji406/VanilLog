@@ -33,6 +33,7 @@ async function POST(request) {
     validateObjectId(author);
 
     const postExists = await Post.exists({ _id: postId });
+
     if (!postExists) {
       throw createError(
         ERRORS.POST_NOT_FOUND.STATUS_CODE,
@@ -80,6 +81,7 @@ async function GET(request) {
     validateObjectId(postId);
 
     const currentPost = await Post.findById(postId).lean().exec();
+
     if (!currentPost) {
       throw createError(
         ERRORS.POST_NOT_FOUND.STATUS_CODE,
