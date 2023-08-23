@@ -1,15 +1,54 @@
 import createError from 'http-errors';
 import { NextResponse } from 'next/server';
-
 import dbConnect from '@lib/dbConnect';
+
 import Post from '@models/Post';
 import User from '@models/User';
 import Comment from '@models/Comment';
+
 import { ERRORS } from '@utils/errors';
 import { sendErrorResponse } from '@utils/response';
 import { validateObjectId } from '@utils/validateObjectId';
 import { getLastPartOfUrl } from '@utils/getLastPartOfUrl';
 import { getSessionFromRequest } from '@utils/getSessionFromRequest';
+import { isLoggedInUser } from '@utils/isLoggedInUser';
+
+/**
+ * 댓글 수정 API
+ * @URL /api/v1/comment/:postId/:commentId
+ * @param request
+ */
+async function PUT(request, { params }) {
+  try {
+    await dbConnect();
+    const { postId, commentId } = params;
+    const { comment: newMessage } = await request.json();
+
+    if (!postId || !commentId) {
+      throw createError(
+        ERRORS.MISSING_PARAMETERS.STATUS_CODE,
+        ERRORS.MISSING_PARAMETERS.MESSAGE,
+      );
+    }
+
+    validateObjectId(postId);
+    validateObjectId(commentId);
+
+    const currentComment = await Comment.findById(commentId).exec();
+    const commentAuthor = currentComment.author.toString();
+    await isLoggedInUser(request, commentAuthor);
+
+    currentComment.comment = newMessage;
+    await currentComment.save();
+
+    return NextResponse.json({
+      status: 'success',
+      message: '댓글 수정이 완료되었습니다.',
+    });
+  } catch (error) {
+    return sendErrorResponse(error);
+  }
+}
 
 /**
  * 댓글 삭제 API
@@ -76,4 +115,4 @@ async function DELETE(request) {
   }
 }
 
-export { DELETE };
+export { PUT, DELETE };
