@@ -28,11 +28,13 @@ function CommentsContainer({ postId }) {
     const fetchComments = async () => {
       try {
         const response = await axios.get(`/api/v1/comment/${postId}`);
+
         if (response.data.status === 'success') {
           setComments(response.data.data);
         }
       } catch (error) {}
     };
+
     fetchComments();
   }, [postId]);
 
