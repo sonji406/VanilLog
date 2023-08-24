@@ -2,10 +2,6 @@ import { render, screen, fireEvent } from '@testing-library/react';
 import { LogoutButton } from '@src/components/LogoutButton';
 import { signOut } from 'next-auth/react';
 
-beforeEach(() => {
-  jest.clearAllMocks();
-});
-
 describe('<LogoutButton />', () => {
   it('로그아웃 버튼 컴포넌트가 올바르게 렌더링 되어야 한다.', () => {
     render(<LogoutButton />);

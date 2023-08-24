@@ -1,10 +1,6 @@
 import { render, screen, act } from '@testing-library/react';
 import { ProfileBox } from '@src/components/SideNavbar/ProfileBox';
 
-beforeEach(() => {
-  jest.clearAllMocks();
-});
-
 describe('<ProfileBox />', () => {
   it('유저 아이디와 프로필 이미지가 주어졌을 때, 닉네임과 프로필 이미지 렌더링 테스트', async () => {
     const profile = {
@@ -20,7 +16,9 @@ describe('<ProfileBox />', () => {
     const image = screen.getByAltText('프로필 사진');
 
     expect(image).toBeInTheDocument();
+
     expect(decodeURIComponent(image.src)).toMatch(/some\/image\.jpg/);
+
     expect(screen.getByText('우지현')).toBeInTheDocument();
   });
 

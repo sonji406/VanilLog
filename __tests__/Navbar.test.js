@@ -5,7 +5,6 @@ import { usePathname } from 'next/navigation';
 import { Navbar } from '@src/components/Navbar';
 
 beforeEach(() => {
-  jest.clearAllMocks();
   useSession.mockReturnValue({ status: 'loading' });
   usePathname.mockImplementation(() => '/some/path');
 });
@@ -29,6 +28,7 @@ describe('<Navbar />', () => {
     render(<Navbar />);
 
     expect(screen.getByText('로그인')).toBeInTheDocument();
+
     expect(screen.getByText('내 블로그')).toBeInTheDocument();
   });
 
@@ -49,6 +49,7 @@ describe('<Navbar />', () => {
     render(<Navbar />);
 
     expect(screen.getByPlaceholderText('Search...')).toBeInTheDocument();
+
     expect(screen.getByText('통합검색')).toBeInTheDocument();
   });
 });

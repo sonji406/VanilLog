@@ -1,10 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import BlogStatistics from '@src/components/Profile/BlogStatistics';
 
-beforeEach(() => {
-  jest.clearAllMocks();
-});
-
 describe('<BlogStatistics />', () => {
   it('블로그 통계 방문자 수가 올바르게 렌더링 되어야 한다.', () => {
     render(<BlogStatistics />);

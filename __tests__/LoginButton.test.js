@@ -2,14 +2,11 @@ import { render, screen, fireEvent } from '@testing-library/react';
 import { LoginButton } from '@src/components/LoginButton';
 import { signIn } from 'next-auth/react';
 
-beforeEach(() => {
-  jest.clearAllMocks();
-});
-
 describe('<LoginButton />', () => {
   it('로그인 버튼 컴포넌트가 올바르게 렌더링 되어야 한다.', () => {
     render(<LoginButton loginCompany='google' />);
     const buttonElement = screen.getByText(/google login/i);
+
     expect(buttonElement).toBeInTheDocument();
   });
 
@@ -20,6 +17,7 @@ describe('<LoginButton />', () => {
     fireEvent.click(buttonElement);
 
     expect(signIn).toHaveBeenCalled();
+
     expect(signIn).toHaveBeenCalledWith('google', {
       callbackUrl: process.env.DOMAIN,
     });

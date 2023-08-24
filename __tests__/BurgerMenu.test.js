@@ -2,10 +2,6 @@ import React from 'react';
 import { render } from '@testing-library/react';
 import { BurgerMenu } from '@src/components/SideNavbar/BurgerMenu';
 
-beforeEach(() => {
-  jest.clearAllMocks();
-});
-
 describe('<BurgerMenu />', () => {
   it('isOpen이 false일 때 open 클래스가 없어야 한다.', () => {
     const { container } = render(<BurgerMenu isOpen={false} />);

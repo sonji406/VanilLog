@@ -1,10 +1,6 @@
 import { render, screen, fireEvent } from '@testing-library/react';
 import DeleteModal from '@src/components/PostDetail/DeleteModal';
 
-beforeEach(() => {
-  jest.clearAllMocks();
-});
-
 describe('<DeleteModal />', () => {
   const onClose = jest.fn();
   const onConfirm = jest.fn();
@@ -34,6 +30,7 @@ describe('<DeleteModal />', () => {
     ).toBeInTheDocument();
 
     expect(screen.getByText('확인')).toBeInTheDocument();
+
     expect(screen.getByText('취소')).toBeInTheDocument();
   });
 
@@ -45,6 +42,7 @@ describe('<DeleteModal />', () => {
     fireEvent.click(screen.getByText('확인'));
 
     expect(onClose).toHaveBeenCalledTimes(1);
+
     expect(onConfirm).toHaveBeenCalledTimes(1);
   });
 
@@ -56,6 +54,7 @@ describe('<DeleteModal />', () => {
     fireEvent.click(screen.getByText('취소'));
 
     expect(onClose).toHaveBeenCalledTimes(1);
+
     expect(onConfirm).not.toHaveBeenCalled();
   });
 });

@@ -1,5 +1,9 @@
 import '@testing-library/jest-dom';
 
+beforeEach(() => {
+  jest.clearAllMocks();
+});
+
 jest.mock('next-auth/react', () => {
   return {
     useSession: jest.fn(),

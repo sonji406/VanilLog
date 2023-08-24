@@ -14,7 +14,6 @@ jest.mock('axios');
 jest.mock('next-auth/react');
 
 beforeEach(() => {
-  jest.clearAllMocks();
   useSession.mockReturnValue({});
 });
 
