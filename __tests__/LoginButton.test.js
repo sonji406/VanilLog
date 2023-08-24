@@ -2,16 +2,18 @@ import { render, screen, fireEvent } from '@testing-library/react';
 import { LoginButton } from '@src/components/LoginButton';
 import { signIn } from 'next-auth/react';
 
+beforeEach(() => {
+  jest.clearAllMocks();
+});
+
 describe('<LoginButton />', () => {
-  it('로그인 버튼 컴포넌트 렌더링 테스트', () => {
+  it('로그인 버튼 컴포넌트가 올바르게 렌더링 되어야 한다.', () => {
     render(<LoginButton loginCompany='google' />);
     const buttonElement = screen.getByText(/google login/i);
     expect(buttonElement).toBeInTheDocument();
   });
 
-  it('로그인 버튼 컴포넌트 클릭 시, signIn 함수가 올바른 파라미터로 호출 되는지 테스트', () => {
-    signIn.mockClear();
-
+  it('로그인 버튼 컴포넌트 클릭 시, signIn 함수가 올바른 파라미터로 호출되어야 한다.', () => {
     render(<LoginButton loginCompany='google' />);
     const buttonElement = screen.getByText(/google login/i);
 
