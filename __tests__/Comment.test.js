@@ -10,13 +10,10 @@ import axios from 'axios';
 import { useSession } from 'next-auth/react';
 import Comment from '@src/components/Comment/Comment';
 
-jest.mock('axios');
-jest.mock('next-auth/react');
-
 describe('<Comment />', () => {
   const mockCommentInfo = {
     _id: 'commentId',
-    comment: 'This is a comment.',
+    comment: '댓글 내용',
     blogPost: 'postId',
     author: 'authorId',
   };
@@ -24,7 +21,7 @@ describe('<Comment />', () => {
   it('댓글 텍스트와 작성자가 올바르게 렌더링되어야 한다.', () => {
     useSession.mockReturnValue({
       data: {
-        mongoId: 'someOtherId',
+        mongoId: '현재 접속자 mongoId',
       },
     });
 
@@ -32,7 +29,7 @@ describe('<Comment />', () => {
       render(<Comment commentInfo={mockCommentInfo} />);
     });
 
-    expect(screen.getByText('This is a comment.')).toBeInTheDocument();
+    expect(screen.getByText('댓글 내용')).toBeInTheDocument();
 
     expect(screen.getByText('작성자: authorId')).toBeInTheDocument();
   });
