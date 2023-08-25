@@ -4,16 +4,22 @@ beforeEach(() => {
   jest.clearAllMocks();
 });
 
-jest.mock('next-auth/react', () => {
-  return {
-    useSession: jest.fn(),
-    signIn: jest.fn(),
-    signOut: jest.fn(),
-  };
-});
+jest.mock('axios');
+
+jest.mock('next-auth/react', () => ({
+  useSession: jest.fn(() => ({
+    data: { mongoId: 'someId' },
+  })),
+  signIn: jest.fn(),
+  signOut: jest.fn(),
+}));
 
 jest.mock('next/navigation', () => {
   return {
     usePathname: jest.fn(),
   };
 });
+
+jest.mock('@utils/useComment', () => ({
+  useComments: jest.fn(),
+}));
