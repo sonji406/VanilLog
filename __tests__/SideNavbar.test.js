@@ -10,9 +10,6 @@ import axios from 'axios';
 import { useSession } from 'next-auth/react';
 import { SideNavbar } from '@src/components/SideNavbar/SideNavbar';
 
-jest.mock('axios');
-jest.mock('next-auth/react');
-
 beforeEach(() => {
   useSession.mockReturnValue({});
 });
@@ -73,6 +70,7 @@ describe('<SideNavbar />', () => {
     });
 
     const sidebar = screen.getByRole('navigation');
+
     act(() => {
       fireEvent.mouseLeave(sidebar);
     });
