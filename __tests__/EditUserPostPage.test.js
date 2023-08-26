@@ -17,7 +17,7 @@ jest.mock('@src/app/post/editor/[userId]/page', () => {
 });
 
 describe('<EditorUserPostPage />', () => {
-  it('올바른 파라미터로 PostEditPage를 렌더링해야 한다.', async () => {
+  it('올바른 파라미터로 PostEditPage가 렌더링되어야 한다.', async () => {
     await act(async () => {
       render(<EditorUserPostPage />);
     });
