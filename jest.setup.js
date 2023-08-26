@@ -6,6 +6,14 @@ beforeEach(() => {
 
 jest.mock('axios');
 
+jest.mock('next/navigation', () => {
+  return {
+    useRouter: jest.fn(),
+    useSearchParams: jest.fn(),
+    usePathname: jest.fn(),
+  };
+});
+
 jest.mock('next-auth/react', () => ({
   useSession: jest.fn(() => ({
     data: { mongoId: 'someId' },
@@ -14,12 +22,10 @@ jest.mock('next-auth/react', () => ({
   signOut: jest.fn(),
 }));
 
-jest.mock('next/navigation', () => {
-  return {
-    usePathname: jest.fn(),
-  };
-});
-
 jest.mock('@utils/useComment', () => ({
   useComments: jest.fn(),
+}));
+
+jest.mock('@utils/usePost', () => ({
+  usePost: jest.fn(),
 }));
