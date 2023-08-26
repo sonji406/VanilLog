@@ -20,7 +20,7 @@ describe('<CommentsSection />', () => {
     ).toBeInTheDocument();
   });
 
-  it('댓글이 있을 경우 댓글 목록이 렌더링된다', () => {
+  it('댓글이 있을 경우 댓글 목록이 렌더링되어야 한다.', () => {
     const mockComments = [
       { _id: '1', comment: '첫 번째 댓글' },
       { _id: '2', comment: '두 번째 댓글' },
@@ -38,7 +38,6 @@ describe('<CommentsSection />', () => {
     });
 
     expect(screen.getByText('첫 번째 댓글')).toBeInTheDocument();
-
     expect(screen.getByText('두 번째 댓글')).toBeInTheDocument();
   });
 

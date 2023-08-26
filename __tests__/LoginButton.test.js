@@ -19,7 +19,6 @@ describe('<LoginButton />', () => {
     fireEvent.click(buttonElement);
 
     expect(signIn).toHaveBeenCalled();
-
     expect(signIn).toHaveBeenCalledWith('google', {
       callbackUrl: process.env.DOMAIN,
     });

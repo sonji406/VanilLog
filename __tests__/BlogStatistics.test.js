@@ -6,9 +6,7 @@ describe('<BlogStatistics />', () => {
     render(<BlogStatistics />);
 
     expect(screen.getByText(/일일 방문자 수:/i)).toBeInTheDocument();
-
     expect(screen.getByText(/총 방문자 수:/i)).toBeInTheDocument();
-
     expect(screen.getByText(/반복 방문자 수:/i)).toBeInTheDocument();
   });
 });

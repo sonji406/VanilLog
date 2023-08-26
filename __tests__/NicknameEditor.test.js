@@ -18,7 +18,6 @@ describe('<NicknameEditor />', () => {
     );
 
     expect(screen.getByText('내 닉네임:')).toBeInTheDocument();
-
     expect(screen.getByText(mockNickname)).toBeInTheDocument();
   });
 
@@ -37,7 +36,6 @@ describe('<NicknameEditor />', () => {
     );
 
     expect(screen.getByRole('textbox')).toBeInTheDocument();
-
     expect(screen.getByText('저장')).toBeInTheDocument();
   });
 

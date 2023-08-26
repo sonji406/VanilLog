@@ -46,9 +46,9 @@ describe('<PostContent />', () => {
     });
 
     const image = screen.getByAltText('image_name');
-    expect(image).toHaveAttribute('src', 'image_url');
-
     const paragraph = screen.getByText('본문 텍스트');
+
+    expect(image).toHaveAttribute('src', 'image_url');
     expect(paragraph).toBeInTheDocument();
   });
 });

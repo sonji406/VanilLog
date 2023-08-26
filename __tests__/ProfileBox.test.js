@@ -16,9 +16,7 @@ describe('<ProfileBox />', () => {
     const image = screen.getByAltText('프로필 사진');
 
     expect(image).toBeInTheDocument();
-
     expect(decodeURIComponent(image.src)).toMatch(/some\/image\.jpg/);
-
     expect(screen.getByText('우지현')).toBeInTheDocument();
   });
 

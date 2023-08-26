@@ -30,7 +30,6 @@ describe('<Comment />', () => {
     });
 
     expect(screen.getByText('댓글 내용')).toBeInTheDocument();
-
     expect(screen.getByText('작성자: authorId')).toBeInTheDocument();
   });
 
@@ -46,7 +45,6 @@ describe('<Comment />', () => {
     });
 
     expect(screen.getByText('수정')).toBeInTheDocument();
-
     expect(screen.getByText('삭제')).toBeInTheDocument();
   });
 

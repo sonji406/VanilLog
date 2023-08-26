@@ -23,7 +23,6 @@ describe('<PostItem />', () => {
     const image = screen.getByAltText('텍스트');
 
     expect(image).toBeInTheDocument();
-
     expect(image.src).toMatch(/이미지파일명.png|data:image\/gif;base64/);
   });
 
