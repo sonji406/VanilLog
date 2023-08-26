@@ -9,7 +9,6 @@ describe('<ConnectedSocial />', () => {
     render(<ConnectedSocial socialLoginType={mockSocialLoginType} />);
 
     expect(screen.getByText('연동된 소셜:')).toBeInTheDocument();
-
     expect(screen.getByText(mockSocialLoginType)).toBeInTheDocument();
   });
 });
