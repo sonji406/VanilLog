@@ -29,3 +29,9 @@ jest.mock('@utils/useComment', () => ({
 jest.mock('@utils/usePost', () => ({
   usePost: jest.fn(),
 }));
+
+jest.mock('@utils/useUserProfile');
+jest.mock('@utils/useImageUpload');
+jest.mock('@utils/useNicknameUpdate');
+
+jest.mock('@editorjs/editorjs');
