@@ -75,7 +75,7 @@ function PostList({ blogUserId }) {
       ) : (
         <>
           {searchValue && (
-            <div>
+            <div className='block ml-20 mb-10 mt-10'>
               {blogUserId && '이 블로그에서'} {searchValue}(으)로 검색한
               결과입니다
             </div>
