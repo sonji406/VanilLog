@@ -48,7 +48,7 @@ function Navbar() {
     <nav className='fixed top-0 left-0 w-full h-[55px] z-50 bg-[#16354D]'>
       <div className='flex justify-between h-full items-center shadow-md shadow-gray-400 p-2 px-6 max-w-[1920px] mx-auto'>
         <Link href='/'>
-          <span className="fon  t-['DiaGothicMedium'] text-[#E4E5EA] text-3xl font-bold">
+          <span className="font-['DiaGothicMedium'] text-[#E4E5EA] hover:text-[#0C151C] text-3xl">
             vanilLog
           </span>
         </Link>
@@ -82,7 +82,7 @@ function Navbar() {
               </div>
               <Link
                 href={`/posts/${userId}`}
-                className="ml-4 font-['DiaGothicBold'] ml-4 text-[#EBC678] text-xl mb-1 hover:text-[#E4E5EA]"
+                className="ml-4 font-['DiaGothicBold'] ml-4 text-[#c2daf0] text-xl mb-1 hover:text-[#0C151C]"
               >
                 MyLog
               </Link>

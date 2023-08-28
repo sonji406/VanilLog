@@ -14,7 +14,7 @@ function PostList({ blogUserId }) {
 
   const searchValue = params.get('q');
   const page = params.get('page') || 1;
-  const limit = params.get('limit') || 8;
+  const limit = params.get('limit') || 10;
 
   const { data } = useSession();
   const loggedInUserId = data?.mongoId;
@@ -91,7 +91,7 @@ function PostList({ blogUserId }) {
       )}
 
       <div className='flex justify-between items-center mt-4'>
-        <div className='flex justify-start flex-grow'>
+        <div className='flex justify-center flex-grow'>
           {pageNumbers.map((number) => (
             <Link
               key={number}
@@ -104,7 +104,7 @@ function PostList({ blogUserId }) {
             >
               <button
                 type='button'
-                className='text-xl text-white font-bold bg-[#6B99C3] rounded-full hover:bg-[#0C151C] hover:text-[#E4E5EA] w-8 h-8 m-0.5'
+                className='w-10 h-10 m-0.5 text-xl text-white font-bold bg-[#6B99C3] border-2 border-white border-inherit rounded-full hover:bg-[#16354D] hover:text-[#E4E5EA]'
               >
                 {number}
               </button>
@@ -112,9 +112,9 @@ function PostList({ blogUserId }) {
           ))}
         </div>
       </div>
-      <div className='flex justify-end'>
+      <div className='flex justify-end mr-4'>
         <Link href={`/post/editor/${loggedInUserId}`}>
-          <button className='text-xl text-white font-bold bg-[#6B99C3] rounded-full hover:bg-[#0C151C] hover:text-[#E4E5EA] py-2 px-8'>
+          <button className='text-xl text-white font-bold bg-[#6B99C3] border-4 border-white border-inherit rounded-full hover:bg-[#16354D] hover:text-[#E4E5EA] py-2 px-8'>
             포스트 작성하기
           </button>
         </Link>
