@@ -7,6 +7,7 @@ import { useSearchParams } from 'next/navigation';
 import { useSession } from 'next-auth/react';
 import { PostItem } from './PostItem';
 import { postListHref } from '@utils/postListHref';
+import { ERRORS } from 'constants/errors';
 
 function PostList({ blogUserId }) {
   const params = useSearchParams();
@@ -46,7 +47,7 @@ function PostList({ blogUserId }) {
         setPosts(response.data.data);
         setTotalPosts(response.data.totalPosts);
       } catch (e) {
-        setError('포스트를 불러오는 중 문제가 발생했습니다.');
+        setError(ERRORS.POST_LOADING_ERROR);
       }
     };
 

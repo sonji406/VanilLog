@@ -5,6 +5,7 @@ import { NextResponse } from 'next/server';
 import { sendErrorResponse } from '@utils/response';
 import { getLastPartOfUrl } from '@utils/getLastPartOfUrl';
 import { getSessionFromRequest } from '@utils/getSessionFromRequest';
+import { SUCCESS } from 'constants/success';
 
 /**
  * 프로필 이미지 수정 api
@@ -34,7 +35,7 @@ async function PUT(request) {
 
     return NextResponse.json({
       status: 200,
-      message: '프로필 이미지가 성공적으로 업데이트되었습니다',
+      message: SUCCESS.PROFILE_PUT_IMAGE,
     });
   } catch (error) {
     return sendErrorResponse(error);

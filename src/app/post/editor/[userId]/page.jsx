@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import dynamic from 'next/dynamic';
 import axios from 'axios';
+import { ERRORS } from 'constants/errors';
 
 const Editor = dynamic(() => import('@src/components/Editor'), {
   ssr: false,
@@ -41,7 +42,7 @@ function PostEditPage({ params }) {
             setError(response.data.message);
           }
         } catch (e) {
-          setError('포스트를 불러오는 중 문제가 발생하였습니다.');
+          setError(ERRORS.POST_LOADING_ERROR);
         }
       };
 

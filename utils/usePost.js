@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import axios from 'axios';
+import { ERRORS } from 'constants/errors';
 
 export const usePost = (postId) => {
   const [post, setPost] = useState(null);
@@ -12,7 +13,7 @@ export const usePost = (postId) => {
       return setErrorMessage(error.response.data.message);
     }
 
-    return setErrorMessage('알 수 없는 오류가 발생했습니다.');
+    return setErrorMessage(ERRORS.UNKNOWN_ERROR);
   };
 
   useEffect(() => {

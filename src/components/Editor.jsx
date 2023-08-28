@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import axios from 'axios';
 import EditorJS from '@editorjs/editorjs';
 import ImageTool from '@editorjs/image';
+import { ERRORS } from 'constants/errors';
 
 function Editor({ author, postId, title, content, error, setError, isModify }) {
   const ref = useRef(null);
@@ -43,7 +44,7 @@ function Editor({ author, postId, title, content, error, setError, isModify }) {
     const outputData = await ref.current.save();
 
     if (!title || !outputData.blocks.length) {
-      setError('제목과 내용을 모두 작성해주세요.');
+      setError(ERRORS.TITLE_CONTENT_REQUIRED);
       return;
     }
 
@@ -66,8 +67,8 @@ function Editor({ author, postId, title, content, error, setError, isModify }) {
       router.push(`/posts/${author}`);
     } catch {
       const errorMessage = isModify
-        ? '수정에 실패하였습니다. 다시 시도해주세요.'
-        : '저장에 실패하였습니다. 다시 시도해주세요.';
+        ? ERRORS.EDITOR_EDIT_FAILED
+        : ERRORS.EDITOR_SAVE_FAILED;
 
       setError(errorMessage);
     }

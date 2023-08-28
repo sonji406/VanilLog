@@ -12,6 +12,7 @@ import { validateObjectId } from '@utils/validateObjectId';
 import { getLastPartOfUrl } from '@utils/getLastPartOfUrl';
 import { getSessionFromRequest } from '@utils/getSessionFromRequest';
 import { isLoggedInUser } from '@utils/isLoggedInUser';
+import { SUCCESS } from 'constants/success';
 
 /**
  * 댓글 수정 API
@@ -43,7 +44,7 @@ async function PUT(request, { params }) {
 
     return NextResponse.json({
       status: 200,
-      message: '댓글 수정이 완료되었습니다.',
+      message: SUCCESS.COMMENT_PUT,
     });
   } catch (error) {
     return sendErrorResponse(error);
@@ -108,7 +109,7 @@ async function DELETE(request) {
 
     return NextResponse.json({
       status: 200,
-      message: 'Comment deleted successfully.',
+      message: SUCCESS.COMMENT_DELETE,
     });
   } catch (error) {
     return sendErrorResponse(error);

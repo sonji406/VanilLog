@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { useSession } from 'next-auth/react';
 import axios from 'axios';
+import { ERRORS } from 'constants/errors';
 
 export const useComments = (postId) => {
   const [commentText, setCommentText] = useState('');
@@ -14,7 +15,7 @@ export const useComments = (postId) => {
       setErrorMessage(error.response.data.message);
     }
 
-    return setErrorMessage('알 수 없는 오류가 발생했습니다.');
+    return setErrorMessage(ERRORS.UNKNOWN_ERROR);
   };
 
   const handleCommentSubmit = async () => {
@@ -23,7 +24,7 @@ export const useComments = (postId) => {
     const commentAuthorId = session?.mongoId;
 
     if (!commentAuthorId) {
-      setErrorMessage('로그인이 필요합니다.');
+      setErrorMessage(ERRORS.LOGIN_REQUIRED);
       return;
     }
 

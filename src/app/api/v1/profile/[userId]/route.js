@@ -9,6 +9,7 @@ import { validateObjectId } from '@utils/validateObjectId';
 import { findById } from '@utils/findById';
 import { getLastPartOfUrl } from '@utils/getLastPartOfUrl';
 import { getSessionFromRequest } from '@utils/getSessionFromRequest';
+import { SUCCESS } from 'constants/success';
 
 /**
  * 유저 프로필 조회 API
@@ -96,7 +97,7 @@ async function PUT(request) {
     return NextResponse.json({
       status: 200,
       data: {
-        message: '닉네임이 성공적으로 업데이트되었습니다',
+        message: SUCCESS.PROFILE_PUT,
       },
     });
   } catch (error) {

@@ -7,6 +7,7 @@ import { StatisticsBox } from './StatisticsBox';
 import { BurgerMenu } from './BurgerMenu';
 import axios from 'axios';
 import { usePathname } from 'next/navigation';
+import { ERRORS } from 'constants/errors';
 
 function SideNavbar() {
   const { data } = useSession();
@@ -29,7 +30,7 @@ function SideNavbar() {
 
         setProfile(response.data.data);
       } catch (e) {
-        setError('프로필을 불러오는 중 문제가 발생했습니다.');
+        setError(ERRORS.PROFILE_LOADING_ERROR);
       }
     };
 
