@@ -1,14 +1,17 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
+  mode: 'jit',
   content: ['./src/**/*.jsx'],
   theme: {
     extend: {
-      fontFamily: {
-        sans: ['Pretendard', 'Ambit', 'sans-serif'],
+      placeholderColor: {
+        white: '#ffffff',
       },
-      colors: {
-        logo: '#0044ff',
-      },
+    },
+  },
+  variants: {
+    extend: {
+      placeholderColor: ['active', 'focus'],
     },
   },
   plugins: [],

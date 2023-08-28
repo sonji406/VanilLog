@@ -62,32 +62,31 @@ function PostList({ blogUserId }) {
   }
 
   return (
-    <div className='w-screen px-5'>
+    <div className='px-5 mt-[45px] mx-auto'>
       {error && <div>{error}</div>}
       {searchValue && (
         <div>
           {blogUserId && '이 블로그에서'} {searchValue}(으)로 검색한 결과입니다
         </div>
       )}
-
-      <div className='flex flex-wrap gap-x-8 gap-y-4 justify-center'>
-        {posts.length > 0 ? (
+      <div className='flex flex-wrap gap-x-8 gap-y-4'>
+        {posts.length > 0 &&
           posts.map((post) => {
             return (
-              <Link key={post._id} href={`/post/${post.author}/${post._id}`}>
-                <PostItem post={post} />
-              </Link>
+              <div
+                key={post._id}
+                className='border-solid border-[#97B1A6] border-2'
+              >
+                <Link href={`/post/${post.author}/${post._id}`}>
+                  <PostItem post={post} />
+                </Link>
+              </div>
             );
-          })
-        ) : (
-          <div className='text-xl font-light text-center w-full py-10 bg-gray-100 rounded-lg shadow-md'>
-            현재 블로그에 작성된 포스트가 없습니다.
-          </div>
-        )}
+          })}
       </div>
 
       <div className='flex justify-between items-center mt-4'>
-        <div className='flex justify-center flex-grow'>
+        <div className='flex justify-start flex-grow'>
           {pageNumbers.map((number) => (
             <Link
               key={number}
@@ -100,20 +99,20 @@ function PostList({ blogUserId }) {
             >
               <button
                 type='button'
-                className='text-xl text-white font-bold bg-[#0044ff] rounded-lg hover:bg-[#0000ff] py-2 px-3 mx-1'
+                className='text-xl text-white font-bold bg-[#E77D67] rounded-full hover:bg-[#0D2DA2] hover:text-[#7F7F80] w-8 h-8 m-0.5'
               >
                 {number}
               </button>
             </Link>
           ))}
         </div>
-        <div>
-          <Link href={`/post/editor/${loggedInUserId}`}>
-            <button className='text-xl text-white font-bold bg-[#0044ff] rounded-lg hover:bg-[#0000ff] py-2 px-8'>
-              포스트 작성하기
-            </button>
-          </Link>
-        </div>
+      </div>
+      <div className='flex justify-end'>
+        <Link href={`/post/editor/${loggedInUserId}`}>
+          <button className='text-xl text-white font-bold bg-[#E77D67] rounded-full hover:bg-[#0D2DA2] hover:text-[#7F7F80] py-2 px-8'>
+            포스트 작성하기
+          </button>
+        </Link>
       </div>
     </div>
   );

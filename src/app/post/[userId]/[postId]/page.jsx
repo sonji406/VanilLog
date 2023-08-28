@@ -34,8 +34,10 @@ export default function PostDetailPage({ params }) {
 
   return (
     <div className='bg-gray-100 min-h-screen p-10'>
-      <PostDetail userId={userId} postId={postId} />
-      <CommentsContainer postId={postId} />
+      <div className='container mx-auto'>
+        <PostDetail userId={userId} postId={postId} />
+        <CommentsContainer postId={postId} />
+      </div>
     </div>
   );
 }
