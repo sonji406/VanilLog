@@ -35,6 +35,12 @@ export default function PostDetail({ userId, postId }) {
       )}
 
       <div className='bg-white rounded-lg shadow-xl p-8 mx-auto max-w-3xl'>
+        <div className='author-link'>
+          <a href={`/posts/${userId}`} style={{ color: 'blue' }}>
+            작성자의 블로그
+          </a>
+        </div>
+
         <PostContent title={post.title} content={post.content} />
 
         {userId === session?.mongoId && (
