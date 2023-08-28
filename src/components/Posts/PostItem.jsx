@@ -5,10 +5,12 @@ function getRandomColor() {
     'bg-[#FDEACA]',
     'bg-[#A8C9EA]',
     'bg-[#92DAD9]',
-    'bg-[#ECA4A4]',
+    'bg-[#FFBDBD]',
     'bg-[#F7E2E1]',
-    'bg-[#7AA7D2]',
     'bg-[#DCE0EB]',
+    'bg-[#D1FFD3]',
+    'bg-[#F5E8FF]',
+    'bg-[#FFFFC4]',
   ];
   return colors[Math.floor(Math.random() * colors.length)];
 }
