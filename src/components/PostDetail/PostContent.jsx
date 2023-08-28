@@ -10,8 +10,12 @@ function PostContent({ title, content }) {
         {content.blocks.map((item) => {
           if (item.type === 'image') {
             return (
-              <div key={item.id} className='my-4'>
-                <img src={item.data.file.url} alt={item.data.file.name} />
+              <div key={item.id} className='my-4 text-center'>
+                <img
+                  src={item.data.file.url}
+                  alt={item.data.file.name}
+                  style={{ margin: 'auto', display: 'block' }}
+                />
                 <p className='text-sm italic text-gray-600 mt-2'>
                   {item.data.caption}
                 </p>
