@@ -8,6 +8,7 @@ import { LogoutButton } from './LogoutButton';
 import { usePathname } from 'next/navigation';
 import { getLastPartOfUrl } from '@utils/getLastPartOfUrl';
 import { ERRORS } from 'constants/errors';
+import axios from 'axios';
 
 function Navbar() {
   const { data, status } = useSession();
@@ -63,7 +64,7 @@ function Navbar() {
             </Link>
           ) : (
             <>
-              <div>
+              <div className='rounded-full bg-white w-9 h-9 flex flex-col items-center justify-center relative overflow-hidden'>
                 {error ? (
                   <p className='text-red'>{error}</p>
                 ) : (
@@ -77,7 +78,7 @@ function Navbar() {
                   )
                 )}
               </div>
-              <div className="ml-4 font-['DiaGothicMedium'] ml-4 text-[#E4E5EA] text-xl">
+              <div className="font-['DiaGothicMedium'] ml-1 text-[#E4E5EA] text-xl">
                 {profile.nickname}
               </div>
               <Link
