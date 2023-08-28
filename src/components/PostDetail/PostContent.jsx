@@ -19,6 +19,9 @@ function PostContent({ title, content }) {
                   width={60}
                   height={40}
                 />
+                <p className='text-sm italic text-gray-600 mt-2'>
+                  {item.data.caption}
+                </p>
               </div>
             );
           }
