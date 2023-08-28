@@ -38,7 +38,7 @@ function PostList({ blogUserId }) {
               params: { userId: blogUserId, page, limit },
             });
 
-        if (response.data.status !== 200) {
+        if (response.data.status !== 'success') {
           setError(response.data.message);
           return;
         }
@@ -68,15 +68,21 @@ function PostList({ blogUserId }) {
           {blogUserId && '이 블로그에서'} {searchValue}(으)로 검색한 결과입니다
         </div>
       )}
+
       <div className='flex flex-wrap gap-x-8 gap-y-4 justify-center'>
-        {posts.length > 0 &&
+        {posts.length > 0 ? (
           posts.map((post) => {
             return (
               <Link key={post._id} href={`/post/${post.author}/${post._id}`}>
                 <PostItem post={post} />
               </Link>
             );
-          })}
+          })
+        ) : (
+          <div className='text-xl font-light text-center w-full py-10 bg-gray-100 rounded-lg shadow-md'>
+            현재 블로그에 작성된 포스트가 없습니다.
+          </div>
+        )}
       </div>
 
       <div className='flex justify-between items-center mt-4'>

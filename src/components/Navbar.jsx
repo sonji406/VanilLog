@@ -2,7 +2,7 @@
 
 import { useSession } from 'next-auth/react';
 import Link from 'next/link';
-import Image from 'next/image';
+import Image from 'next/legacy/image';
 import { LogoutButton } from './LogoutButton';
 import { usePathname } from 'next/navigation';
 import { getLastPartOfUrl } from '@utils/getLastPartOfUrl';
