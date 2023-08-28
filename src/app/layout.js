@@ -1,9 +1,10 @@
+import { METAINFO } from 'constants/metaInfo';
 import { AuthSession } from './AuthSession';
 import './globals.css';
 
 export const metadata = {
-  title: { default: 'VanilLog' },
-  description: { default: 'VanilLog post page' },
+  title: { default: METAINFO.DEFAULT.TITLE },
+  description: { default: METAINFO.DEFAULT.DESCRIPTION },
 };
 
 export default function RootLayout({ children }) {

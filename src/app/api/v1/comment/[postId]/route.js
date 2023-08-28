@@ -5,7 +5,7 @@ import dbConnect from '@lib/dbConnect';
 import Post from '@models/Post';
 import User from '@models/User';
 import Comment from '@models/Comment';
-import { ERRORS } from '@utils/errors';
+import { ERRORS } from 'constants/errors';
 import { sendErrorResponse } from '@utils/response';
 import { validateObjectId } from '@utils/validateObjectId';
 import { getLastPartOfUrl } from '@utils/getLastPartOfUrl';

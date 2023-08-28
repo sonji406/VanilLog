@@ -1,4 +1,4 @@
-import { ERRORS } from '@utils/errors';
+import { ERRORS } from 'constants/errors';
 
 export async function verifyPostAuthor(post, session) {
   if (post.author.toString() !== session.mongoId) {

@@ -73,6 +73,10 @@ const UNAUTHORIZED_USER = {
   MESSAGE: '자신의 프로필만 조회할 수 있습니다.',
 };
 
+const MONGODB_URI_NOT_FOUND = {
+  MESSAGE: 'Please define the MONGODB_URI environment variable inside .env',
+};
+
 export const ERRORS = {
   INVALID_USER_ID,
   INVALID_JSON,
@@ -89,4 +93,5 @@ export const ERRORS = {
   NOT_COMMENT_AUTHOR,
   UNAUTHORIZED_USER,
   COMMENT_USER_NOT_LOGGED_IN,
+  MONGODB_URI_NOT_FOUND,
 };

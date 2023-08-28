@@ -1,6 +1,6 @@
 import PostDetail from '@src/components/PostDetail/PostDetail';
 import CommentsContainer from '@src/components/Comment/CommentsContainer';
-import { METAINFO } from '@utils/metaInfo';
+import { METAINFO } from 'constants/metaInfo';
 import axios from 'axios';
 
 export async function generateMetadata({ params }) {
