@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import axios from 'axios';
 import EditorJS from '@editorjs/editorjs';
@@ -76,7 +76,7 @@ function Editor({ author, postId, title, content, error, setError, isModify }) {
 
   return (
     <>
-      <div className='border-2 border-black my-4'>
+      <div className='border-2 border-black rounded bg-white my-4'>
         <div id='editorjs' />
       </div>
       <div>

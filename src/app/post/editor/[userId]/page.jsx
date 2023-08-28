@@ -54,7 +54,7 @@ function PostEditPage({ params }) {
     <>
       <div className='flex justify-center'>
         <div className='w-[800px] text-center mt-6'>
-          <div className='flex items-center justify-center border-2 border-black'>
+          <div className='flex items-center rounded justify-center border-2 border-black bg-white'>
             <input
               type='text'
               placeholder='제목을 입력하세요'
