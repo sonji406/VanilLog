@@ -14,9 +14,9 @@ function ProfileBox({ profile, error }) {
         <div className='text-center'>
           <div className='rounded-full bg-white p-3 shadow-[0_0_10px_5px rgba(0, 0, 0, 0.3)]'>
             <div className='rounded-full bg-white w-48 h-48 flex flex-col items-center justify-center relative overflow-hidden'>
-              {!profileImage ? (
+              {error ? (
                 <p className='text-red'>{error}</p>
-              ) : userId ? (
+              ) : profileImage ? (
                 <Image
                   src={profileImage}
                   alt='프로필 사진'
