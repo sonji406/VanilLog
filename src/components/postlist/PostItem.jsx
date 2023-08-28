@@ -28,9 +28,9 @@ function PostItem({ post }) {
   const randomColor = getRandomColor();
 
   return (
-    <div className='w-[350px] h-[400px] flex flex-col items-center'>
-      <div className='w-full h-full card bg-white transform transition-transform duration-200 hover:scale-105'>
-        <div className='w-full h-[300px] relative'>
+    <div className='w-[400x] h-[250px] flex flex-col items-center'>
+      <div className='w-[200px] h-[250px] card bg-white transform transition-transform duration-200 hover:scale-105'>
+        <div className='w-full h-[170px] relative'>
           {imageUrl ? (
             <Image
               className='object-cover'
@@ -39,12 +39,12 @@ function PostItem({ post }) {
               layout='fill'
             />
           ) : (
-            <div className={`w-full h-[300px] ${randomColor}`} />
+            <div className={`w-full h-[170px] ${randomColor}`} />
           )}
         </div>
         <div className='p-4'>
-          <div className='card-title text-2xl font-bold'>{title}</div>{' '}
-          <div className='card-description text-base text-gray-400 mt-2 truncate w-full'>
+          <div className='card-title text-l font-bold'>{title}</div>{' '}
+          <div className='card-description text-sm text-gray-400 mt-2 truncate w-full'>
             {textValue}
           </div>
         </div>
