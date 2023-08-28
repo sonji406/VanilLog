@@ -32,12 +32,12 @@ function PostEditPage({ params }) {
         try {
           const response = await axios.get(`/api/v1/post/${postId}`);
 
-          if (response.data.status === 'success') {
+          if (response.data.status === 200) {
             setTitle(response.data.data.title);
             setContent(response.data.data.content);
           }
 
-          if (response.data.status !== 'success') {
+          if (response.data.status !== 200) {
             setError(response.data.message);
           }
         } catch (e) {

@@ -22,7 +22,7 @@ function SideNavbar() {
       try {
         const response = await axios.get(`/api/v1/profile/${userId}`);
 
-        if (response.data.status !== 'success') {
+        if (response.data.status !== 200) {
           setError(response.data.message);
           return;
         }

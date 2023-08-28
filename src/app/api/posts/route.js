@@ -7,7 +7,7 @@ async function POST(request, response) {
   await dbConnect();
 
   const successResponse = {
-    status: 'success',
+    status: 200,
   };
 
   const failureResponse = {

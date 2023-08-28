@@ -58,7 +58,7 @@ function Editor({ author, postId, title, content, error, setError, isModify }) {
         ? await axios.put(`/api/v1/post/${postId}`, postData)
         : await axios.post('/api/v1/post', postData);
 
-      if (response.data.status !== 'success') {
+      if (response.data.status !== 200) {
         setError(response.data.message);
         return;
       }

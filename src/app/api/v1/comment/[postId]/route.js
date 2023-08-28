@@ -60,7 +60,7 @@ async function POST(request) {
     );
 
     return NextResponse.json({
-      status: 'success',
+      status: 200,
       data: newComment,
     });
   } catch (error) {
@@ -96,7 +96,7 @@ async function GET(request) {
       .exec();
 
     return NextResponse.json({
-      status: 'success',
+      status: 200,
       data: comments,
     });
   } catch (error) {

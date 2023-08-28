@@ -29,7 +29,7 @@ function CommentsContainer({ postId }) {
       try {
         const response = await axios.get(`/api/v1/comment/${postId}`);
 
-        if (response.data.status === 'success') {
+        if (response.data.status === 200) {
           setComments(response.data.data);
         }
       } catch (error) {}

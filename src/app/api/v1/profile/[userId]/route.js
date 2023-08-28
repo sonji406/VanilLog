@@ -34,7 +34,7 @@ async function GET(request) {
     const userProfile = await findById(User, userId, ERRORS.USER_NOT_FOUND);
 
     return NextResponse.json({
-      status: 'success',
+      status: 200,
       data: userProfile,
     });
   } catch (error) {
@@ -94,7 +94,7 @@ async function PUT(request) {
     await User.findByIdAndUpdate(userId, { nickname }).exec();
 
     return NextResponse.json({
-      status: 'success',
+      status: 200,
       data: {
         message: '닉네임이 성공적으로 업데이트되었습니다',
       },

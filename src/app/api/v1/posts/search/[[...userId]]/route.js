@@ -59,7 +59,7 @@ async function GET(request, { params }) {
     const totalPosts = await Post.countDocuments(findOption);
 
     return NextResponse.json({
-      status: 'success',
+      status: 200,
       data: posts,
       totalPosts: totalPosts,
     });

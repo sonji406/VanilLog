@@ -31,7 +31,7 @@ async function GET(request) {
     const post = await findById(Post, postId, ERRORS.POST_NOT_FOUND);
 
     return NextResponse.json({
-      status: 'success',
+      status: 200,
       data: post,
     });
   } catch (error) {
@@ -69,7 +69,7 @@ async function DELETE(request) {
     });
 
     return NextResponse.json({
-      status: 'success',
+      status: 200,
       data: {
         message: '포스트가 성공적으로 삭제되었습니다',
         post: deletedPost,
@@ -127,7 +127,7 @@ async function PUT(request) {
     }
 
     return NextResponse.json({
-      status: 'success',
+      status: 200,
       data: {
         message: '포스트가 성공적으로 업데이트되었습니다',
         post: updatedPost,

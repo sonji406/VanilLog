@@ -38,7 +38,7 @@ function PostList({ blogUserId }) {
               params: { userId: blogUserId, page, limit },
             });
 
-        if (response.data.status !== 'success') {
+        if (response.data.status !== 200) {
           setError(response.data.message);
           return;
         }

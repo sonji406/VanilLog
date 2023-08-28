@@ -22,7 +22,7 @@ export const useImageUpload = (userId) => {
           `/api/v1/profile/updateImage/${userId}`,
           { imageUrl },
         );
-        if (updateResponse.data && updateResponse.data.status === 'success') {
+        if (updateResponse.data && updateResponse.data.status === 200) {
           setUploadedImage(imageUrl);
         }
       }

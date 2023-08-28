@@ -33,7 +33,7 @@ async function PUT(request) {
     await User.findByIdAndUpdate(userId, { profileImage: imageUrl }).exec();
 
     return NextResponse.json({
-      status: 'success',
+      status: 200,
       message: '프로필 이미지가 성공적으로 업데이트되었습니다',
     });
   } catch (error) {
