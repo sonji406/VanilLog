@@ -86,7 +86,9 @@ function PostList({ blogUserId }) {
         </div>
       ) : (
         <div className='flex justify-center items-center h-[50vh]'>
-          현재 해당 블로그에 작성된 포스트가 없습니다.
+          {searchValue
+            ? '검색 결과가 없습니다.'
+            : '현재 작성된 포스트가 없습니다.'}
         </div>
       )}
 
