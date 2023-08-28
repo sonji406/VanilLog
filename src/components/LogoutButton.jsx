@@ -7,7 +7,12 @@ function LogoutButton() {
 
   return (
     <>
-      <button onClick={handleSignOut}>Logout</button>
+      <button
+        className="font-['DiaGothicBold'] ml-4 text-[#D28782] text-xl mb-1 hover:text-[#0C151C]"
+        onClick={handleSignOut}
+      >
+        Logout
+      </button>
     </>
   );
 }

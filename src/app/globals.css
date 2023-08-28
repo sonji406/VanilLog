@@ -3,10 +3,15 @@
 @tailwind utilities;
 
 @font-face {
-  font-family: 'DiaGothic';
+  font-family: 'DiaGothicMedium';
   src: url('../../public/fonts/KBO\ Dia\ Gothic_medium.ttf');
 }
 
+@font-face {
+  font-family: 'DiaGothicBold';
+  src: url('../../public/fonts/KBO\ Dia\ Gothic_bold.ttf');
+}
+
 body {
-  @apply flex items-center justify-center h-screen font-sans bg-[#EDF2F7];
+  @apply flex items-center justify-center h-screen font-sans bg-[#E4E5EA];
 }

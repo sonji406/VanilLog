@@ -19,10 +19,10 @@ function Navbar() {
   }
 
   return (
-    <nav className='fixed top-0 left-0 w-full h-[48px] z-50 bg-[#249D8C]'>
-      <div className='flex justify-between items-center shadow-md shadow-gray-400 p-2 px-8'>
+    <nav className='fixed top-0 left-0 w-full h-[55px] z-50 bg-[#16354D]'>
+      <div className='flex justify-between h-full items-center shadow-md shadow-gray-400 p-2 px-6 max-w-[1920px] mx-auto'>
         <Link href='/'>
-          <span className="font-['DiaGothic'] text-[#F4C84B] text-2xl font-bold">
+          <span className="fon  t-['DiaGothicMedium'] text-[#E4E5EA] text-3xl font-bold">
             vanilLog
           </span>
         </Link>
@@ -31,17 +31,22 @@ function Navbar() {
           {status === 'unauthenticated' ? (
             <Link
               href='/auth/login'
-              className="font-['DiaGothic'] ml-4 text-[#9a8e5e] text-xl"
+              className="font-['DiaGothicMedium'] ml-4 text-[#E4E5EA] text-xl"
             >
               Login
             </Link>
           ) : (
             <>
-              <div className='ml-4'>{data?.name}님 반갑습니다.</div>
-              <LogoutButton />
-              <Link href={`/posts/${userId}`} className='ml-4'>
-                내 블로그
+              <div className="ml-4 font-['DiaGothicMedium'] ml-4 text-[#E4E5EA] text-xl">
+                {data?.name}
+              </div>
+              <Link
+                href={`/posts/${userId}`}
+                className="ml-4 font-['DiaGothicBold'] ml-4 text-[#EBC678] text-xl mb-1 hover:text-[#E4E5EA]"
+              >
+                MyLog
               </Link>
+              <LogoutButton />
             </>
           )}
           <form
