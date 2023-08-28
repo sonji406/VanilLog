@@ -1,8 +1,8 @@
 'use client';
 
+import { useState } from 'react';
 import { useSession } from 'next-auth/react';
 import Link from 'next/link';
-import Image from 'next/legacy/image';
 import { LogoutButton } from './LogoutButton';
 import { usePathname } from 'next/navigation';
 import { getLastPartOfUrl } from '@utils/getLastPartOfUrl';
@@ -19,55 +19,56 @@ function Navbar() {
   }
 
   return (
-    <div className='fixed top-0 left-0 w-full z-50 bg-[#e0e0e0]'>
-      <div className='flex justify-between items-center shadow-md shadow-gray-400'>
+    <nav className='fixed top-0 left-0 w-full h-[48px] z-50 bg-[#249D8C]'>
+      <div className='flex justify-between items-center shadow-md shadow-gray-400 p-2 px-8'>
         <Link href='/'>
-          <Image
-            src='/image/blogLogo.png'
-            alt='blogLogo'
-            width={40}
-            height={40}
-          ></Image>
+          <span className="font-['DiaGothic'] text-[#F4C84B] text-2xl font-bold">
+            vanilLog
+          </span>
         </Link>
-        {status === 'unauthenticated' ? (
-          <>
-            <Link href='/auth/login' className='ml-4'>
-              로그인
+
+        <div className='flex items-center'>
+          {status === 'unauthenticated' ? (
+            <Link
+              href='/auth/login'
+              className="font-['DiaGothic'] ml-4 text-[#9a8e5e] text-xl"
+            >
+              Login
             </Link>
-            <p className='ml-4'>내 블로그</p>
-          </>
-        ) : (
-          <>
-            <div className='ml-4'>{data?.name}님 반갑습니다.</div>
-            <LogoutButton />
-            <Link href={`/posts/${userId}`} className='ml-4'>
-              내 블로그
-            </Link>
-          </>
-        )}
-        <form
-          action={blogUserId ? `/posts/${blogUserId}` : '/posts'}
-          method='get'
-          className='flex ml-4'
-        >
-          <input
-            className='py-1 bg-[#e0e0e0]'
-            type='text'
-            name='q'
-            placeholder='Search...'
-            required
-          />
-          <input type='hidden' name='page' value='1' />
-          <input type='hidden' name='limit' value='10' />
-          <button
-            className='text-lg text-white font-semibold bg-blue-500 hover:bg-[#0044ff] py-1 px-3 rounded-lg shadow-md shadow-gray-500'
-            type='submit'
+          ) : (
+            <>
+              <div className='ml-4'>{data?.name}님 반갑습니다.</div>
+              <LogoutButton />
+              <Link href={`/posts/${userId}`} className='ml-4'>
+                내 블로그
+              </Link>
+            </>
+          )}
+          <form
+            action={blogUserId ? `/posts/${blogUserId}` : '/posts'}
+            method='get'
+            className='flex ml-4'
           >
-            통합검색
-          </button>
-        </form>
+            <div>
+              <input
+                className='px-3 py-1 bg-[#f9f7ed] rounded-full placeholder-white focus:border-none focus:outline-none'
+                type='text'
+                name='q'
+                required
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter') {
+                    e.preventDefault();
+                    e.currentTarget.form.submit();
+                  }
+                }}
+              />
+            </div>
+            <input type='hidden' name='page' value='1' />
+            <input type='hidden' name='limit' value='10' />
+          </form>
+        </div>
       </div>
-    </div>
+    </nav>
   );
 }
 

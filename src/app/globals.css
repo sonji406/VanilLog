@@ -3,10 +3,10 @@
 @tailwind utilities;
 
 @font-face {
-  font-family: 'Ambit';
-  src:
-    url('../../public/fonts/AmbitTRIAL-Bold.otf') format('otf'),
-    url('../../public/fonts/AmbitTRIAL-BoldItalic.otf') format('otf');
-  font-weight: normal;
-  font-style: normal;
+  font-family: 'DiaGothic';
+  src: url('../../public/fonts/KBO\ Dia\ Gothic_medium.ttf');
+}
+
+body {
+  @apply flex items-center justify-center h-screen font-sans bg-[#F1E1D2];
 }
