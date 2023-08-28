@@ -6,7 +6,9 @@ function LoginPage() {
     <div className='text-center font-sans'>
       <div className='mt-32 mb-20'>
         <Link href='/'>
-          <span className='text-9xl text-logo font-bold'>vanilLog</span>
+          <span className="text-9xl text-[#16354D] font-['DiaGothicMedium'] font-bold">
+            vanilLog
+          </span>
         </Link>
       </div>
       <div>
