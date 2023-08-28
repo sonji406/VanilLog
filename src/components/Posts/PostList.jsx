@@ -21,6 +21,7 @@ function PostList({ blogUserId }) {
 
   const [posts, setPosts] = useState([]);
   const [totalPosts, setTotalPosts] = useState(0);
+  const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
 
   const searchApi = blogUserId
@@ -30,6 +31,7 @@ function PostList({ blogUserId }) {
 
   useEffect(() => {
     const fetchData = async () => {
+      setIsLoading(true);
       try {
         const response = searchValue
           ? await axios.get(searchApi, {
@@ -48,6 +50,8 @@ function PostList({ blogUserId }) {
         setTotalPosts(response.data.totalPosts);
       } catch (e) {
         setError(ERRORS.POST_LOADING_ERROR);
+      } finally {
+        setIsLoading(false);
       }
     };
 
@@ -64,63 +68,72 @@ function PostList({ blogUserId }) {
   return (
     <div className='px-5 mt-[22px] mx-auto'>
       {error && <div>{error}</div>}
-      {searchValue && (
-        <div>
-          {blogUserId && '이 블로그에서'} {searchValue}(으)로 검색한 결과입니다
-        </div>
-      )}
-      {posts.length > 0 ? (
-        <div className='flex justify-center flex-wrap gap-x-8 gap-y-4'>
-          {posts.map((post) => {
-            return (
-              <div
-                key={post._id}
-                className='border-solid border-white border-8 shadow-md'
-              >
-                <Link href={`/post/${post.author}/${post._id}`}>
-                  <PostItem post={post} />
-                </Link>
-              </div>
-            );
-          })}
+      {isLoading ? (
+        <div className='flex justify-center items-center h-[50vh]'>
+          로딩 중...
         </div>
       ) : (
-        <div className='flex justify-center items-center h-[50vh]'>
-          {searchValue
-            ? '검색 결과가 없습니다.'
-            : '현재 작성된 포스트가 없습니다.'}
-        </div>
-      )}
+        <>
+          {searchValue && (
+            <div>
+              {blogUserId && '이 블로그에서'} {searchValue}(으)로 검색한
+              결과입니다
+            </div>
+          )}
+          {posts.length > 0 ? (
+            <div className='flex justify-center flex-wrap gap-x-8 gap-y-4'>
+              {posts.map((post) => {
+                return (
+                  <div
+                    key={post._id}
+                    className='border-solid border-white border-8 shadow-md'
+                  >
+                    <Link href={`/post/${post.author}/${post._id}`}>
+                      <PostItem post={post} />
+                    </Link>
+                  </div>
+                );
+              })}
+            </div>
+          ) : (
+            <div className='flex justify-center items-center h-[50vh]'>
+              {searchValue
+                ? '검색 결과가 없습니다.'
+                : '현재 작성된 포스트가 없습니다.'}
+            </div>
+          )}
 
-      <div className='flex justify-between items-center mt-4'>
-        <div className='flex justify-center flex-grow'>
-          {pageNumbers.map((number) => (
-            <Link
-              key={number}
-              href={`/posts/${postListHref(
-                blogUserId,
-                searchValue,
-                number,
-                limit,
-              )}`}
-            >
-              <button
-                type='button'
-                className='w-10 h-10 m-0.5 text-xl text-white font-bold bg-[#6B99C3] border-2 border-white border-inherit rounded-full hover:bg-[#16354D] hover:text-[#E4E5EA]'
-              >
-                {number}
+          <div className='flex justify-between items-center mt-4'>
+            <div className='flex justify-center flex-grow'>
+              {pageNumbers.map((number) => (
+                <Link
+                  key={number}
+                  href={`/posts/${postListHref(
+                    blogUserId,
+                    searchValue,
+                    number,
+                    limit,
+                  )}`}
+                >
+                  <button
+                    type='button'
+                    className='w-10 h-10 m-0.5 text-xl text-white font-bold bg-[#6B99C3] border-2 border-white border-inherit rounded-full hover:bg-[#16354D] hover:text-[#E4E5EA]'
+                  >
+                    {number}
+                  </button>
+                </Link>
+              ))}
+            </div>
+          </div>
+          <div className='flex justify-end mr-4'>
+            <Link href={`/post/editor/${loggedInUserId}`}>
+              <button className='text-xl text-white font-bold bg-[#6B99C3] border-4 border-white border-inherit rounded-full hover:bg-[#16354D] hover:text-[#E4E5EA] py-2 px-8'>
+                포스트 작성하기
               </button>
             </Link>
-          ))}
-        </div>
-      </div>
-      <div className='flex justify-end mr-4'>
-        <Link href={`/post/editor/${loggedInUserId}`}>
-          <button className='text-xl text-white font-bold bg-[#6B99C3] border-4 border-white border-inherit rounded-full hover:bg-[#16354D] hover:text-[#E4E5EA] py-2 px-8'>
-            포스트 작성하기
-          </button>
-        </Link>
-      </div>
+          </div>
+        </>
+      )}
     </div>
   );
 }
