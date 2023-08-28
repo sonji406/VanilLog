@@ -1,5 +1,7 @@
 'use client';
 
+import { useState, useEffect } from 'react';
+
 function NicknameEditor({
   editing,
   toggleEditing,
@@ -8,38 +10,69 @@ function NicknameEditor({
   updateNickname,
   message,
 }) {
+  const [showMessage, setShowMessage] = useState(false);
+
+  useEffect(() => {
+    if (message) {
+      setShowMessage(true);
+      const timer = setTimeout(() => {
+        setShowMessage(false);
+      }, 2000);
+
+      return () => {
+        clearTimeout(timer);
+      };
+    }
+  }, [message]);
+
   return (
-    <div className='mb-5'>
-      <label className='font-bold mb-2 block'>내 닉네임:</label>
+    <div
+      className='shadow rounded-lg p-5 bg-white space-y-4 mb-5'
+      style={{ margin: '20px' }}
+    >
+      <h2 className='flex justify-center font-semibold text-lg text-gray-700'>
+        내 닉네임
+      </h2>
       {editing ? (
         <>
           <input
             type='text'
             value={nickname}
             onChange={(e) => setNickname(e.target.value)}
-            className='border px-2 py-1 rounded block w-full mb-3'
+            className='border px-2 py-1 rounded w-full block'
           />
-          <div className='flex justify-between items-center'>
+          <div className='flex justify-end space-x-2 mt-2'>
             <button
               onClick={updateNickname}
-              className='bg-logo text-white px-4 py-2 rounded'
+              className='bg-[#16354D] hover:bg-black text-white px-3 py-1 text-sm rounded shadow'
             >
               저장
             </button>
+            <button
+              onClick={toggleEditing}
+              className='bg-red-500 hover:bg-red-600 text-white px-3 py-1 text-sm rounded shadow'
+            >
+              취소
+            </button>
           </div>
-          <div className='mt-2 text-sm text-blue-600'>{message}</div>
         </>
       ) : (
         <>
-          <div className='mb-2'>{nickname}</div>
-          <button
-            onClick={toggleEditing}
-            className='bg-logo text-white px-4 py-2 rounded'
-          >
-            닉네임 수정하기
-          </button>
-          <div className='mt-2 text-sm text-blue-600'>{message}</div>
+          <div className='flex justify-center'>{nickname}</div>
+          <div className='flex justify-end'>
+            <button
+              onClick={toggleEditing}
+              className='bg-[#16354D] hover:bg-black text-white px-3 py-1 text-sm rounded'
+            >
+              변경하기
+            </button>
+          </div>
         </>
+      )}
+      {showMessage && (
+        <div className='flex justify-center text-sm text-blue-600'>
+          {message}
+        </div>
       )}
     </div>
   );
