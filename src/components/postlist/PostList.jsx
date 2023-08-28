@@ -69,9 +69,9 @@ function PostList({ blogUserId }) {
           {blogUserId && '이 블로그에서'} {searchValue}(으)로 검색한 결과입니다
         </div>
       )}
-      <div className='flex justify-center flex-wrap gap-x-8 gap-y-4'>
-        {posts.length > 0 &&
-          posts.map((post) => {
+      {posts.length > 0 ? (
+        <div className='flex justify-center flex-wrap gap-x-8 gap-y-4'>
+          {posts.map((post) => {
             return (
               <div
                 key={post._id}
@@ -83,7 +83,12 @@ function PostList({ blogUserId }) {
               </div>
             );
           })}
-      </div>
+        </div>
+      ) : (
+        <div className='flex justify-center items-center h-[50vh]'>
+          현재 해당 블로그에 작성된 포스트가 없습니다.
+        </div>
+      )}
 
       <div className='flex justify-between items-center mt-4'>
         <div className='flex justify-start flex-grow'>
