@@ -34,12 +34,12 @@ function ProfileBox({ profile, error }) {
           </div>
           {userId && (
             <>
-              <div className='mt-2'>
+              <div className='mt-5 mb-5'>
                 <strong>{nickname}</strong>
               </div>
               <Link href={`/profile/${userId}`}>
                 <button className='text-base text-blue-500 font-bold hover:text-[#0044ff] py-2 px-4'>
-                  프로필 수정/통계
+                  프로필 정보/수정
                 </button>
               </Link>
             </>
