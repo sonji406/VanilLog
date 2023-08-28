@@ -39,9 +39,12 @@ export default function ProfilePage({ params }) {
   }
 
   return (
-    <div className='flex flex-col items-center justify-center p-20 mt-[100px]'>
+    <div className='flex flex-col items-center justify-center p-20'>
       <div className='flex w-full mt-10'>
-        <div className='flex-1 pr-10 border-r flex flex-col items-center justify-center'>
+        <div
+          style={{ flex: 1 }}
+          className='pr-10 border-r flex flex-col items-center justify-center'
+        >
           <ProfileImageUploader
             uploadedImage={uploadedImage}
             userProfile={userProfile}
@@ -50,7 +53,7 @@ export default function ProfilePage({ params }) {
           />
         </div>
 
-        <div className='flex-1 pl-10'>
+        <div style={{ flex: 3 }} className='pl-10'>
           <NicknameEditor
             editing={isEditingNickname}
             toggleEditing={toggleEditing}
