@@ -1,18 +1,44 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useSession } from 'next-auth/react';
+import Image from 'next/legacy/image';
 import Link from 'next/link';
 import { LogoutButton } from './LogoutButton';
 import { usePathname } from 'next/navigation';
 import { getLastPartOfUrl } from '@utils/getLastPartOfUrl';
+import { ERRORS } from 'constants/errors';
 
 function Navbar() {
   const { data, status } = useSession();
   const userId = data?.mongoId;
+  const [profile, setProfile] = useState([]);
+  const [error, setError] = useState(null);
+
   const pathname = usePathname();
   const pattern = /^\/posts\/[0-9a-fA-F]{24}$/;
   const blogUserId = pattern.test(pathname) ? getLastPartOfUrl(pathname) : '';
+
+  useEffect(() => {
+    if (userId) {
+      const profileData = async () => {
+        try {
+          const response = await axios.get(`/api/v1/profile/${userId}`);
+
+          if (response.data.status !== 200) {
+            setError(response.data.message);
+            return;
+          }
+
+          setProfile(response.data.data);
+        } catch (e) {
+          setError(ERRORS.PROFILE_LOADING_ERROR);
+        }
+      };
+
+      profileData();
+    }
+  }, [userId]);
 
   if (status === 'loading') {
     return <p>Loading...</p>;
@@ -37,8 +63,22 @@ function Navbar() {
             </Link>
           ) : (
             <>
+              <div>
+                {error ? (
+                  <p className='text-red'>{error}</p>
+                ) : (
+                  profile.profileImage && (
+                    <Image
+                      src={profile.profileImage}
+                      alt='프로필 사진'
+                      layout='fill'
+                      priority
+                    />
+                  )
+                )}
+              </div>
               <div className="ml-4 font-['DiaGothicMedium'] ml-4 text-[#E4E5EA] text-xl">
-                {data?.name}
+                {profile.nickname}
               </div>
               <Link
                 href={`/posts/${userId}`}
