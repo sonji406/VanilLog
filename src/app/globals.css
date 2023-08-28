@@ -8,5 +8,5 @@
 }
 
 body {
-  @apply flex items-center justify-center h-screen font-sans bg-[#F1E1D2];
+  @apply flex items-center justify-center h-screen font-sans bg-[#EDF2F7];
 }
