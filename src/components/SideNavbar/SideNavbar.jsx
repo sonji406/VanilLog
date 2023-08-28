@@ -51,7 +51,7 @@ function SideNavbar() {
 
         <div>
           <nav
-            className={`fixed top-0 left-0 h-full w-64 bg-[#DFE1E0] transform shadow-2xl shadow-gray-800 flex flex-col items-center ${
+            className={`fixed top-0 left-0 h-full w-64 bg-[#E4E5EA] transform shadow-2xl shadow-gray-800 flex flex-col items-center ${
               isOpen ? 'translate-x-0' : '-translate-x-full'
             } transition-transform duration-500`}
             onMouseLeave={() => setIsOpen(false)}
