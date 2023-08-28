@@ -41,10 +41,6 @@ function Navbar() {
     }
   }, [userId]);
 
-  if (status === 'loading') {
-    return <p>Loading...</p>;
-  }
-
   return (
     <nav className='fixed top-0 left-0 w-full h-[55px] z-50 bg-[#16354D]'>
       <div className='flex justify-between h-full items-center shadow-md shadow-gray-400 p-2 px-6 max-w-[1920px] mx-auto'>

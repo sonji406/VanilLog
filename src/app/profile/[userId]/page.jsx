@@ -31,11 +31,13 @@ export default function ProfilePage({ params }) {
   );
 
   if (loading) {
-    return <div>프로필을 불러오는 중입니다.</div>;
+    return (
+      <div className='flex justify-center'>프로필을 불러오는 중입니다.</div>
+    );
   }
 
   if (error) {
-    return <div>Error: {error}</div>;
+    return <div className='flex justify-center'>Error: {error}</div>;
   }
 
   return (

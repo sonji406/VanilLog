@@ -20,7 +20,8 @@ export default function PostDetail({ userId, postId }) {
 
   const errorMessage = postError || commentError;
 
-  if (!post) return <div>포스트를 불러오는 중...</div>;
+  if (!post)
+    return <div className='flex justify-center'>포스트를 불러오는 중...</div>;
 
   return (
     <>
