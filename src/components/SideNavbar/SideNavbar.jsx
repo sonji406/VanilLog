@@ -36,7 +36,7 @@ function SideNavbar() {
   }, [userId]);
 
   return (
-    <div className='relative'>
+    <div className='relative z-10'>
       <label
         className='fixed top-4 left-4 z-10 rounded-full bg-blue-500  hover:bg-[#0044ff] p-3 cursor-pointer mt-[45px] shadow-md shadow-gray-500'
         title='menu'
