@@ -25,13 +25,13 @@ function BlogLink({ sessionId }) {
       <h2 className='flex justify-center font-semibold text-lg text-gray-700 border-b border-gray-400 pb-3'>
         내 블로그 링크
       </h2>
-      <div className='flex justify-center text-[#16354D] text-lg'>
+      <div
+        className='flex justify-center text-[#16354D] text-lg'
+        onMouseEnter={() => setHovered(true)}
+        onMouseLeave={() => setHovered(false)}
+      >
         <Link href={`/posts/${sessionId}`}>
-          <span
-            onMouseEnter={() => setHovered(true)}
-            onMouseLeave={() => setHovered(false)}
-            className={`${hovered ? 'text-[#16354D]' : ''}`}
-          >
+          <span className={`${hovered ? 'text-[#16354D]' : ''}`}>
             {hovered ? '내 블로그로 이동하기' : url}
           </span>
         </Link>
