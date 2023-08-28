@@ -73,6 +73,11 @@ const UNAUTHORIZED_USER = {
   MESSAGE: '자신의 프로필만 조회할 수 있습니다.',
 };
 
+const MISSING_POST_FIELDS = {
+  STATUS_CODE: 400,
+  MESSAGE: '필수로 입력해야 하는 포스트의 필드가 누락되었습니다.',
+};
+
 export const ERRORS = {
   INVALID_USER_ID,
   INVALID_JSON,
@@ -89,4 +94,5 @@ export const ERRORS = {
   NOT_COMMENT_AUTHOR,
   UNAUTHORIZED_USER,
   COMMENT_USER_NOT_LOGGED_IN,
+  MISSING_POST_FIELDS,
 };
