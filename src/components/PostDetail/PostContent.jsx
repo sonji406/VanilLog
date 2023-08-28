@@ -1,5 +1,3 @@
-import Image from 'next/image';
-
 function PostContent({ title, content }) {
   return (
     <div className='bg-white rounded-lg p-8 mx-auto max-w-3xl'>
@@ -13,12 +11,7 @@ function PostContent({ title, content }) {
           if (item.type === 'image') {
             return (
               <div key={item.id} className='my-4'>
-                <Image
-                  src={item.data.file.url}
-                  alt={item.data.file.name}
-                  width={60}
-                  height={40}
-                />
+                <img src={item.data.file.url} alt={item.data.file.name} />
                 <p className='text-sm italic text-gray-600 mt-2'>
                   {item.data.caption}
                 </p>
