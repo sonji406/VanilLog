@@ -10,7 +10,7 @@ export const useComments = (postId) => {
   const { data: session } = useSession();
 
   const handleError = (error) => {
-    if (error.response && error.response.data.status !== 'success') {
+    if (error.response && error.response.data.status !== 200) {
       setErrorMessage(error.response.data.message);
     }
 
@@ -33,7 +33,7 @@ export const useComments = (postId) => {
         author: commentAuthorId,
       });
 
-      if (response.data.status === 'success') {
+      if (response.data.status === 200) {
         setCommentText('');
 
         return response.data.data;

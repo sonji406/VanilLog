@@ -38,7 +38,7 @@ async function POST(request) {
       $push: { blogPosts: post._id },
     });
 
-    return NextResponse.json({ status: 'success', data: post });
+    return NextResponse.json({ status: 200, data: post });
   } catch (error) {
     return sendErrorResponse(error);
   }

@@ -42,7 +42,7 @@ async function PUT(request, { params }) {
     await currentComment.save();
 
     return NextResponse.json({
-      status: 'success',
+      status: 200,
       message: '댓글 수정이 완료되었습니다.',
     });
   } catch (error) {
@@ -107,7 +107,7 @@ async function DELETE(request) {
     );
 
     return NextResponse.json({
-      status: 'success',
+      status: 200,
       message: 'Comment deleted successfully.',
     });
   } catch (error) {

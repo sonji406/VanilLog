@@ -10,7 +10,7 @@ export const useUserProfile = (userId, session) => {
     const fetchData = async () => {
       try {
         const response = await axios.get(`/api/v1/profile/${userId}`);
-        if (response.data.status !== 'success') {
+        if (response.data.status !== 200) {
           throw new Error(response.data.message);
         }
         setUserProfile(response.data.data);

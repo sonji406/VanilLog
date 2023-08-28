@@ -8,7 +8,7 @@ export const usePost = (postId) => {
   const [errorMessage, setErrorMessage] = useState(null);
 
   const handleError = (error) => {
-    if (error.response && error.response.data.status !== 'success') {
+    if (error.response && error.response.data.status !== 200) {
       return setErrorMessage(error.response.data.message);
     }
 
@@ -21,7 +21,7 @@ export const usePost = (postId) => {
       try {
         const response = await axios.get(`/api/v1/post/${postId}`);
 
-        if (response.data.status === 'success') {
+        if (response.data.status === 200) {
           return setPost(response.data.data);
         }
 
@@ -37,7 +37,7 @@ export const usePost = (postId) => {
     try {
       const response = await axios.delete(`/api/v1/post/${postId}`);
 
-      if (response.data.status === 'success') {
+      if (response.data.status === 200) {
         return router.push(`/posts/${userId}`);
       }
 

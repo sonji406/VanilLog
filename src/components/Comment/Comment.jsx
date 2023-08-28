@@ -30,7 +30,7 @@ function Comment({ commentInfo }) {
         `/api/v1/comment/${postId}/${commentId}`,
         { comment: editedComment },
       );
-      if (response.data.status === 'success') {
+      if (response.data.status === 200) {
         setIsEditing(false);
       }
     } catch (error) {
@@ -44,7 +44,7 @@ function Comment({ commentInfo }) {
       const response = await axios.delete(
         `/api/v1/comment/${postId}/${commentId}`,
       );
-      if (response.data.status === 'success') {
+      if (response.data.status === 200) {
         setIsDeleted(true);
       }
     } catch (error) {

@@ -1,5 +1,3 @@
-import Image from 'next/image';
-
 function PostContent({ title, content }) {
   return (
     <div className='bg-white rounded-lg p-8 mx-auto max-w-3xl'>
