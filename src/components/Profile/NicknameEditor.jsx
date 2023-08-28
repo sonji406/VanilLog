@@ -30,7 +30,7 @@ function NicknameEditor({
       className='shadow rounded-lg p-5 bg-white space-y-4 mb-5'
       style={{ margin: '20px' }}
     >
-      <h2 className='flex justify-center font-semibold text-lg text-gray-700'>
+      <h2 className='flex justify-center font-semibold text-lg text-gray-700 border-b border-gray-400 pb-3'>
         내 닉네임
       </h2>
       {editing ? (

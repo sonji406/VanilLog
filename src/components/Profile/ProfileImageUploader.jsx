@@ -18,7 +18,7 @@ function ProfileImageUploader({
         onChange={handleImageUpload}
       />
       <div className='rounded-full bg-white p-3 shadow-[0_0_10px_5px rgba(0, 0, 0, 0.3)]'>
-        <div className='rounded-full bg-white w-48 h-48 flex flex-col items-center justify-center relative overflow-hidden border-2 border-white'>
+        <div className='rounded-full bg-white w-60 h-60 flex flex-col items-center justify-center relative overflow-hidden border-2 border-white'>
           <Image
             src={
               uploadedImage ||

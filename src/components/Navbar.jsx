@@ -78,7 +78,7 @@ function Navbar() {
                   )
                 )}
               </div>
-              <div className="font-['DiaGothicMedium'] ml-1 text-[#E4E5EA] text-xl">
+              <div className="font-['DiaGothicMedium'] ml-1 text-[#E4E5EA] text-xl pl-2">
                 {profile.nickname}
               </div>
               <Link

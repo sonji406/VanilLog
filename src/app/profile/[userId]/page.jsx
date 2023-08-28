@@ -39,7 +39,7 @@ export default function ProfilePage({ params }) {
   }
 
   return (
-    <div className='flex flex-col items-center justify-center p-20'>
+    <div className='flex flex-col items-center justify-center p-20 pr-80 pl-80'>
       <div className='flex w-full mt-10'>
         <div
           style={{ flex: 1 }}
@@ -53,7 +53,7 @@ export default function ProfilePage({ params }) {
           />
         </div>
 
-        <div style={{ flex: 3 }} className='pl-10'>
+        <div style={{ flex: 2 }} className='pl-10 w-[700px]'>
           <NicknameEditor
             editing={isEditingNickname}
             toggleEditing={toggleEditing}
