@@ -19,29 +19,31 @@ function SideNavbar() {
   const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
-    const profileData = async () => {
-      try {
-        const response = await axios.get(`/api/v1/profile/${userId}`);
+    if (userId) {
+      const profileData = async () => {
+        try {
+          const response = await axios.get(`/api/v1/profile/${userId}`);
 
-        if (response.data.status !== 200) {
-          setError(response.data.message);
-          return;
+          if (response.data.status !== 200) {
+            setError(response.data.message);
+            return;
+          }
+
+          setProfile(response.data.data);
+        } catch (e) {
+          setError(ERRORS.PROFILE_LOADING_ERROR);
         }
+      };
 
-        setProfile(response.data.data);
-      } catch (e) {
-        setError(ERRORS.PROFILE_LOADING_ERROR);
-      }
-    };
-
-    profileData();
+      profileData();
+    }
   }, [userId]);
 
   return (
     pathname.startsWith('/profile') || (
       <div className='relative z-10'>
         <label
-          className='fixed top-4 left-4 z-10 rounded-full bg-blue-500  hover:bg-[#0044ff] p-3 cursor-pointer mt-[45px] shadow-md shadow-gray-500'
+          className='fixed top-4 left-4 z-10 rounded-full bg-[#6B99C3]  hover:bg-[#16354D] p-3 cursor-pointer mt-[45px] shadow-md shadow-gray-500'
           title='menu'
           onMouseEnter={() => setIsOpen(true)}
         >
