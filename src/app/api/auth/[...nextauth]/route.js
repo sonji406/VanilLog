@@ -55,6 +55,9 @@ const handler = NextAuth({
     async session({ token }) {
       return token;
     },
+    async redirect({ url, baseUrl }) {
+      return baseUrl;
+    },
   },
   secret: process.env.NEXTAUTH_SECRET,
 });
