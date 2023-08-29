@@ -13,5 +13,5 @@
 }
 
 body {
-  @apply flex items-center justify-center h-screen font-sans bg-[#E4E5EA];
+  @apply mt-[70px] items-center justify-center h-screen font-sans bg-gray-100;
 }

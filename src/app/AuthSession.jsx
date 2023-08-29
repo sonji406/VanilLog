@@ -8,7 +8,7 @@ function AuthSession({ children }) {
   return (
     <SessionProvider>
       <Navbar />
-      <div className='w-full h-auto md:w-[1280px] lg:w-[1600px] xl:w-[1920px] mx-auto'>
+      <div className='h-auto w-[1280px] mx-auto'>
         <SideNavbar />
         {children}
       </div>
