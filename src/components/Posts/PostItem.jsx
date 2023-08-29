@@ -45,8 +45,8 @@ function PostItem({ post }) {
           )}
         </div>
         <div className='p-4'>
-          <div className='card-title text-l font-bold'>{title}</div>{' '}
-          <div className='card-description text-sm text-gray-400 mt-2 truncate w-full'>
+          <div className='text-l font-bold truncate'>{title}</div>{' '}
+          <div className='text-sm text-gray-400 mt-2 truncate w-full'>
             {textValue}
           </div>
         </div>
