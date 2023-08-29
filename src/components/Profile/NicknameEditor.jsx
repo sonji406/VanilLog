@@ -11,6 +11,7 @@ function NicknameEditor({
   message,
 }) {
   const [showMessage, setShowMessage] = useState(false);
+  const [tempNickname, setTempNickname] = useState(nickname);
 
   useEffect(() => {
     if (message) {
@@ -24,6 +25,20 @@ function NicknameEditor({
       };
     }
   }, [message]);
+
+  const handleToggleEditing = () => {
+    setTempNickname(nickname);
+    toggleEditing();
+  };
+
+  const handleCancel = () => {
+    toggleEditing();
+    setNickname(tempNickname);
+  };
+
+  const handleSave = () => {
+    updateNickname();
+  };
 
   return (
     <div
@@ -43,13 +58,13 @@ function NicknameEditor({
           />
           <div className='flex justify-end space-x-2 mt-2'>
             <button
-              onClick={updateNickname}
+              onClick={handleSave}
               className='bg-[#16354D] hover:bg-black text-white px-3 py-1 text-sm rounded shadow'
             >
               저장
             </button>
             <button
-              onClick={toggleEditing}
+              onClick={handleCancel}
               className='bg-red-500 hover:bg-red-600 text-white px-3 py-1 text-sm rounded shadow'
             >
               취소
@@ -61,7 +76,7 @@ function NicknameEditor({
           <div className='flex justify-center'>{nickname}</div>
           <div className='flex justify-end'>
             <button
-              onClick={toggleEditing}
+              onClick={handleToggleEditing}
               className='bg-[#16354D] hover:bg-black text-white px-3 py-1 text-sm rounded'
             >
               변경하기
