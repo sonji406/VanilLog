@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server';
 import createError from 'http-errors';
 import dbConnect from '@lib/dbConnect';
 import Post from '@models/Post';
-import { ERRORS } from '@utils/errors';
+import { ERRORS } from 'constants/errors';
 import { sendErrorResponse } from '@utils/response';
 import { validateObjectId } from '@utils/validateObjectId';
 
@@ -59,7 +59,7 @@ async function GET(request, { params }) {
     const totalPosts = await Post.countDocuments(findOption);
 
     return NextResponse.json({
-      status: 'success',
+      status: 200,
       data: posts,
       totalPosts: totalPosts,
     });

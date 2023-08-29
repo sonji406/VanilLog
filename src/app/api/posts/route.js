@@ -2,12 +2,13 @@ import mongoose from 'mongoose';
 import { NextResponse } from 'next/server';
 import dbConnect from '@lib/dbConnect';
 import Post from '@models/Post';
+import { ERRORS } from 'constants/errors';
 
 async function POST(request, response) {
   await dbConnect();
 
   const successResponse = {
-    status: 'success',
+    status: 200,
   };
 
   const failureResponse = {
@@ -18,7 +19,10 @@ async function POST(request, response) {
     const { title, content, author } = await request.json();
 
     if (!title || !content || !author) {
-      throw { message: '값이 누락되었습니다.', status: 400 };
+      throw {
+        message: ERRORS.MISSING_PARAMETERS.MESSAGE,
+        status: ERRORS.MISSING_PARAMETERS.STATUS_CODE,
+      };
     }
 
     const _id = new mongoose.Types.ObjectId();

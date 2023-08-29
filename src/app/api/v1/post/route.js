@@ -1,12 +1,17 @@
+import createDOMPurify from 'dompurify';
+import { JSDOM } from 'jsdom';
 import createError from 'http-errors';
 import { NextResponse } from 'next/server';
 
 import dbConnect from '@lib/dbConnect';
 import Post from '@models/Post';
 import User from '@models/User';
-import { ERRORS } from '@utils/errors';
+import { ERRORS } from 'constants/errors';
 import { sendErrorResponse } from '@utils/response';
 import { validateObjectId } from '@utils/validateObjectId';
+
+const window = new JSDOM('').window;
+const DOMPurify = createDOMPurify(window);
 
 /**
  * 포스트 생성 API
@@ -17,7 +22,24 @@ async function POST(request) {
   await dbConnect();
 
   try {
-    const { title, content, author } = await request.json();
+    const parsedData = await request.json();
+    let { title, content, author } = parsedData;
+
+    title = DOMPurify.sanitize(title);
+    author = DOMPurify.sanitize(author);
+
+    if (!content || !content.blocks || !Array.isArray(content.blocks)) {
+      throw new Error(ERRORS.MISSING_POST_FIELDS.MESSAGE);
+    }
+
+    content.blocks = content.blocks.map((block) => {
+      if (block.type === 'paragraph') {
+        block.data.text = DOMPurify.sanitize(block.data.text);
+      } else if (block.type === 'image') {
+        block.data.caption = DOMPurify.sanitize(block.data.caption);
+      }
+      return block;
+    });
 
     if (!title || !content || !author) {
       throw createError(
@@ -38,7 +60,7 @@ async function POST(request) {
       $push: { blogPosts: post._id },
     });
 
-    return NextResponse.json({ status: 'success', data: post });
+    return NextResponse.json({ status: 200, data: post });
   } catch (error) {
     return sendErrorResponse(error);
   }

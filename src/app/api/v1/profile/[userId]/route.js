@@ -3,12 +3,13 @@ import { NextResponse } from 'next/server';
 
 import dbConnect from '@lib/dbConnect';
 import User from '@models/User';
-import { ERRORS } from '@utils/errors';
+import { ERRORS } from 'constants/errors';
 import { sendErrorResponse } from '@utils/response';
 import { validateObjectId } from '@utils/validateObjectId';
 import { findById } from '@utils/findById';
 import { getLastPartOfUrl } from '@utils/getLastPartOfUrl';
 import { getSessionFromRequest } from '@utils/getSessionFromRequest';
+import { SUCCESS } from 'constants/success';
 
 /**
  * 유저 프로필 조회 API
@@ -34,7 +35,7 @@ async function GET(request) {
     const userProfile = await findById(User, userId, ERRORS.USER_NOT_FOUND);
 
     return NextResponse.json({
-      status: 'success',
+      status: 200,
       data: userProfile,
     });
   } catch (error) {
@@ -94,9 +95,9 @@ async function PUT(request) {
     await User.findByIdAndUpdate(userId, { nickname }).exec();
 
     return NextResponse.json({
-      status: 'success',
+      status: 200,
       data: {
-        message: '닉네임이 성공적으로 업데이트되었습니다',
+        message: SUCCESS.PROFILE_PUT,
       },
     });
   } catch (error) {

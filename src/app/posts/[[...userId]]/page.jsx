@@ -1,5 +1,5 @@
-import { PostList } from '@src/components/PostList/PostList';
-import { METAINFO } from '@utils/metaInfo';
+import { PostList } from '@src/components/Posts/PostList';
+import { METAINFO } from 'constants/metaInfo';
 import axios from 'axios';
 
 export async function generateMetadata({ params }) {

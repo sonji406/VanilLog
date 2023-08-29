@@ -1,10 +1,11 @@
 'use client';
 
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import axios from 'axios';
 import EditorJS from '@editorjs/editorjs';
 import ImageTool from '@editorjs/image';
+import { ERRORS } from 'constants/errors';
 
 function Editor({ author, postId, title, content, error, setError, isModify }) {
   const ref = useRef(null);
@@ -43,7 +44,7 @@ function Editor({ author, postId, title, content, error, setError, isModify }) {
     const outputData = await ref.current.save();
 
     if (!title || !outputData.blocks.length) {
-      setError('제목과 내용을 모두 작성해주세요.');
+      setError(ERRORS.TITLE_CONTENT_REQUIRED);
       return;
     }
 
@@ -58,7 +59,7 @@ function Editor({ author, postId, title, content, error, setError, isModify }) {
         ? await axios.put(`/api/v1/post/${postId}`, postData)
         : await axios.post('/api/v1/post', postData);
 
-      if (response.data.status !== 'success') {
+      if (response.data.status !== 200) {
         setError(response.data.message);
         return;
       }
@@ -66,8 +67,8 @@ function Editor({ author, postId, title, content, error, setError, isModify }) {
       router.push(`/posts/${author}`);
     } catch {
       const errorMessage = isModify
-        ? '수정에 실패하였습니다. 다시 시도해주세요.'
-        : '저장에 실패하였습니다. 다시 시도해주세요.';
+        ? ERRORS.EDITOR_EDIT_FAILED
+        : ERRORS.EDITOR_SAVE_FAILED;
 
       setError(errorMessage);
     }
@@ -75,18 +76,20 @@ function Editor({ author, postId, title, content, error, setError, isModify }) {
 
   return (
     <>
-      <div className='border-2 border-black my-4'>
-        <div id='editorjs' />
+      <div className='border-2 border-gray-300 rounded-lg mb-6'>
+        <div className='mt-2 ml-6'>
+          <div id='editorjs' />
+        </div>
       </div>
       <div>
+        <div className='text-red-700 text-center'>{error}</div>
         <button
           onClick={postSave}
-          className='text-xl text-white font-bold bg-[#0044ff] rounded-lg hover:bg-[#0000ff] py-2 px-8 w-full'
+          className='text-xl text-white font-bold bg-[#6B99C3] rounded-full hover:bg-[#16354D] py-2 px-8 w-full'
         >
-          Save
+          저장하기
         </button>
       </div>
-      <div className='text-red-700 p-4'>{error}</div>
     </>
   );
 }

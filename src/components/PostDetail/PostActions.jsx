@@ -9,7 +9,7 @@ function PostActions({ userId, postId, session, onShowDeleteModal }) {
     <div className='flex justify-end mb-8 space-x-4'>
       <button
         onClick={() => router.push(`/post/editor/${userId}/${postId}`)}
-        className='bg-logo text-white py-2 px-4 rounded'
+        className='bg-blue-500 text-white py-2 px-4 rounded'
       >
         수정하기
       </button>

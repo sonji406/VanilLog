@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 import { S3 } from '@aws-sdk/client-s3';
 import createError from 'http-errors';
-import { ERRORS } from '@utils/errors';
+import { ERRORS } from 'constants/errors';
 import { sendErrorResponse } from '@utils/response';
 
 const s3Data = new S3({

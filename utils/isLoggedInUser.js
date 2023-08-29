@@ -1,4 +1,4 @@
-import { ERRORS } from './errors';
+import { ERRORS } from '../constants/errors';
 import { getSessionFromRequest } from './getSessionFromRequest';
 import { validateObjectId } from './validateObjectId';
 

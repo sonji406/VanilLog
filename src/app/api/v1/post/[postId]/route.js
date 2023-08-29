@@ -5,13 +5,14 @@ import { JSDOM } from 'jsdom';
 import Post from '@models/Post';
 import User from '@models/User';
 import dbConnect from '@lib/dbConnect';
-import { ERRORS } from '@utils/errors';
+import { ERRORS } from 'constants/errors';
 import { sendErrorResponse } from '@utils/response';
 import { validateObjectId } from '@utils/validateObjectId';
 import { findById } from '@utils/findById';
 import { getLastPartOfUrl } from '@utils/getLastPartOfUrl';
 import { getSessionFromRequest } from '@utils/getSessionFromRequest';
 import { verifyPostAuthor } from '@utils/verifyPostAuthor';
+import { SUCCESS } from 'constants/success';
 
 const window = new JSDOM('').window;
 const DOMPurify = createDOMPurify(window);
@@ -31,7 +32,7 @@ async function GET(request) {
     const post = await findById(Post, postId, ERRORS.POST_NOT_FOUND);
 
     return NextResponse.json({
-      status: 'success',
+      status: 200,
       data: post,
     });
   } catch (error) {
@@ -69,9 +70,9 @@ async function DELETE(request) {
     });
 
     return NextResponse.json({
-      status: 'success',
+      status: 200,
       data: {
-        message: '포스트가 성공적으로 삭제되었습니다',
+        message: SUCCESS.POST_DELETE,
         post: deletedPost,
       },
     });
@@ -127,9 +128,9 @@ async function PUT(request) {
     }
 
     return NextResponse.json({
-      status: 'success',
+      status: 200,
       data: {
-        message: '포스트가 성공적으로 업데이트되었습니다',
+        message: SUCCESS.POST_PUT,
         post: updatedPost,
       },
     });

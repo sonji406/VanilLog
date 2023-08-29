@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
+import { SUCCESS } from 'constants/success';
 
 export const useNicknameUpdate = (userId, initialNickname, toggleEditing) => {
   const [nickname, setNickname] = useState(initialNickname || '');
@@ -16,10 +17,10 @@ export const useNicknameUpdate = (userId, initialNickname, toggleEditing) => {
       const response = await axios.put(`/api/v1/profile/${userId}`, {
         nickname,
       });
-      if (response.data.status !== 'success') {
+      if (response.data.status !== 200) {
         throw new Error(response.data.message);
       }
-      setMessage('닉네임이 성공적으로 업데이트되었습니다');
+      setMessage(SUCCESS.NICKNAME_UPDATE);
       toggleEditing();
       return nickname;
     } catch (error) {

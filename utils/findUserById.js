@@ -1,6 +1,6 @@
 import createError from 'http-errors';
 import User from '@models/User';
-import { ERRORS } from '@utils/errors';
+import { ERRORS } from 'constants/errors';
 
 export async function findUserById(userId) {
   const user = await User.findOne({ _id: userId }).lean().exec();
