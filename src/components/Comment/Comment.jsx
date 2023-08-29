@@ -56,17 +56,25 @@ function Comment({ commentInfo }) {
     <div className='border-t pt-4'>
       <div className='flex justify-between items-center mb-2'>
         <span className='text-gray-500'>{commentInfo.author.nickname}</span>
-        {isAuthor &&
-          (isEditing ? (
-            <button
-              onClick={handleEdit}
-              className='text-xs text-gray-700 bg-gray-300 hover:bg-gray-400 py-0 px-1 rounded'
-            >
-              확인
-            </button>
-          ) : (
-            <>
-              <div>
+        {isAuthor && (
+          <div>
+            {isEditing ? (
+              <>
+                <button
+                  onClick={handleEdit}
+                  className='text-xs text-gray-700 bg-gray-300 hover:bg-gray-400 py-0 px-1 rounded'
+                >
+                  확인
+                </button>
+                <button
+                  onClick={() => setIsEditing(false)} // 취소 버튼을 클릭하면 에디트 모드를 꺼줍니다.
+                  className='ml-2 text-xs text-gray-700 bg-gray-300 hover:bg-gray-400 py-0 px-1 rounded'
+                >
+                  취소
+                </button>
+              </>
+            ) : (
+              <>
                 <button
                   onClick={() => setIsEditing(true)}
                   className='text-xs text-gray-700 bg-gray-300 hover:bg-gray-400 py-0 px-1 rounded'
@@ -79,14 +87,15 @@ function Comment({ commentInfo }) {
                 >
                   삭제
                 </button>
-                {error && (
-                  <span className='ml-2 text-red-500'>
-                    댓글을 수정/삭제할 수 없습니다.
-                  </span>
-                )}
-              </div>
-            </>
-          ))}
+              </>
+            )}
+            {error && (
+              <span className='ml-2 text-red-500'>
+                댓글을 수정/삭제할 수 없습니다.
+              </span>
+            )}
+          </div>
+        )}
       </div>
       {isEditing ? (
         <input
