@@ -38,6 +38,11 @@ function Comment({ commentInfo }) {
     }
   };
 
+  const handleCancel = () => {
+    setIsEditing(false);
+    setEditedComment(commentInfo.comment);
+  };
+
   const handleDelete = async () => {
     try {
       setError(null);
@@ -67,7 +72,7 @@ function Comment({ commentInfo }) {
                   확인
                 </button>
                 <button
-                  onClick={() => setIsEditing(false)} // 취소 버튼을 클릭하면 에디트 모드를 꺼줍니다.
+                  onClick={handleCancel}
                   className='ml-2 text-xs text-gray-700 bg-gray-300 hover:bg-gray-400 py-0 px-1 rounded'
                 >
                   취소
