@@ -44,11 +44,11 @@ function Navbar() {
   return (
     <nav className='fixed top-0 left-0 w-full h-[55px] z-50 bg-[#16354D]'>
       <div className='flex justify-between h-full items-center shadow-md shadow-gray-400 p-2 px-6 max-w-[1920px] mx-auto'>
-        <Link href='/'>
+        <a href='/'>
           <span className="font-['DiaGothicMedium'] text-[#E4E5EA] hover:text-[#6B99C3] text-3xl">
             vanilLog
           </span>
-        </Link>
+        </a>
 
         <div className='flex items-center'>
           {status === 'unauthenticated' ? (
