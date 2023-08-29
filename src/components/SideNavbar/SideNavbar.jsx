@@ -42,7 +42,7 @@ function SideNavbar() {
     pathname.startsWith('/profile') || (
       <div className='relative z-10'>
         <label
-          className='fixed top-8 left-4 z-10  bg-[#6B99C3] hover:bg-[#16354D] p-3 cursor-pointer mt-[45px] border-4 border-white border-inherit rounded-full'
+          className='fixed top-8 left-4 z-10 bg-[#6B99C3] hover:bg-[#16354D] p-3 cursor-pointer mt-[45px] border-4 border-white border-inherit rounded-full'
           title='menu'
           onMouseEnter={() => setIsOpen(true)}
         >
@@ -51,7 +51,7 @@ function SideNavbar() {
 
         <div>
           <nav
-            className={`fixed top-0 left-0 h-full w-64 bg-[#E4E5EA] transform shadow-2xl shadow-gray-800 flex flex-col items-center ${
+            className={`fixed top-0 left-0 h-full w-64 bg-gray-100 transform shadow-2xl shadow-gray-800 flex flex-col items-center ${
               isOpen ? 'translate-x-0' : '-translate-x-full'
             } transition-transform duration-500`}
             onMouseLeave={() => setIsOpen(false)}

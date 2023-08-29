@@ -34,7 +34,7 @@ function ProfileBox({ profile, error }) {
           </div>
           {userId && (
             <>
-              <div className='mt-5 mb-5'>
+              <div className="mt-5 mb-5 font-['DiaGothicBold']">
                 <strong>{nickname}</strong>
               </div>
               <Link href={`/profile/${userId}`}>
