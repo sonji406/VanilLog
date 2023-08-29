@@ -45,7 +45,7 @@ function Navbar() {
     <nav className='fixed top-0 left-0 w-full h-[55px] z-50 bg-[#16354D]'>
       <div className='flex justify-between h-full items-center shadow-md shadow-gray-400 p-2 px-6 max-w-[1920px] mx-auto'>
         <Link href='/'>
-          <span className="font-['DiaGothicMedium'] text-[#E4E5EA] hover:text-[#0C151C] text-3xl">
+          <span className="font-['DiaGothicMedium'] text-[#E4E5EA] hover:text-[#6B99C3] text-3xl">
             vanilLog
           </span>
         </Link>
@@ -54,7 +54,7 @@ function Navbar() {
           {status === 'unauthenticated' ? (
             <Link
               href='/auth/login'
-              className="font-['DiaGothicMedium'] ml-4 text-[#E4E5EA] text-xl"
+              className="font-['DiaGothicBold'] ml-4 text-[#6B99C3] text-xl mb-1 hover:text-[#16354D] py-1 px-2 rounded-full hover:bg-white mb-0.5"
             >
               Login
             </Link>
@@ -74,12 +74,12 @@ function Navbar() {
                   )
                 )}
               </div>
-              <div className="font-['DiaGothicMedium'] ml-1 text-[#E4E5EA] text-xl pl-2">
+              <div className="font-['DiaGothicBold'] mr-4 text-[#E4E5EA] text-xl pl-2">
                 {profile.nickname}
               </div>
               <Link
                 href={`/posts/${userId}`}
-                className="ml-4 font-['DiaGothicBold'] ml-4 text-[#c2daf0] text-xl mb-1 hover:text-[#0C151C]"
+                className="font-['DiaGothicBold'] text-[#c2daf0] text-xl py-1 px-2 rounded-full hover:bg-white hover:text-[#16354D] mb-0.5"
               >
                 MyLog
               </Link>

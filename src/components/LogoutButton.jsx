@@ -8,7 +8,7 @@ function LogoutButton() {
   return (
     <>
       <button
-        className="font-['DiaGothicBold'] ml-4 text-[#6B99C3] text-xl mb-1 hover:text-[#0C151C]"
+        className="font-['DiaGothicBold'] ml-4 text-[#6B99C3] text-xl py-1 px-2 rounded-full hover:bg-white hover:text-[#16354D] mb-0.5"
         onClick={handleSignOut}
       >
         Logout
