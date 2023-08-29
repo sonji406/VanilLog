@@ -1,4 +1,5 @@
 import Image from 'next/legacy/image';
+import { useState, useEffect } from 'react';
 
 function getRandomColor() {
   const colors = [
@@ -16,6 +17,12 @@ function getRandomColor() {
 }
 
 function PostItem({ post }) {
+  const [randomColor, setRandomColor] = useState('');
+
+  useEffect(() => {
+    setRandomColor(getRandomColor());
+  }, []);
+
   const imageContent = post.content.blocks.find(
     (block) => block.type === 'image',
   );
@@ -26,8 +33,6 @@ function PostItem({ post }) {
   const imageUrl = imageContent ? imageContent.data.file.url : '';
   const title = post.title;
   const textValue = textContent ? textContent.data.text : '';
-
-  const randomColor = getRandomColor();
 
   return (
     <div className='w-[400x] h-[250px] flex flex-col items-center'>

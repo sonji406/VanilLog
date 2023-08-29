@@ -22,6 +22,7 @@ function PostList({ blogUserId }) {
   const [posts, setPosts] = useState([]);
   const [totalPosts, setTotalPosts] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
+  const [buttonText, setButtonText] = useState('포스트 작성하기');
   const [error, setError] = useState(null);
 
   const searchApi = blogUserId
@@ -126,11 +127,36 @@ function PostList({ blogUserId }) {
             </div>
           </div>
           <div className='flex justify-end mr-4'>
-            <Link href={`/post/editor/${loggedInUserId}`}>
-              <button className='text-xl text-white font-bold bg-[#6B99C3] border-4 border-white border-inherit rounded-full hover:bg-[#16354D] hover:text-[#E4E5EA] py-2 px-8'>
-                포스트 작성하기
-              </button>
-            </Link>
+            <button
+              style={{
+                minWidth: '200px',
+                maxWidth: '300px',
+                minHeight: '50px',
+                maxHeight: '50px',
+              }}
+              className={`text-xl font-bold py-2 px-8 ${
+                loggedInUserId || buttonText !== '로그인 후 작성 가능'
+                  ? 'text-white bg-[#6B99C3] border-4 border-white border-inherit rounded-full hover:bg-[#16354D] hover:text-[#E4E5EA]'
+                  : ''
+              }`}
+              disabled={!loggedInUserId}
+              onMouseOver={() => {
+                if (!loggedInUserId) {
+                  setButtonText('로그인 후 작성 가능');
+                }
+              }}
+              onMouseOut={() => {
+                setButtonText('포스트 작성하기');
+              }}
+            >
+              {loggedInUserId ? (
+                <Link href={`/post/editor/${loggedInUserId}`}>
+                  {buttonText}
+                </Link>
+              ) : (
+                buttonText
+              )}
+            </button>
           </div>
         </>
       )}
