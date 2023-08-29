@@ -33,7 +33,7 @@ export default function PostDetailPage({ params }) {
   const postId = params.postId;
 
   return (
-    <div className='bg-gray-100 min-h-screen px-10'>
+    <div className='bg-gray-100 px-10'>
       <div className='container mx-auto'>
         <PostDetail userId={userId} postId={postId} />
         <CommentsContainer postId={postId} />

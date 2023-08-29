@@ -54,7 +54,7 @@ function Navbar() {
           {status === 'unauthenticated' ? (
             <Link
               href='/auth/login'
-              className="font-['DiaGothicBold'] ml-4 text-[#6B99C3] text-xl mb-1 hover:text-[#16354D] py-1 px-2 rounded-full hover:bg-white mb-0.5"
+              className="font-['DiaGothicBold'] text-[#6B99C3] text-xl mb-1 hover:text-[#16354D] py-1 px-2 rounded-full hover:bg-white mb-0.5"
             >
               Login
             </Link>
@@ -74,7 +74,7 @@ function Navbar() {
                   )
                 )}
               </div>
-              <div className="font-['DiaGothicBold'] mr-4 text-[#E4E5EA] text-xl pl-2">
+              <div className="font-['DiaGothicBold'] mr-2 text-[#E4E5EA] text-xl pl-1">
                 {profile.nickname}
               </div>
               <Link
@@ -89,7 +89,7 @@ function Navbar() {
           <form
             action={blogUserId ? `/posts/${blogUserId}` : '/posts'}
             method='get'
-            className='flex ml-4'
+            className='flex ml-2'
           >
             <div>
               <input

@@ -13,5 +13,5 @@
 }
 
 body {
-  @apply mt-[70px] items-center justify-center h-screen font-sans bg-gray-100;
+  @apply my-[70px] items-center justify-center font-sans bg-gray-100;
 }
