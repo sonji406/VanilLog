@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from 'react';
 import { useSession } from 'next-auth/react';
-import { ProfileBox } from './Profilebox';
+import { ProfileBox } from '@src/components/SideNavbar/ProfileBox';
 import { BurgerMenu } from './BurgerMenu';
 import axios from 'axios';
 import { usePathname } from 'next/navigation';
