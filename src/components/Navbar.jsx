@@ -93,9 +93,10 @@ function Navbar() {
           >
             <div>
               <input
-                className='px-3 py-1 bg-[#f9f7ed] rounded-full placeholder-white focus:border-none focus:outline-none'
+                className='px-3 py-1 bg-[#f9f7ed] rounded-full placeholder-gray focus:border-none focus:outline-none'
                 type='text'
                 name='q'
+                placeholder='Search...'
                 required
                 onKeyDown={(e) => {
                   if (e.key === 'Enter') {
