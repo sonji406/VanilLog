@@ -47,6 +47,10 @@ async function POST(request) {
       blogPost: postId,
     });
 
+    const authorInfo = await User.findById(author, 'nickname');
+
+    newComment.author = authorInfo;
+
     await Post.findByIdAndUpdate(
       postId,
       { $push: { comments: newComment._id } },
@@ -92,6 +96,7 @@ async function GET(request) {
     const comments = await Comment.find({
       _id: { $in: currentPost.comments },
     })
+      .populate({ path: 'author', select: 'nickname' })
       .lean()
       .exec();
 

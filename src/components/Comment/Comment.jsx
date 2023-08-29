@@ -13,7 +13,7 @@ function Comment({ commentInfo }) {
 
   const postId = commentInfo.blogPost;
   const commentId = commentInfo._id;
-  const isAuthor = session?.mongoId === commentInfo.author;
+  const isAuthor = session?.mongoId === commentInfo.author._id;
 
   if (!commentInfo || isDeleted) {
     return <></>;
@@ -54,49 +54,49 @@ function Comment({ commentInfo }) {
 
   return (
     <div className='border-t pt-4'>
-      {isEditing ? (
-        <p>
-          <input
-            type='text'
-            onChange={onChange}
-            className='w-full p-3 border rounded-md mb-4'
-          />
-        </p>
-      ) : (
-        <p className='mb-2'>{editedComment}</p>
-      )}
-      <span className='text-gray-500'>
-        작성자: {commentInfo.author}
+      <div className='flex justify-between items-center mb-2'>
+        <span className='text-gray-500'>{commentInfo.author.nickname}</span>
         {isAuthor &&
           (isEditing ? (
             <button
               onClick={handleEdit}
-              className='ml-2 text-sm text-gray-700 bg-gray-300 hover:bg-gray-400 py-1 px-2 rounded'
+              className='text-xs text-gray-700 bg-gray-300 hover:bg-gray-400 py-0 px-1 rounded'
             >
               확인
             </button>
           ) : (
             <>
-              <button
-                onClick={() => setIsEditing(true)}
-                className='ml-2 text-sm text-gray-700 bg-gray-300 hover:bg-gray-400 py-1 px-2 rounded'
-              >
-                수정
-              </button>
-              <button
-                onClick={handleDelete}
-                className='ml-2 text-sm text-gray-700 bg-gray-300 hover:bg-gray-400 py-1 px-2 rounded'
-              >
-                삭제
-              </button>
-              {error && (
-                <span className='ml-2 text-red-500'>
-                  댓글을 수정/삭제할 수 없습니다.
-                </span>
-              )}
+              <div>
+                <button
+                  onClick={() => setIsEditing(true)}
+                  className='text-xs text-gray-700 bg-gray-300 hover:bg-gray-400 py-0 px-1 rounded'
+                >
+                  수정
+                </button>
+                <button
+                  onClick={handleDelete}
+                  className='ml-2 text-xs text-gray-700 bg-gray-300 hover:bg-gray-400 py-0 px-1 rounded'
+                >
+                  삭제
+                </button>
+                {error && (
+                  <span className='ml-2 text-red-500'>
+                    댓글을 수정/삭제할 수 없습니다.
+                  </span>
+                )}
+              </div>
             </>
           ))}
-      </span>
+      </div>
+      {isEditing ? (
+        <input
+          type='text'
+          onChange={onChange}
+          className='w-full p-3 border rounded-md mb-4'
+        />
+      ) : (
+        <p className='mb-2'>{editedComment}</p>
+      )}
     </div>
   );
 }
