@@ -92,6 +92,7 @@ function Comment({ commentInfo }) {
         <input
           type='text'
           onChange={onChange}
+          value={editedComment}
           className='w-full p-3 border rounded-md mb-4'
         />
       ) : (
