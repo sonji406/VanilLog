@@ -14,6 +14,8 @@ import { getSessionFromRequest } from '@utils/getSessionFromRequest';
 import { verifyPostAuthor } from '@utils/verifyPostAuthor';
 import { SUCCESS } from 'constants/success';
 
+export const dynamic = 'force-dynamic';
+
 const window = new JSDOM('').window;
 const DOMPurify = createDOMPurify(window);
 

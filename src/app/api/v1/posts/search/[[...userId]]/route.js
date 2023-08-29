@@ -6,6 +6,8 @@ import { ERRORS } from 'constants/errors';
 import { sendErrorResponse } from '@utils/response';
 import { validateObjectId } from '@utils/validateObjectId';
 
+export const dynamic = 'force-dynamic';
+
 /**
  * 포스트 검색 API(메인)
  * @URL /v1/posts/search?q=검색어&page={page_number}&limit={items_per_page}

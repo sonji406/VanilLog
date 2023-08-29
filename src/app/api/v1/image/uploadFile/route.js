@@ -4,6 +4,8 @@ import createError from 'http-errors';
 import { ERRORS } from 'constants/errors';
 import { sendErrorResponse } from '@utils/response';
 
+export const dynamic = 'force-dynamic';
+
 const s3Data = new S3({
   accessKeyId: process.env.AWS_ACCESS_KEY_ID,
   secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,

@@ -14,6 +14,8 @@ import { getSessionFromRequest } from '@utils/getSessionFromRequest';
 import { isLoggedInUser } from '@utils/isLoggedInUser';
 import { SUCCESS } from 'constants/success';
 
+export const dynamic = 'force-dynamic';
+
 /**
  * 댓글 수정 API
  * @URL /api/v1/comment/:postId/:commentId

@@ -7,6 +7,8 @@ import { getLastPartOfUrl } from '@utils/getLastPartOfUrl';
 import { getSessionFromRequest } from '@utils/getSessionFromRequest';
 import { SUCCESS } from 'constants/success';
 
+export const dynamic = 'force-dynamic';
+
 /**
  * 프로필 이미지 수정 api
  * @URL /api/v1/profile/updateImage/:userId
