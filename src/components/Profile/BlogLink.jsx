@@ -5,7 +5,6 @@ import Link from 'next/link';
 
 function BlogLink({ sessionId }) {
   const [copied, setCopied] = useState(false);
-  const [hovered, setHovered] = useState(false);
   const url = `https://vanillog/posts/${sessionId}`;
 
   const handleCopy = () => {
@@ -25,15 +24,9 @@ function BlogLink({ sessionId }) {
       <h2 className='flex justify-center font-semibold text-lg text-gray-700 border-b border-gray-400 pb-3'>
         내 블로그 링크
       </h2>
-      <div
-        className='flex justify-center text-[#16354D] text-lg'
-        onMouseEnter={() => setHovered(true)}
-        onMouseLeave={() => setHovered(false)}
-      >
+      <div>
         <Link href={`/posts/${sessionId}`}>
-          <span className={`${hovered ? 'text-[#16354D]' : ''}`}>
-            {hovered ? '내 블로그로 이동하기' : url}
-          </span>
+          <span className='text-[#16354D] underline'>{url}</span>
         </Link>
       </div>
       <div className='flex justify-end'>
