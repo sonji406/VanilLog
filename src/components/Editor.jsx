@@ -76,18 +76,20 @@ function Editor({ author, postId, title, content, error, setError, isModify }) {
 
   return (
     <>
-      <div className='border-2 border-black rounded bg-white my-4'>
-        <div id='editorjs' />
+      <div className='border-2 border-gray-300 rounded-lg mb-6'>
+        <div className='mt-2 ml-6'>
+          <div id='editorjs' />
+        </div>
       </div>
       <div>
+        <div className='text-red-700 text-center'>{error}</div>
         <button
           onClick={postSave}
-          className='text-xl text-white font-bold bg-[#0044ff] rounded-lg hover:bg-[#0000ff] py-2 px-8 w-full'
+          className='text-xl text-white font-bold bg-[#6B99C3] rounded-full hover:bg-[#16354D] py-2 px-8 w-full'
         >
-          Save
+          저장하기
         </button>
       </div>
-      <div className='text-red-700 p-4'>{error}</div>
     </>
   );
 }

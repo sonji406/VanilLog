@@ -52,26 +52,29 @@ function PostEditPage({ params }) {
 
   return (
     <>
-      <div className='flex justify-center'>
-        <div className='w-[800px] text-center mt-6'>
-          <div className='flex items-center rounded justify-center border-2 border-black bg-white'>
-            <input
-              type='text'
-              placeholder='제목을 입력하세요'
-              className='w-4/5 p-2 text-lg'
-              value={title}
-              onChange={handleTitleChange}
+      <div className='min-h-screen px-10'>
+        <div className='md:container md:mx-auto'>
+          <div className='rounded-lg shadow-md bg-white p-8 mx-auto max-w-3xl'>
+            <div className='border-2 border-gray-300 p-1 rounded-lg mb-8'>
+              <input
+                type='text'
+                placeholder='제목을 입력하세요'
+                className='w-full p-2 text-lg'
+                value={title}
+                onChange={handleTitleChange}
+              />
+            </div>
+
+            <Editor
+              author={userId}
+              postId={postId}
+              title={title}
+              content={content}
+              isModify={isModify}
+              error={error}
+              setError={setSaveError}
             />
           </div>
-          <Editor
-            author={userId}
-            postId={postId}
-            title={title}
-            content={content}
-            isModify={isModify}
-            error={error}
-            setError={setSaveError}
-          />
         </div>
       </div>
     </>
