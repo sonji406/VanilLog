@@ -3,7 +3,7 @@
 import { signIn } from 'next-auth/react';
 
 function LoginButton({ loginCompany }) {
-  const callbackUrl = process.env.DOMAIN;
+  const callbackUrl = process.env.NEXT_PUBLIC_DOMAIN;
   const handleSignIn = () => signIn(loginCompany, { callbackUrl });
 
   return (
