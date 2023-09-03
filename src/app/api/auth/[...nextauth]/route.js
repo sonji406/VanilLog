@@ -5,7 +5,7 @@ import GoogleProvider from 'next-auth/providers/google';
 
 export const dynamic = 'force-dynamic';
 
-const handler = NextAuth({
+const authOption = {
   providers: [
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID,
@@ -19,6 +19,7 @@ const handler = NextAuth({
     async jwt({ token, account, trigger }) {
       if (account) {
         token.accessToken = account.access_token;
+        token.accessTokenExpires = account.expires_at;
       }
 
       /*
@@ -62,6 +63,8 @@ const handler = NextAuth({
     },
   },
   secret: process.env.NEXTAUTH_SECRET,
-});
+};
 
-export { handler as GET, handler as POST };
+const handler = NextAuth(authOption);
+
+export { handler as GET, handler as POST, authOption };
