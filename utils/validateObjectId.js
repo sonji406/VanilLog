@@ -5,8 +5,8 @@ import { ERRORS } from 'constants/errors';
 export function validateObjectId(userId) {
   if (!mongoose.Types.ObjectId.isValid(userId)) {
     throw createError(
-      ERRORS.INVALID_USER_ID.STATUS_CODE,
-      ERRORS.INVALID_USER_ID.MESSAGE,
+      ERRORS.INVALID_MONGO_ID.STATUS_CODE,
+      ERRORS.INVALID_MONGO_ID.MESSAGE,
     );
   }
 }

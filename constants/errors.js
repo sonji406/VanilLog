@@ -1,6 +1,6 @@
-const INVALID_USER_ID = {
+const INVALID_MONGO_ID = {
   STATUS_CODE: 401,
-  MESSAGE: 'userId 형식이 일치하지 않습니다.',
+  MESSAGE: 'Id 형식이 일치하지 않습니다.',
 };
 
 const INVALID_JSON = {
@@ -91,7 +91,7 @@ const UNKNOWN_ERROR = '알 수 없는 오류가 발생했습니다.';
 const LOGIN_REQUIRED = '로그인이 필요합니다.';
 
 export const ERRORS = {
-  INVALID_USER_ID,
+  INVALID_MONGO_ID,
   INVALID_JSON,
   USER_NOT_FOUND,
   DUPLICATE_NICKNAME,
