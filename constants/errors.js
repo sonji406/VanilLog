@@ -73,6 +73,11 @@ const UNAUTHORIZED_USER = {
   MESSAGE: '자신의 프로필만 조회할 수 있습니다.',
 };
 
+const MISSING_POST_FIELDS = {
+  STATUS_CODE: 404,
+  MESSAGE: '포스트 내용이 없습니다.',
+};
+
 const MONGODB_URI_NOT_FOUND =
   'Please define the MONGODB_URI environment variable inside .env';
 
@@ -114,4 +119,5 @@ export const ERRORS = {
   PROFILE_LOADING_ERROR,
   UNKNOWN_ERROR,
   LOGIN_REQUIRED,
+  MISSING_POST_FIELDS,
 };
