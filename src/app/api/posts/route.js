@@ -4,6 +4,8 @@ import dbConnect from '@lib/dbConnect';
 import Post from '@models/Post';
 import { ERRORS } from 'constants/errors';
 
+export const dynamic = 'force-dynamic';
+
 async function POST(request, response) {
   await dbConnect();
 

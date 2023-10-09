@@ -4,6 +4,8 @@ import createError from 'http-errors';
 import { ERRORS } from 'constants/errors';
 import { sendErrorResponse } from '@utils/response';
 
+export const dynamic = 'force-dynamic';
+
 const s3Data = new S3({
   accessKeyId: process.env.AWS_ACCESS_KEY_ID,
   secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
@@ -12,6 +14,11 @@ const s3Data = new S3({
 
 const bucketName = process.env.AWS_S3_BUCKET_NAME;
 
+/**
+ * 이미지 조회 api
+ * @URL /api/v1/image/uploadFile
+ * @param request
+ */
 async function GET(request) {
   try {
     const { file: fileName, fileType } = request.query;
@@ -48,6 +55,11 @@ async function GET(request) {
   }
 }
 
+/**
+ * 이미지 업로드 api
+ * @URL /api/v1/image/uploadFile
+ * @param request
+ */
 async function POST(request) {
   try {
     const formData = await request.formData();

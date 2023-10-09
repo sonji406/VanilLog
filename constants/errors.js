@@ -1,6 +1,6 @@
-const INVALID_USER_ID = {
+const INVALID_MONGO_ID = {
   STATUS_CODE: 401,
-  MESSAGE: 'userId 형식이 일치하지 않습니다.',
+  MESSAGE: 'Id 형식이 일치하지 않습니다.',
 };
 
 const INVALID_JSON = {
@@ -73,6 +73,11 @@ const UNAUTHORIZED_USER = {
   MESSAGE: '자신의 프로필만 조회할 수 있습니다.',
 };
 
+const MISSING_POST_FIELDS = {
+  STATUS_CODE: 404,
+  MESSAGE: '포스트 내용이 없습니다.',
+};
+
 const MONGODB_URI_NOT_FOUND =
   'Please define the MONGODB_URI environment variable inside .env';
 
@@ -91,7 +96,7 @@ const UNKNOWN_ERROR = '알 수 없는 오류가 발생했습니다.';
 const LOGIN_REQUIRED = '로그인이 필요합니다.';
 
 export const ERRORS = {
-  INVALID_USER_ID,
+  INVALID_MONGO_ID,
   INVALID_JSON,
   USER_NOT_FOUND,
   DUPLICATE_NICKNAME,
@@ -114,4 +119,5 @@ export const ERRORS = {
   PROFILE_LOADING_ERROR,
   UNKNOWN_ERROR,
   LOGIN_REQUIRED,
+  MISSING_POST_FIELDS,
 };

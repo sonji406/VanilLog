@@ -10,6 +10,8 @@ import { sendErrorResponse } from '@utils/response';
 import { validateObjectId } from '@utils/validateObjectId';
 import { getLastPartOfUrl } from '@utils/getLastPartOfUrl';
 
+export const dynamic = 'force-dynamic';
+
 /**
  * 댓글 생성 API
  * @URL /api/v1/comment/:postId
