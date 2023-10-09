@@ -7,6 +7,8 @@ import { ERRORS } from 'constants/errors';
 import { sendErrorResponse } from '@utils/response';
 import { validateObjectId } from '@utils/validateObjectId';
 
+export const dynamic = 'force-dynamic';
+
 /**
  * 포스트 목록 조회 API
  * @URL /api/v1/posts?userId=:userId&page={page_number}&limit={items_per_page}

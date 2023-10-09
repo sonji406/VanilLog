@@ -6,9 +6,7 @@ import axios from 'axios';
 export async function generateMetadata({ params }) {
   const postId = params.postId;
   try {
-    const response = await axios(
-      `${process.env.DOMAIN}/api/v1/posts/${postId}`,
-    );
+    const response = await axios(`${process.env.DOMAIN}/api/v1/post/${postId}`);
     const post = response.data.data;
     const blockWithText = post.content.blocks.find((block) => block.data?.text);
 

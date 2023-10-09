@@ -11,6 +11,8 @@ import { getLastPartOfUrl } from '@utils/getLastPartOfUrl';
 import { getSessionFromRequest } from '@utils/getSessionFromRequest';
 import { SUCCESS } from 'constants/success';
 
+export const dynamic = 'force-dynamic';
+
 /**
  * 유저 프로필 조회 API
  * @URL /api/v1/profile/:userId
