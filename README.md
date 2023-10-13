@@ -5,17 +5,17 @@
 **VanilLog**는 개인의 블로그 글을 관리하고 공유할 수 있는 플랫폼입니다. NextJS 13의 최신 기능과 함께, 사용자는 자신의 블로그에서 쉽고 빠르게 게시글을 작성하고 관리할 수 있습니다.
 
 <details>
-  <summary><b>📹 시연 영상</b></summary>
+  <summary><b>📹 VanilLog 시연 영상</b></summary>
   
   - 메인화면
-    - 로그인하지 않으면 포스트만 조회할 수 있습니다.
+    - 로그인하지 않은 경우, 포스트 조회 및 검색 기능만 이용할 수 있습니다.
 
       https://github.com/Last-Survivors-3-8/VanilLog/assets/133579214/3fbb62af-5866-4475-a960-b60188ace9b4
 
   - 로그인
     - 상단바의 'Login' 버튼이나 사이드바의 '로그인을 해주세요.' 버튼을 클릭해 로그인 화면으로 이동합니다.
     - 구글 로그인 시 자동으로 회원가입 및 로그인됩니다.
-    - 처음 설정되는 닉네임은 구글 닉네임입니다.
+    - 가입 초기에 설정되는 닉네임과 프로필 이미지는, 연계된 구글 계정에서 가져온 닉네임과 이미지입니다.
     
       https://github.com/Last-Survivors-3-8/VanilLog/assets/133579214/12613435-67ca-45fc-b934-68e65328e452
 
@@ -44,7 +44,7 @@
 
   - 댓글 작성
     - 포스트 상세 페이지 하단에 댓글을 입력한 후 '댓글 작성' 버튼을 클릭합니다.
-    - 작성된 댓글을 확인할 수 있습니다.
+    - 작성한 댓글을 확인할 수 있습니다.
     
       https://github.com/Last-Survivors-3-8/VanilLog/assets/133579214/d469469f-c5b5-4cd9-a73f-34117fab5e62
 
@@ -58,26 +58,26 @@
       https://github.com/Last-Survivors-3-8/VanilLog/assets/133579214/fb0dafe6-e7a8-4624-8fc1-1e2e5cbcd420
 
   - 통합 검색
-    - 메인화면에서 상단바 오른쪽에 검색어를 입력하고 엔터를 누릅니다.
+    - 메인화면 내 우측 상단 검색란에 검색어를 입력한 후 엔터를 누릅니다.
     - 검색어와 관련된 포스트들이 표시됩니다.
 
       https://github.com/Last-Survivors-3-8/VanilLog/assets/133579214/7afeed5e-0872-4364-b6ea-e7c2ad6cdbce
 
   - 블로그내 검색
-    - 특정 블로그에서 상단바 오른쪽에 검색어를 입력 후 엔터를 누릅니다.
+    - 특정 블로그 내 우측 상단 검색란에 검색어를 입력한 후 엔터를 누릅니다.
     - 해당 블로그 내에서 검색어와 관련된 포스트들이 표시됩니다.
       
       https://github.com/Last-Survivors-3-8/VanilLog/assets/133579214/c476e3a2-07b0-4b1d-9d8a-4f37c1b4f38c
 
   - 프로필
-    - 왼쪽 상당의 햄버거 아이콘을 클릭합니다.
+    - 좌측 상단의 햄버거 아이콘을 클릭합니다.
     - 사이드바에서 '프로필 정보/수정' 버튼을 클릭합니다.
       
       https://github.com/Last-Survivors-3-8/VanilLog/assets/133579214/1bda2d17-dd5f-49eb-9a7e-6aca16860fdc
 
   - 프로필 사진 변경
     - '사진 업로드/변경' 버튼을 클릭합니다.
-    - 페이지를 새로 고침하여 변경된 프로필 사진을 확인할 수 있습니다..
+    - 사진 변경란에서는 변경된 프로필 사진이 바로 반영되고, 상단바의 프로필 사진은 페이지를 새로고침하면 확인할 수 있습니다.
       
       https://github.com/Last-Survivors-3-8/VanilLog/assets/133579214/a6ead064-c65b-4f63-9fac-995df25e7788
 
