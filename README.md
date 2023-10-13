@@ -210,6 +210,7 @@ const signedUrl = await new Promise((resolve, reject) => {
 
 ![React](https://img.shields.io/badge/React-18.2.0-61DAFB?logo=React)
 ![Next.js](https://img.shields.io/badge/Next.js-13.4.13-000000?logo=Next.js)
+![Next Auth](https://img.shields.io/badge/Next%20Auth-4.23.1-5968FF?logo=Next%20Auth)
 ![AWS SDK](https://img.shields.io/badge/AWS%20SDK-3.395.0-orange?logo=Amazon%20AWS)
 ![Axios](https://img.shields.io/badge/Axios-1.4.0-blueviolet)
 ![TailwindCSS](https://img.shields.io/badge/TailwindCSS-3.3.3-38B2AC?logo=Tailwind%20CSS)
