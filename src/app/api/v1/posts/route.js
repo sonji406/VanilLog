@@ -3,9 +3,11 @@ import { NextResponse } from 'next/server';
 
 import dbConnect from '@lib/dbConnect';
 import Post from '@models/Post';
-import { ERRORS } from '@utils/errors';
+import { ERRORS } from 'constants/errors';
 import { sendErrorResponse } from '@utils/response';
 import { validateObjectId } from '@utils/validateObjectId';
+
+export const dynamic = 'force-dynamic';
 
 /**
  * 포스트 목록 조회 API
@@ -43,7 +45,7 @@ async function GET(request) {
     const totalPosts = await Post.countDocuments(findOption);
 
     return NextResponse.json({
-      status: 'success',
+      status: 200,
       data: posts,
       totalPosts: totalPosts,
     });

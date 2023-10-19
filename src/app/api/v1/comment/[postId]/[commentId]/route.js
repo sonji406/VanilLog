@@ -6,12 +6,15 @@ import Post from '@models/Post';
 import User from '@models/User';
 import Comment from '@models/Comment';
 
-import { ERRORS } from '@utils/errors';
+import { ERRORS } from 'constants/errors';
 import { sendErrorResponse } from '@utils/response';
 import { validateObjectId } from '@utils/validateObjectId';
 import { getLastPartOfUrl } from '@utils/getLastPartOfUrl';
 import { getSessionFromRequest } from '@utils/getSessionFromRequest';
 import { isLoggedInUser } from '@utils/isLoggedInUser';
+import { SUCCESS } from 'constants/success';
+
+export const dynamic = 'force-dynamic';
 
 /**
  * 댓글 수정 API
@@ -42,8 +45,8 @@ async function PUT(request, { params }) {
     await currentComment.save();
 
     return NextResponse.json({
-      status: 'success',
-      message: '댓글 수정이 완료되었습니다.',
+      status: 200,
+      message: SUCCESS.COMMENT_PUT,
     });
   } catch (error) {
     return sendErrorResponse(error);
@@ -107,8 +110,8 @@ async function DELETE(request) {
     );
 
     return NextResponse.json({
-      status: 'success',
-      message: 'Comment deleted successfully.',
+      status: 200,
+      message: SUCCESS.COMMENT_DELETE,
     });
   } catch (error) {
     return sendErrorResponse(error);

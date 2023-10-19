@@ -1,6 +1,6 @@
-const INVALID_USER_ID = {
+const INVALID_MONGO_ID = {
   STATUS_CODE: 401,
-  MESSAGE: 'userId 형식이 일치하지 않습니다.',
+  MESSAGE: 'Id 형식이 일치하지 않습니다.',
 };
 
 const INVALID_JSON = {
@@ -73,8 +73,30 @@ const UNAUTHORIZED_USER = {
   MESSAGE: '자신의 프로필만 조회할 수 있습니다.',
 };
 
+const MISSING_POST_FIELDS = {
+  STATUS_CODE: 404,
+  MESSAGE: '포스트 내용이 없습니다.',
+};
+
+const MONGODB_URI_NOT_FOUND =
+  'Please define the MONGODB_URI environment variable inside .env';
+
+const POST_LOADING_ERROR = '포스트를 불러오는 중 문제가 발생하였습니다.';
+
+const TITLE_CONTENT_REQUIRED = '제목과 내용을 모두 작성해주세요.';
+
+const EDITOR_EDIT_FAILED = '수정에 실패하였습니다. 다시 시도해주세요.';
+
+const EDITOR_SAVE_FAILED = '저장에 실패하였습니다. 다시 시도해주세요.';
+
+const PROFILE_LOADING_ERROR = '프로필을 불러오는 중 문제가 발생했습니다.';
+
+const UNKNOWN_ERROR = '알 수 없는 오류가 발생했습니다.';
+
+const LOGIN_REQUIRED = '로그인이 필요합니다.';
+
 export const ERRORS = {
-  INVALID_USER_ID,
+  INVALID_MONGO_ID,
   INVALID_JSON,
   USER_NOT_FOUND,
   DUPLICATE_NICKNAME,
@@ -89,4 +111,13 @@ export const ERRORS = {
   NOT_COMMENT_AUTHOR,
   UNAUTHORIZED_USER,
   COMMENT_USER_NOT_LOGGED_IN,
+  MONGODB_URI_NOT_FOUND,
+  POST_LOADING_ERROR,
+  TITLE_CONTENT_REQUIRED,
+  EDITOR_EDIT_FAILED,
+  EDITOR_SAVE_FAILED,
+  PROFILE_LOADING_ERROR,
+  UNKNOWN_ERROR,
+  LOGIN_REQUIRED,
+  MISSING_POST_FIELDS,
 };

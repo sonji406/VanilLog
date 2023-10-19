@@ -29,7 +29,7 @@ function CommentsContainer({ postId }) {
       try {
         const response = await axios.get(`/api/v1/comment/${postId}`);
 
-        if (response.data.status === 'success') {
+        if (response.data.status === 200) {
           setComments(response.data.data);
         }
       } catch (error) {}
@@ -46,13 +46,15 @@ function CommentsContainer({ postId }) {
 
   return (
     <>
-      {errorMessage && <div>{errorMessage}</div>}
-      <CommentsSection
-        comments={comments}
-        commentText={commentText}
-        onCommentChange={(e) => setCommentText(e.target.value)}
-        onCommentSubmit={handleNewComment}
-      />
+      <div className='rounded-lg shadow-md bg-white p-8 mx-auto max-w-3xl mt-10'>
+        <CommentsSection
+          comments={comments}
+          commentText={commentText}
+          onCommentChange={(e) => setCommentText(e.target.value)}
+          onCommentSubmit={handleNewComment}
+          errorMessage={errorMessage}
+        />
+      </div>
     </>
   );
 }

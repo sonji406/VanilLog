@@ -32,37 +32,43 @@ export default function ProfilePage({ params }) {
   );
 
   if (loading) {
-    return <div>프로필을 불러오는 중입니다.</div>;
+    return (
+      <div className='flex justify-center'>프로필을 불러오는 중입니다.</div>
+    );
   }
 
   if (error) {
-    return <div>Error: {error}</div>;
+    return <div className='flex justify-center'>Error: {error}</div>;
   }
 
   return (
-    <div className='flex p-20'>
-      <div className='flex-1 pr-10'>
-        <ProfileImageUploader
-          uploadedImage={uploadedImage}
-          userProfile={userProfile}
-          handleImageUpload={handleImageUpload}
-          inputRef={inputRef}
-        />
+    <div className='flex flex-col items-center justify-center p-20 pr-80 pl-80'>
+      <div className='flex w-full mt-10'>
+        <div
+          style={{ flex: 1 }}
+          className='pr-10 border-r flex flex-col items-center justify-center'
+        >
+          <ProfileImageUploader
+            uploadedImage={uploadedImage}
+            userProfile={userProfile}
+            handleImageUpload={handleImageUpload}
+            inputRef={inputRef}
+          />
+        </div>
 
-        <NicknameEditor
-          editing={isEditingNickname}
-          toggleEditing={toggleEditing}
-          nickname={nickname}
-          setNickname={setNickname}
-          updateNickname={updateNickname}
-          message={message}
-        />
-
-        <BlogLink sessionId={session?.mongoId} />
-        <ConnectedSocial socialLoginType={userProfile?.socialLoginType} />
+        <div style={{ flex: 2 }} className='pl-10 w-[700px]'>
+          <NicknameEditor
+            editing={isEditingNickname}
+            toggleEditing={toggleEditing}
+            nickname={nickname}
+            setNickname={setNickname}
+            updateNickname={updateNickname}
+            message={message}
+          />
+          <BlogLink sessionId={session?.mongoId} />
+          <ConnectedSocial socialLoginType={userProfile?.socialLoginType} />
+        </div>
       </div>
-
-      <BlogStatistics />
     </div>
   );
 }

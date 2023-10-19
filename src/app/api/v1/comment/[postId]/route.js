@@ -5,10 +5,12 @@ import dbConnect from '@lib/dbConnect';
 import Post from '@models/Post';
 import User from '@models/User';
 import Comment from '@models/Comment';
-import { ERRORS } from '@utils/errors';
+import { ERRORS } from 'constants/errors';
 import { sendErrorResponse } from '@utils/response';
 import { validateObjectId } from '@utils/validateObjectId';
 import { getLastPartOfUrl } from '@utils/getLastPartOfUrl';
+
+export const dynamic = 'force-dynamic';
 
 /**
  * 댓글 생성 API
@@ -47,6 +49,10 @@ async function POST(request) {
       blogPost: postId,
     });
 
+    const authorInfo = await User.findById(author, 'nickname');
+
+    newComment.author = authorInfo;
+
     await Post.findByIdAndUpdate(
       postId,
       { $push: { comments: newComment._id } },
@@ -60,7 +66,7 @@ async function POST(request) {
     );
 
     return NextResponse.json({
-      status: 'success',
+      status: 200,
       data: newComment,
     });
   } catch (error) {
@@ -92,11 +98,12 @@ async function GET(request) {
     const comments = await Comment.find({
       _id: { $in: currentPost.comments },
     })
+      .populate({ path: 'author', select: 'nickname' })
       .lean()
       .exec();
 
     return NextResponse.json({
-      status: 'success',
+      status: 200,
       data: comments,
     });
   } catch (error) {

@@ -20,7 +20,8 @@ export default function PostDetail({ userId, postId }) {
 
   const errorMessage = postError || commentError;
 
-  if (!post) return <div>포스트를 불러오는 중...</div>;
+  if (!post)
+    return <div className='flex justify-center'>포스트를 불러오는 중...</div>;
 
   return (
     <>
@@ -34,7 +35,13 @@ export default function PostDetail({ userId, postId }) {
         />
       )}
 
-      <div className='bg-white rounded-lg shadow-xl p-8 mx-auto max-w-3xl'>
+      <div className='rounded-lg shadow-md bg-white p-8 mx-auto max-w-3xl'>
+        <div className='mb-6'>
+          <a href={`/posts/${userId}`} className='text-blue-500 underline'>
+            작성자의 블로그
+          </a>
+        </div>
+
         <PostContent title={post.title} content={post.content} />
 
         {userId === session?.mongoId && (

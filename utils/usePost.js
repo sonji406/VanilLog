@@ -2,17 +2,18 @@
 
 import { useState, useEffect } from 'react';
 import axios from 'axios';
+import { ERRORS } from 'constants/errors';
 
 export const usePost = (postId) => {
   const [post, setPost] = useState(null);
   const [errorMessage, setErrorMessage] = useState(null);
 
   const handleError = (error) => {
-    if (error.response && error.response.data.status !== 'success') {
+    if (error.response && error.response.data.status !== 200) {
       return setErrorMessage(error.response.data.message);
     }
 
-    return setErrorMessage('알 수 없는 오류가 발생했습니다.');
+    return setErrorMessage(ERRORS.UNKNOWN_ERROR);
   };
 
   useEffect(() => {
@@ -21,7 +22,7 @@ export const usePost = (postId) => {
       try {
         const response = await axios.get(`/api/v1/post/${postId}`);
 
-        if (response.data.status === 'success') {
+        if (response.data.status === 200) {
           return setPost(response.data.data);
         }
 
@@ -37,7 +38,7 @@ export const usePost = (postId) => {
     try {
       const response = await axios.delete(`/api/v1/post/${postId}`);
 
-      if (response.data.status === 'success') {
+      if (response.data.status === 200) {
         return router.push(`/posts/${userId}`);
       }
 

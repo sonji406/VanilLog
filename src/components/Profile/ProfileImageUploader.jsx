@@ -9,7 +9,7 @@ function ProfileImageUploader({
   inputRef,
 }) {
   return (
-    <div className='mb-10 flex flex-col items-center'>
+    <div className='mb-10 flex flex-col items-center mb-5'>
       <input
         type='file'
         accept='image/*'
@@ -17,19 +17,22 @@ function ProfileImageUploader({
         ref={inputRef}
         onChange={handleImageUpload}
       />
-      <Image
-        src={
-          uploadedImage ||
-          userProfile?.profileImage ||
-          '/image/profileDefault.png'
-        }
-        alt='Profile Image'
-        width={128}
-        height={128}
-        priority
-      />
+      <div className='rounded-full bg-white p-3 shadow-[0_0_10px_5px rgba(0, 0, 0, 0.3)]'>
+        <div className='rounded-full bg-white w-60 h-60 flex flex-col items-center justify-center relative overflow-hidden border-2 border-white'>
+          <Image
+            src={
+              uploadedImage ||
+              userProfile?.profileImage ||
+              '/image/profileDefault.png'
+            }
+            alt='Profile Image'
+            layout='fill'
+            priority
+          />
+        </div>
+      </div>
       <button
-        className='bg-logo text-white px-4 py-2 rounded mt-5'
+        className='bg-[#16354D] hover:bg-black text-white px-4 py-2 rounded shadow mt-5'
         onClick={() => inputRef.current.click()}
       >
         사진 업로드/변경
