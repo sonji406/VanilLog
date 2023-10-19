@@ -10,7 +10,6 @@ import ProfileImageUploader from '@src/components/Profile/ProfileImageUploader';
 import NicknameEditor from '@src/components/Profile/NicknameEditor';
 import BlogLink from '@src/components/Profile/BlogLink';
 import ConnectedSocial from '@src/components/Profile/ConnectedSocial';
-import BlogStatistics from '@src/components/Profile/BlogStatistics';
 
 export default function ProfilePage({ params }) {
   const [isEditingNickname, setIsEditingNickname] = useState(false);

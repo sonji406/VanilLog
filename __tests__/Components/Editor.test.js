@@ -41,7 +41,7 @@ describe('Editor', () => {
       );
     });
 
-    const saveButton = screen.getByText('Save');
+    const saveButton = screen.getByText('저장하기');
 
     await act(async () => {
       fireEvent.click(saveButton);

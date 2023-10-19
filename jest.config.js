@@ -5,6 +5,7 @@ module.exports = {
     '^@utils/(.*)$': '<rootDir>/utils/$1',
     '^@lib/(.*)$': '<rootDir>/lib/$1',
     '^@models/(.*)$': '<rootDir>/models/$1',
+    '^constants/(.*)$': '<rootDir>/constants/$1',
   },
   testEnvironment: 'jsdom',
   testPathIgnorePatterns: ['<rootDir>/.next/', '<rootDir>/node_modules/'],

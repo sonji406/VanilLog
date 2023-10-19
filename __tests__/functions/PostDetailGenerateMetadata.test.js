@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { generateMetadata } from '@src/app/post/[userId]/[postId]/page';
-import { METAINFO } from '@utils/metaInfo';
+import { METAINFO } from 'constants/metaInfo';
 
 describe('generateMetadata', () => {
   it('유효한 포스트 ID에 대한 올바른 메타데이터가 생성되어야 한다.', async () => {
