@@ -11,23 +11,23 @@ describe('<BlogLink />', () => {
 
   beforeEach(() => {
     mockData = {
-      sessionId: '12345',
+      sessionId: 'testUserId',
     };
     jest.clearAllMocks();
   });
 
-  it('should render without crashing', () => {
+  it('블로그 링크 컴포넌트가 올바르게 렌더링 되어야 합니다.', () => {
     render(<BlogLink sessionId={mockData.sessionId} />);
   });
 
-  it('should display the correct URL', () => {
+  it('올바른 URL을 표시해야 합니다.', () => {
     const { getByText } = render(<BlogLink sessionId={mockData.sessionId} />);
     expect(
       getByText(`https://vanillog/posts/${mockData.sessionId}`),
     ).toBeInTheDocument();
   });
 
-  it('should handle the copy button click', async () => {
+  it('복사하기 버튼 클릭 시 내 블로그 링크가 복사되어야 합니다.', async () => {
     const { getByText, queryByText } = render(
       <BlogLink sessionId={mockData.sessionId} />,
     );
