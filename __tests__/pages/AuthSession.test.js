@@ -19,7 +19,7 @@ describe('<AuthSession />', () => {
     jest.clearAllMocks();
   });
 
-  it('Navbar, SideNavbar 컴포넌트와 자식 컴포넌트가 올바르게 렌더링되어야 한다.', async () => {
+  it('Navbar, SideNavbar 컴포넌트와 자식 컴포넌트가 올바르게 렌더링 되어야 한다.', async () => {
     await act(async () => {
       render(
         <AuthSession>
