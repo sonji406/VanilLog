@@ -2,37 +2,30 @@ import React from 'react';
 import { render, screen, act } from '@testing-library/react';
 import PostContent from '@src/components/PostDetail/PostContent';
 
-jest.mock('next/legacy/image', () => ({
-  __esModule: true,
-  default: (props) => {
-    return <img alt={props.alt || 'default alt text'} {...props} />;
-  },
-}));
-
 describe('<PostContent />', () => {
   const mockContent = {
     blocks: [
       {
         type: 'image',
-        id: 'image1',
+        id: 'testImageId',
         data: {
           file: {
-            url: 'image_url',
-            name: 'image_name',
+            url: 'testImageUrl',
+            name: 'testImageName',
           },
         },
       },
       {
         type: 'paragraph',
-        id: 'paragraph1',
+        id: 'testParagraph1',
         data: {
-          text: '본문 텍스트',
+          text: 'testParagraphDataText',
         },
       },
     ],
   };
 
-  it('제목이 올바르게 렌더링되어야 한다.', () => {
+  it('제목이 올바르게 렌더링 되어야 한다.', () => {
     act(() => {
       render(<PostContent title='Test Title' content={mockContent} />);
     });
@@ -40,15 +33,15 @@ describe('<PostContent />', () => {
     expect(screen.getByText('Test Title')).toBeInTheDocument();
   });
 
-  it('본문 블록이 올바르게 렌더링되어야 한다.', () => {
+  it('본문 블록이 올바르게 렌더링 되어야 한다.', () => {
     act(() => {
       render(<PostContent title='Test Title' content={mockContent} />);
     });
 
-    const image = screen.getByAltText('image_name');
-    const paragraph = screen.getByText('본문 텍스트');
+    const image = screen.getByAltText('testImageName');
+    const paragraph = screen.getByText('testParagraphDataText');
 
-    expect(image).toHaveAttribute('src', 'image_url');
+    expect(image).toHaveAttribute('src', 'testImageUrl');
     expect(paragraph).toBeInTheDocument();
   });
 });
