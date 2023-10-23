@@ -13,33 +13,33 @@ jest.mock('next-auth/react', () => ({
   useSession: jest.fn(),
 }));
 
-describe('CommentsSection', () => {
+describe('<CommentsSection />', () => {
   let mockComments = [];
   let mockOnCommentChange = jest.fn();
   let mockOnCommentSubmit = jest.fn();
-  let mockCommentText = 'This is a comment';
+  let mockCommentText = '댓글 내용';
   let mockErrorMessage = null;
 
   beforeEach(() => {
     mockComments = [
       {
-        _id: 'someId1',
-        comment: 'Great post!',
+        _id: 'testCommentId',
+        comment: 'testCommentContent',
         author: {
-          _id: 'userId1',
-          nickname: 'JohnDoe',
+          _id: 'testAuthorId',
+          nickname: 'testAuthorNickname',
         },
       },
     ];
 
-    useSession.mockReturnValue({ data: { mongoId: 'someMongoId' } });
+    useSession.mockReturnValue({ data: { mongoId: 'testUserId' } });
   });
 
   afterEach(() => {
     jest.clearAllMocks();
   });
 
-  it('renders comments and allows new comments to be submitted', async () => {
+  it('댓글 렌더링 및 새 댓글 작성 기능이 올바르게 렌더링 되어야 한다.', async () => {
     act(() => {
       render(
         <CommentsSection
@@ -52,12 +52,14 @@ describe('CommentsSection', () => {
       );
     });
 
-    expect(screen.getByText('Great post!')).toBeInTheDocument();
+    expect(screen.getByText('testCommentContent')).toBeInTheDocument();
 
     const textarea = screen.getByPlaceholderText('댓글 내용을 입력하세요');
     const submitButton = screen.getByRole('button', { name: /댓글 작성/i });
 
-    fireEvent.change(textarea, { target: { value: 'Another great post!' } });
+    fireEvent.change(textarea, {
+      target: { value: 'edited testCommentContent' },
+    });
     expect(mockOnCommentChange).toHaveBeenCalled();
 
     fireEvent.click(submitButton);
