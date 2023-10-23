@@ -7,10 +7,10 @@ jest.mock('@src/components/Posts/PostList', () => ({
   PostList: jest.fn(() => <div>Mocked Post List</div>),
 }));
 
-describe('Posts', () => {
-  it('올바른 유저Id의 블로그의 포스트 목록이 렌더링되어야 합니다.', () => {
+describe('<BlogMainPage />', () => {
+  it('올바른 유저Id의 블로그의 포스트 목록이 렌더링 되어야 한다.', () => {
     const mockParams = {
-      userId: ['유저Id'],
+      userId: ['testUserId'],
     };
 
     act(() => {
@@ -18,6 +18,6 @@ describe('Posts', () => {
     });
 
     expect(screen.getByText('Mocked Post List')).toBeInTheDocument();
-    expect(PostList).toHaveBeenCalledWith({ blogUserId: '유저Id' }, {});
+    expect(PostList).toHaveBeenCalledWith({ blogUserId: 'testUserId' }, {});
   });
 });
