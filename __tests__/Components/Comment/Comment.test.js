@@ -10,15 +10,15 @@ jest.mock('next-auth/react', () => ({
 }));
 
 const mockCommentInfo = {
-  _id: 'comment1',
-  comment: 'This is a comment',
-  author: { _id: 'author1', nickname: 'Author1' },
-  blogPost: 'post1',
+  _id: 'testCommentId',
+  comment: 'testCommentContent',
+  author: { _id: 'testAuthorId', nickname: 'testAuthorNickname' },
+  blogPost: 'testPostId',
 };
 
-describe('Comment Component', () => {
+describe('<Comment />', () => {
   beforeEach(() => {
-    useSession.mockReturnValue({ data: { mongoId: 'author1' } });
+    useSession.mockReturnValue({ data: { mongoId: 'testAuthorId' } });
     axios.put.mockResolvedValue({ data: { status: 200 } });
     axios.delete.mockResolvedValue({ data: { status: 200 } });
   });
@@ -27,17 +27,17 @@ describe('Comment Component', () => {
     jest.clearAllMocks();
   });
 
-  it('should render correctly', () => {
+  it('댓글 컴포넌트가 올바르게 렌더링 되어야 한다.', () => {
     render(<Comment commentInfo={mockCommentInfo} />);
-    expect(screen.getByText('This is a comment')).toBeInTheDocument();
+    expect(screen.getByText('testCommentContent')).toBeInTheDocument();
   });
 
-  it('should allow editing comments', async () => {
+  it('댓글 편집이 가능해야 한다.', async () => {
     render(<Comment commentInfo={mockCommentInfo} />);
     fireEvent.click(screen.getByText('수정'));
 
     const input = screen.getByRole('textbox');
-    fireEvent.change(input, { target: { value: 'New Comment' } });
+    fireEvent.change(input, { target: { value: 'edited testCommentContent' } });
 
     await act(async () => {
       fireEvent.click(screen.getByText('확인'));
@@ -46,14 +46,14 @@ describe('Comment Component', () => {
     expect(axios.put).toHaveBeenCalled();
   });
 
-  it('should allow canceling editing', () => {
+  it('댓글 편집 취소가 가능해야 한다.', () => {
     render(<Comment commentInfo={mockCommentInfo} />);
     fireEvent.click(screen.getByText('수정'));
     fireEvent.click(screen.getByText('취소'));
-    expect(screen.getByText('This is a comment')).toBeInTheDocument();
+    expect(screen.getByText('testCommentContent')).toBeInTheDocument();
   });
 
-  it('should allow deleting comments', async () => {
+  it('댓글 삭제가 가능해야 한다.', async () => {
     render(<Comment commentInfo={mockCommentInfo} />);
 
     await act(async () => {
