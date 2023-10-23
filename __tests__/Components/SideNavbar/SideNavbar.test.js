@@ -8,26 +8,29 @@ jest.mock('axios');
 jest.mock('next-auth/react');
 jest.mock('next/navigation');
 
-describe('SideNavbar Component', () => {
+describe('<SideNavbar />', () => {
   beforeEach(() => {
     usePathname.mockReturnValue('/home');
   });
 
-  it('fetches profile data when userId is present', async () => {
-    useSession.mockReturnValue({ data: { mongoId: 'sampleId' } });
+  it('userId가 존재할 때 프로필 데이터를 가져와야 합니다.', async () => {
+    useSession.mockReturnValue({ data: { mongoId: 'testUserId' } });
     axios.get.mockResolvedValueOnce({
-      data: { status: 200, data: { _id: 'sampleId', nickname: 'testUser' } },
+      data: {
+        status: 200,
+        data: { _id: 'testUserId', nickname: 'testUserNickname' },
+      },
     });
 
     render(<SideNavbar />);
 
     await waitFor(() => {
-      expect(screen.getByText('testUser')).toBeInTheDocument();
+      expect(screen.getByText('testUserNickname')).toBeInTheDocument();
     });
   });
 
-  it('sets error message when there is an API error', async () => {
-    useSession.mockReturnValue({ data: { mongoId: 'sampleId' } });
+  it('API 에러가 있을 경우 에러 메시지가 렌더링 되어야 합니다.', async () => {
+    useSession.mockReturnValue({ data: { mongoId: 'testUserId' } });
     axios.get.mockRejectedValueOnce(new Error());
 
     render(<SideNavbar />);
@@ -39,7 +42,7 @@ describe('SideNavbar Component', () => {
     });
   });
 
-  it('opens the sidebar menu on mouse enter', async () => {
+  it('비로그인 시, 사이드바 메뉴에 로그인 버튼이 렌더링 되어야 합니다.', async () => {
     useSession.mockReturnValue({ data: {} });
 
     render(<SideNavbar />);
@@ -52,10 +55,13 @@ describe('SideNavbar Component', () => {
     });
   });
 
-  it('opens the sidebar menu on mouse enter for logged-in user', async () => {
-    useSession.mockReturnValue({ data: { mongoId: 'sampleId' } });
+  it('로그인 시, 사이드바 메뉴에 사용자의 닉네임이 렌더링 되어야 합니다.', async () => {
+    useSession.mockReturnValue({ data: { mongoId: 'testUserId' } });
     axios.get.mockResolvedValueOnce({
-      data: { status: 200, data: { _id: 'sampleId', nickname: 'testUser' } },
+      data: {
+        status: 200,
+        data: { _id: 'testUserId', nickname: 'testUserNickname' },
+      },
     });
 
     render(<SideNavbar />);
@@ -64,11 +70,11 @@ describe('SideNavbar Component', () => {
     fireEvent.mouseEnter(menuButton);
 
     await waitFor(() => {
-      expect(screen.getByText('testUser')).toBeVisible();
+      expect(screen.getByText('testUserNickname')).toBeVisible();
     });
   });
 
-  it('closes the sidebar menu on mouse leave', async () => {
+  it('사이드바에서 마우스를 떼면 사이드바가 닫혀야 합니다.', async () => {
     useSession.mockReturnValue({ data: {} });
 
     render(<SideNavbar />);
@@ -78,11 +84,11 @@ describe('SideNavbar Component', () => {
     fireEvent.mouseLeave(sidebarMenu);
 
     await waitFor(() => {
-      expect(screen.queryByText('testUser')).not.toBeInTheDocument();
+      expect(screen.queryByText('testUserNickname')).not.toBeInTheDocument();
     });
   });
 
-  it('does not render the SideNavbar when pathname starts with /profile', () => {
+  it('프로필 페이지에서는 사이드바가 렌더링 되지 않아야 합니다.', () => {
     useSession.mockReturnValue({ data: {} });
     usePathname.mockReturnValue('/profile/sample');
 
