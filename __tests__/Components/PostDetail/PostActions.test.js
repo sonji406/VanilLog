@@ -40,7 +40,7 @@ describe('<PostActions />', () => {
 
     const { container } = render(
       <PostActions
-        userId='다른사람 UserId'
+        userId='anotherTestUserId'
         postId='testPostId'
         session={{ mongoId: 'testUserId' }}
         onShowDeleteModal={jest.fn()}
