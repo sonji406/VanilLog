@@ -15,10 +15,10 @@ jest.mock('@src/components/Comment/CommentsContainer', () => {
 });
 
 describe('<PostDetailPage />', () => {
-  it('가상의 PostDetail과 CommentsContainer가 렌더링되어야 한다.', async () => {
+  it('가상의 PostDetail과 CommentsContainer가 올바르게 렌더링 되어야 한다.', async () => {
     const mockParams = {
-      userId: '1',
-      postId: '1',
+      userId: 'testUserId',
+      postId: 'testPostId',
     };
 
     await act(async () => {
