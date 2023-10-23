@@ -7,10 +7,10 @@ jest.mock('next/legacy/image', () => {
   return MockedImage;
 });
 
-describe('PostItem Component', () => {
-  it('renders image content when provided', () => {
+describe('<PostItem />', () => {
+  it('이미지가 있는 포스트의 경우 이미지가 썸네일로 렌더링 되어야 합니다.', () => {
     const mockPostWithImage = {
-      title: 'Test Post',
+      title: 'Test Title',
       content: {
         blocks: [
           {
@@ -31,9 +31,9 @@ describe('PostItem Component', () => {
     expect(imageElement).toHaveAttribute('src', 'https://example.com/test.jpg');
   });
 
-  it('renders random color when post has no image content', () => {
+  it('이미지가 없는 포스트의 경우 랜덤 색상이 썸네일로 렌더링 되어야 합니다.', () => {
     const mockPost = {
-      title: 'Test Post',
+      title: 'Test Title',
       content: {
         blocks: [{ type: 'paragraph', data: { text: 'Test Post Content' } }],
       },
@@ -46,9 +46,9 @@ describe('PostItem Component', () => {
     expect(coloredDiv).toHaveClass('w-full', 'h-[170px]');
   });
 
-  it('renders title and content correctly', () => {
+  it('제목과 콘텐츠가 올바르게 렌더링 되어야 합니다.', () => {
     const mockPost = {
-      title: 'Test Post',
+      title: 'Test Title',
       content: {
         blocks: [{ type: 'paragraph', data: { text: 'Test Post Content' } }],
       },
@@ -56,7 +56,7 @@ describe('PostItem Component', () => {
 
     render(<PostItem post={mockPost} />);
 
-    expect(screen.getByText('Test Post')).toBeInTheDocument();
+    expect(screen.getByText('Test Title')).toBeInTheDocument();
     expect(screen.getByText('Test Post Content')).toBeInTheDocument();
   });
 });
