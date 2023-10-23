@@ -35,3 +35,45 @@ jest.mock('@utils/useImageUpload');
 jest.mock('@utils/useNicknameUpdate');
 
 jest.mock('@editorjs/editorjs');
+
+const mockPostData = {
+  title: 'Test Title',
+  author: {
+    $oid: 'authorId',
+  },
+  content: {
+    blocks: [
+      {
+        id: 'testPostContentId1',
+        type: 'image',
+        data: {
+          file: {
+            url: 'https://example.com/test.jpg',
+            name: 'test_image.jpeg',
+          },
+          caption: 'caption',
+          withBorder: false,
+          stretched: false,
+          withBackground: false,
+        },
+      },
+      {
+        id: 'testPostContentId2',
+        type: 'paragraph',
+        data: {
+          text: 'testParagraphContent',
+        },
+      },
+    ],
+  },
+  comments: [
+    {
+      $oid: 'commentId1',
+    },
+    {
+      $oid: 'commentId2',
+    },
+  ],
+};
+
+global.mockPostData = mockPostData;
