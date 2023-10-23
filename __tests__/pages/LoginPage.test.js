@@ -10,8 +10,8 @@ jest.mock('@src/components/LoginButton', () => ({
   )),
 }));
 
-describe('LoginPage', () => {
-  it('로그인페이지가 렌더링되어야 한다.', () => {
+describe('<LoginPage />', () => {
+  it('로그인 페이지가 올바르게 렌더링 되어야 한다.', () => {
     act(() => {
       render(<LoginPage />);
     });
