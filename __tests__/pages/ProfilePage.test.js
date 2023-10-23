@@ -6,14 +6,14 @@ import { useUserProfile } from '@utils/useUserProfile';
 import { useImageUpload } from '@utils/useImageUpload';
 import { useNicknameUpdate } from '@utils/useNicknameUpdate';
 
-describe('ProfilePage', () => {
-  it('프로필 데이터가 올바르게 렌더링되어야 합니다.', async () => {
+describe('<ProfilePage />', () => {
+  it('프로필 데이터가 올바르게 렌더링 되어야 한다.', async () => {
     useSession.mockReturnValue({
-      data: { session: { mongoId: '접속사Id' } },
+      data: { session: { mongoId: 'testUserId' } },
     });
 
     useUserProfile.mockReturnValue({
-      userProfile: { nickname: '햄스터', socialLoginType: 'google' },
+      userProfile: { nickname: 'testUserNickname', socialLoginType: 'google' },
       loading: false,
       error: null,
     });
@@ -24,21 +24,21 @@ describe('ProfilePage', () => {
     });
 
     useNicknameUpdate.mockReturnValue({
-      nickname: '햄스터',
+      nickname: 'testUserNickname',
       setNickname: jest.fn(),
       message: '',
       updateNickname: jest.fn(),
     });
 
     await act(async () => {
-      render(<ProfilePage params={{ userId: '점속자Id' }} />);
+      render(<ProfilePage params={{ userId: 'testUserId' }} />);
     });
 
-    expect(screen.getByText('햄스터')).toBeInTheDocument();
+    expect(screen.getByText('testUserNickname')).toBeInTheDocument();
     expect(screen.getByText('google')).toBeInTheDocument();
   });
 
-  it('로딩 상태가 정상적으로 렌더링되어야 합니다.', async () => {
+  it('로딩 상태가 올바르게 렌더링 되어야 한다.', async () => {
     useUserProfile.mockReturnValue({
       userProfile: null,
       loading: true,
@@ -46,13 +46,13 @@ describe('ProfilePage', () => {
     });
 
     await act(async () => {
-      render(<ProfilePage params={{ userId: '유저Id' }} />);
+      render(<ProfilePage params={{ userId: 'testUserId' }} />);
     });
 
     expect(screen.getByText('프로필을 불러오는 중입니다.')).toBeInTheDocument();
   });
 
-  it('에러 상태를 정상적으로 처리해야 합니다.', async () => {
+  it('에러 상태를 올바르게 처리해야 한다.', async () => {
     useUserProfile.mockReturnValue({
       userProfile: null,
       loading: false,
@@ -60,7 +60,7 @@ describe('ProfilePage', () => {
     });
 
     await act(async () => {
-      render(<ProfilePage params={{ userId: '유저Id' }} />);
+      render(<ProfilePage params={{ userId: 'testUserId' }} />);
     });
 
     expect(screen.getByText('Error: 에러 발생')).toBeInTheDocument();
