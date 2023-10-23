@@ -3,7 +3,7 @@ import { render, screen, fireEvent, act } from '@testing-library/react';
 import ProfileImageUploader from '@src/components/Profile/ProfileImageUploader';
 
 describe('<ProfileImageUploader />', () => {
-  it('기본 이미지를 올바르게 렌더링한다', () => {
+  it('프로필 이미지 업로더가 올바르게 렌더링 되어야 합니다.', () => {
     render(
       <ProfileImageUploader
         uploadedImage={null}
@@ -18,8 +18,8 @@ describe('<ProfileImageUploader />', () => {
     expect(image).toBeInTheDocument();
   });
 
-  it('업로드된 이미지가 있다면 그것을 보여준다', () => {
-    const uploadedImage = '/some-image-url.png';
+  it('업로드된 이미지가 있다면 그것이 렌더링 되어야 합니다.', () => {
+    const uploadedImage = '/test-image-url.png';
 
     render(
       <ProfileImageUploader
@@ -35,7 +35,7 @@ describe('<ProfileImageUploader />', () => {
     expect(image.src).toContain(encodeURIComponent(uploadedImage));
   });
 
-  it('버튼 클릭시 input의 click 메소드가 호출된다', () => {
+  it('사진 업로드/변경 버튼 클릭시 input의 click 메소드가 호출되어야 합니다.', () => {
     const mockClick = jest.fn();
     const ref = React.createRef();
 
