@@ -14,7 +14,7 @@ describe('<Home />', () => {
     jest.clearAllMocks();
   });
 
-  it('포스트 리스트 컴포넌트가 정상적으로 렌더링되어야 한다.', async () => {
+  it('포스트 리스트 컴포넌트가 올바르게 렌더링 되어야 한다.', async () => {
     await act(async () => {
       render(<Home />);
     });
