@@ -11,7 +11,7 @@ describe('<Navbar />', () => {
     jest.clearAllMocks();
   });
 
-  it('로그인하지 않은 사용자의 경우 로그인 링크가 렌더링 되어야 합니다.', () => {
+  it('로그인하지 않은 사용자의 경우 로그인 링크가 렌더링 되어야 한다.', () => {
     useSession.mockReturnValue({ status: 'unauthenticated' });
 
     render(<Navbar />);
@@ -19,7 +19,7 @@ describe('<Navbar />', () => {
     expect(screen.getByText('Login')).toBeInTheDocument();
   });
 
-  it('로그인한 사용자의 경우 사용자의 프로필 이미지와 닉네임이 렌더링 되어야 합니다.', async () => {
+  it('로그인한 사용자의 경우 사용자의 프로필 이미지와 닉네임이 렌더링 되어야 한다.', async () => {
     useSession.mockReturnValue({
       status: 'authenticated',
       data: { mongoId: 'testUserId' },
@@ -45,7 +45,7 @@ describe('<Navbar />', () => {
     });
   });
 
-  it('프로필을 불러오는 동안 에러가 발생하면 에러 메시지가 렌더링 되어야 합니다.', async () => {
+  it('프로필을 불러오는 동안 에러가 발생하면 에러 메시지가 렌더링 되어야 한다.', async () => {
     useSession.mockReturnValue({
       status: 'authenticated',
       data: { mongoId: 'testUserId' },

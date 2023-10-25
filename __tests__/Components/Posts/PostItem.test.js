@@ -8,7 +8,7 @@ jest.mock('next/legacy/image', () => {
 });
 
 describe('<PostItem />', () => {
-  it('이미지가 있는 포스트의 경우 이미지가 썸네일로 렌더링 되어야 합니다.', () => {
+  it('이미지가 있는 포스트의 경우 이미지가 썸네일로 렌더링 되어야 한다.', () => {
     const mockPostWithImage = {
       title: 'Test Title',
       content: {
@@ -31,7 +31,7 @@ describe('<PostItem />', () => {
     expect(imageElement).toHaveAttribute('src', 'https://example.com/test.jpg');
   });
 
-  it('이미지가 없는 포스트의 경우 랜덤 색상이 썸네일로 렌더링 되어야 합니다.', () => {
+  it('이미지가 없는 포스트의 경우 랜덤 색상이 썸네일로 렌더링 되어야 한다.', () => {
     const mockPost = {
       title: 'Test Title',
       content: {
@@ -46,7 +46,7 @@ describe('<PostItem />', () => {
     expect(coloredDiv).toHaveClass('w-full', 'h-[170px]');
   });
 
-  it('제목과 콘텐츠가 올바르게 렌더링 되어야 합니다.', () => {
+  it('제목과 콘텐츠가 올바르게 렌더링 되어야 한다.', () => {
     const mockPost = {
       title: 'Test Title',
       content: {

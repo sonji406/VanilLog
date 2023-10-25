@@ -27,7 +27,6 @@ describe('<CommentsSection />', () => {
         comment: 'testCommentContent',
         author: {
           _id: 'testAuthorId',
-          nickname: 'testAuthorNickname',
         },
       },
     ];

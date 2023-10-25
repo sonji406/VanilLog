@@ -12,7 +12,7 @@ jest.mock('next-auth/react', () => ({
 const mockCommentInfo = {
   _id: 'testCommentId',
   comment: 'testCommentContent',
-  author: { _id: 'testAuthorId', nickname: 'testAuthorNickname' },
+  author: { _id: 'testAuthorId' },
   blogPost: 'testPostId',
 };
 

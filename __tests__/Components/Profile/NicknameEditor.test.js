@@ -14,7 +14,7 @@ describe('<NicknameEditor />', () => {
     jest.clearAllMocks();
   });
 
-  it('닉네임 편집 컴포넌트가 올바르게 렌더링 되어야 합니다.', () => {
+  it('닉네임 편집 컴포넌트가 올바르게 렌더링 되어야 한다.', () => {
     render(
       <NicknameEditor
         editing={false}
@@ -27,7 +27,7 @@ describe('<NicknameEditor />', () => {
     );
   });
 
-  it('변경하기 버튼을 클릭하면 편집 가능한 상태로 변경되어야 합니다.', () => {
+  it('변경하기 버튼을 클릭하면 편집 가능한 상태로 변경되어야 한다.', () => {
     const toggleEditing = jest.fn();
     const { getByText, queryByRole } = render(
       <NicknameEditor
@@ -50,7 +50,7 @@ describe('<NicknameEditor />', () => {
     expect(toggleEditing).toHaveBeenCalled();
   });
 
-  it('닉네임 변경이 완료되면 올바른 메시지가 나타나야 합니다.', async () => {
+  it('닉네임 변경이 완료되면 올바른 메시지가 나타나야 한다.', async () => {
     let showMessage = '';
     const setMessage = (newMessage) => {
       showMessage = newMessage;

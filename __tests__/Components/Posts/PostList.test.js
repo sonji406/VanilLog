@@ -34,7 +34,7 @@ describe('<PostList /> - Pagination', () => {
     jest.clearAllMocks();
   });
 
-  it('페이지 넘버 1 버튼이 표시될 때 그 버튼은 올바른 href로 렌더링 되어야 합니다.', async () => {
+  it('페이지 넘버 1 버튼이 표시될 때 그 버튼은 올바른 href로 렌더링 되어야 한다.', async () => {
     axios.get.mockResolvedValue({
       data: {
         status: 200,
@@ -51,7 +51,7 @@ describe('<PostList /> - Pagination', () => {
     expect(linkElement1).toHaveAttribute('href', '/posts?page=1&limit=10');
   });
 
-  it('페이지 넘버 2 버튼이 표시될 때 그 버튼은 올바른 href로 렌더링 되어야 합니다.', async () => {
+  it('페이지 넘버 2 버튼이 표시될 때 그 버튼은 올바른 href로 렌더링 되어야 한다.', async () => {
     axios.get.mockResolvedValue({
       data: {
         status: 200,
@@ -88,7 +88,7 @@ describe('<PostList /> - Search Results', () => {
     jest.clearAllMocks();
   });
 
-  it('검색어에 해당되는 포스트가 있는 경우 검색 결과가 렌더링 되어야 합니다.', async () => {
+  it('검색어에 해당되는 포스트가 있는 경우 검색 결과가 렌더링 되어야 한다.', async () => {
     const mockPosts = [
       {
         _id: 'testPostId1',
@@ -120,7 +120,7 @@ describe('<PostList /> - Search Results', () => {
     });
   });
 
-  it('검색어에 해당되는 포스트가 없는 경우 검색 결과가 없다는 텍스트가 렌더링 되어야 합니다.', async () => {
+  it('검색어에 해당되는 포스트가 없는 경우 검색 결과가 없다는 텍스트가 렌더링 되어야 한다.', async () => {
     axios.get.mockResolvedValue({
       data: {
         status: 200,

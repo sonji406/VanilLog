@@ -16,18 +16,18 @@ describe('<BlogLink />', () => {
     jest.clearAllMocks();
   });
 
-  it('블로그 링크 컴포넌트가 올바르게 렌더링 되어야 합니다.', () => {
+  it('블로그 링크 컴포넌트가 올바르게 렌더링 되어야 한다.', () => {
     render(<BlogLink sessionId={mockData.sessionId} />);
   });
 
-  it('올바른 URL을 표시해야 합니다.', () => {
+  it('올바른 URL을 표시해야 한다.', () => {
     const { getByText } = render(<BlogLink sessionId={mockData.sessionId} />);
     expect(
       getByText(`https://vanillog/posts/${mockData.sessionId}`),
     ).toBeInTheDocument();
   });
 
-  it('복사하기 버튼 클릭 시 내 블로그 링크가 복사되어야 합니다.', async () => {
+  it('복사하기 버튼 클릭 시 내 블로그 링크가 복사되어야 한다.', async () => {
     const { getByText, queryByText } = render(
       <BlogLink sessionId={mockData.sessionId} />,
     );
