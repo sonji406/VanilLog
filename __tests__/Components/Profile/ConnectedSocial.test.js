@@ -2,30 +2,19 @@ import React from 'react';
 import { render } from '@testing-library/react';
 import ConnectedSocial from '@src/components/Profile/ConnectedSocial';
 
-const mockUserData = {
-  _id: 'testUserId',
-  nickname: 'testUserNickname',
-  email: 'test@test.com',
-  socialLoginType: 'google',
-  profileImage: 'https://example.com/image.jpg',
-  blogPosts: ['blogId'],
-  comments: ['commentId'],
-};
+const renderConnectedSocial = () =>
+  render(
+    <ConnectedSocial socialLoginType={global.mockUserData.socialLoginType} />,
+  );
 
 describe('<ConnectedSocial />', () => {
-  beforeEach(() => {
-    jest.clearAllMocks();
-  });
-
   it('연결된 소셜 컴포넌트가 올바르게 렌더링 되어야 한다.', () => {
-    render(<ConnectedSocial socialLoginType={mockUserData.socialLoginType} />);
+    renderConnectedSocial();
   });
 
   it('올바른 socialLoginType이 표시되어야 한다.', () => {
-    const { getByText } = render(
-      <ConnectedSocial socialLoginType={mockUserData.socialLoginType} />,
-    );
+    const { getByText } = renderConnectedSocial();
 
-    expect(getByText(mockUserData.socialLoginType)).toBeInTheDocument();
+    expect(getByText(global.mockUserData.socialLoginType)).toBeInTheDocument();
   });
 });
