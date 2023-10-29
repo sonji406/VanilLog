@@ -1,8 +1,8 @@
 import React from 'react';
-import { render, screen, act, waitFor } from '@testing-library/react';
-import PostActions from '@src/components/PostDetail/PostActions';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
+import { render, screen, act, waitFor } from '@testing-library/react';
+import PostActions from '@src/components/PostDetail/PostActions';
 
 const renderPostActions = (userId, postId, session, onShowDeleteModal) => {
   return render(

@@ -1,8 +1,8 @@
 import React from 'react';
+import { useSession } from 'next-auth/react';
 import { render, screen, act, fireEvent } from '@testing-library/react';
 import Comment from '@src/components/Comment/Comment';
 import axios from 'axios';
-import { useSession } from 'next-auth/react';
 
 const renderComment = () => render(<Comment commentInfo={mockCommentInfo} />);
 

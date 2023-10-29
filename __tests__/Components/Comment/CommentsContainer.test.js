@@ -6,9 +6,9 @@ import {
   fireEvent,
   waitFor,
 } from '@testing-library/react';
+import { useComments } from '@utils/useComment';
 import CommentsContainer from '@src/components/Comment/CommentsContainer';
 import axios from 'axios';
-import { useComments } from '@utils/useComment';
 
 jest.mock('@utils/useComment');
 

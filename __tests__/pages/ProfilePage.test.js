@@ -1,10 +1,10 @@
 import React from 'react';
-import { render, screen, act } from '@testing-library/react';
-import ProfilePage from '@src/app/profile/[userId]/page';
 import { useSession } from 'next-auth/react';
+import { render, screen, act } from '@testing-library/react';
 import { useUserProfile } from '@utils/useUserProfile';
 import { useImageUpload } from '@utils/useImageUpload';
 import { useNicknameUpdate } from '@utils/useNicknameUpdate';
+import ProfilePage from '@src/app/profile/[userId]/page';
 
 const renderProfilePage = async (params) => {
   await act(async () => {

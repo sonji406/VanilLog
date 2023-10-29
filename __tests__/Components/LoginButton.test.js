@@ -1,6 +1,6 @@
+import { signIn } from 'next-auth/react';
 import { render, screen, fireEvent } from '@testing-library/react';
 import { LoginButton } from '@src/components/LoginButton';
-import { signIn } from 'next-auth/react';
 
 const renderLoginButtonAndGetElement = (loginCompany) => {
   render(<LoginButton loginCompany={loginCompany} />);

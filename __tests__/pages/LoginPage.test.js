@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, screen, act } from '@testing-library/react';
-import LoginPage from '@src/app/auth/login/page';
 import { LoginButton } from '@src/components/LoginButton';
+import LoginPage from '@src/app/auth/login/page';
 
 jest.mock('@src/components/LoginButton', () => ({
   __esModule: true,

@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, fireEvent, act } from '@testing-library/react';
+import { render, fireEvent } from '@testing-library/react';
 import NicknameEditor from '@src/components/Profile/NicknameEditor';
 
 const mockUserData = {

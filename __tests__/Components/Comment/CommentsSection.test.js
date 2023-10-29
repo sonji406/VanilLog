@@ -1,4 +1,5 @@
 import React from 'react';
+import { useSession } from 'next-auth/react';
 import {
   render,
   fireEvent,
@@ -7,7 +8,6 @@ import {
   waitFor,
 } from '@testing-library/react';
 import CommentsSection from '@src/components/Comment/CommentsSection';
-import { useSession } from 'next-auth/react';
 
 const mockCommentInfo = global.mockCommentData[0];
 

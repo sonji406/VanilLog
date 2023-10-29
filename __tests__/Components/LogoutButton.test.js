@@ -1,6 +1,6 @@
+import { signOut } from 'next-auth/react';
 import { render, screen, fireEvent } from '@testing-library/react';
 import { LogoutButton } from '@src/components/LogoutButton';
-import { signOut } from 'next-auth/react';
 
 const renderLogoutButtonAndGetElement = () => {
   render(<LogoutButton />);

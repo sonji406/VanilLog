@@ -1,9 +1,9 @@
 import { render, screen } from '@testing-library/react';
 import { useRouter } from 'next/navigation';
 import { useSession } from 'next-auth/react';
-import PostDetail from '@src/components/PostDetail/PostDetail';
 import { usePost } from '@utils/usePost';
 import { useComments } from '@utils/useComment';
+import PostDetail from '@src/components/PostDetail/PostDetail';
 
 const renderPostDetail = (props) => {
   useSession.mockReturnValue({

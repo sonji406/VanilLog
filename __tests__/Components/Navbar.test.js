@@ -1,6 +1,6 @@
-import { render, screen, waitFor, act } from '@testing-library/react';
-import { Navbar } from '@src/components/Navbar';
 import { useSession } from 'next-auth/react';
+import { render, screen, waitFor } from '@testing-library/react';
+import { Navbar } from '@src/components/Navbar';
 import axios from 'axios';
 
 const renderNavbar = () => render(<Navbar />);

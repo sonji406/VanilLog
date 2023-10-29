@@ -1,7 +1,7 @@
 import React from 'react';
+import { useRouter } from 'next/router';
 import { render, screen, act, fireEvent } from '@testing-library/react';
 import Editor from '@src/components/Editor';
-import { useRouter } from 'next/router';
 import EditorJS from '@editorjs/editorjs';
 import axios from 'axios';
 

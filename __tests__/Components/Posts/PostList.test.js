@@ -1,8 +1,8 @@
 import React from 'react';
-import { render, waitFor, screen } from '@testing-library/react';
-import { PostList } from '@src/components/Posts/PostList';
 import { useRouter } from 'next/router';
 import { useSession } from 'next-auth/react';
+import { render, waitFor, screen } from '@testing-library/react';
+import { PostList } from '@src/components/Posts/PostList';
 import axios from 'axios';
 
 const mockAxiosGet = (data) => {

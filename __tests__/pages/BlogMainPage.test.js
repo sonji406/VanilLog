@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, screen, act } from '@testing-library/react';
-import Posts from '@src/app/posts/[[...userId]]/page';
 import { PostList } from '@src/components/Posts/PostList';
+import Posts from '@src/app/posts/[[...userId]]/page';
 
 const renderPostsPage = (params) => {
   act(() => {

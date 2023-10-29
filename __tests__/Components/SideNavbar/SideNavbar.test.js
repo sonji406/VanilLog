@@ -1,8 +1,8 @@
-import { render, screen, fireEvent, waitFor } from '@testing-library/react';
-import axios from 'axios';
 import { usePathname } from 'next/navigation';
 import { useSession } from 'next-auth/react';
+import { render, screen, fireEvent } from '@testing-library/react';
 import { SideNavbar } from '@src/components/SideNavbar/SideNavbar';
+import axios from 'axios';
 
 const renderSideNavbar = () => render(<SideNavbar />);
 

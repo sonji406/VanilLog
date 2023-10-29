@@ -1,7 +1,7 @@
-import axios from 'axios';
+import { METAINFO } from 'constants/metaInfo';
 import { generateMetadata as generateMetadataForUser } from '@src/app/posts/[[...userId]]/page';
 import { generateMetadata as generateMetadataForPost } from '@src/app/post/[userId]/[postId]/page';
-import { METAINFO } from 'constants/metaInfo';
+import axios from 'axios';
 
 const mockAxiosSuccess = (data) => {
   axios.mockResolvedValueOnce({ data: { data } });
