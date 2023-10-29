@@ -3,6 +3,12 @@ import { render, screen, act } from '@testing-library/react';
 import Posts from '@src/app/posts/[[...userId]]/page';
 import { PostList } from '@src/components/Posts/PostList';
 
+const renderPostsPage = (params) => {
+  act(() => {
+    render(<Posts params={params} />);
+  });
+};
+
 jest.mock('@src/components/Posts/PostList', () => ({
   PostList: jest.fn(() => <div>Mocked Post List</div>),
 }));
@@ -13,9 +19,7 @@ describe('<BlogMainPage />', () => {
       userId: ['testUserId'],
     };
 
-    act(() => {
-      render(<Posts params={mockParams} />);
-    });
+    renderPostsPage(mockParams);
 
     expect(screen.getByText('Mocked Post List')).toBeInTheDocument();
     expect(PostList).toHaveBeenCalledWith({ blogUserId: 'testUserId' }, {});
