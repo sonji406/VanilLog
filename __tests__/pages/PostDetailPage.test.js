@@ -14,6 +14,12 @@ jest.mock('@src/components/Comment/CommentsContainer', () => {
   };
 });
 
+const renderPostDetailPage = async (params) => {
+  await act(async () => {
+    render(<PostDetailPage params={params} />);
+  });
+};
+
 describe('<PostDetailPage />', () => {
   it('가상의 PostDetail과 CommentsContainer가 올바르게 렌더링 되어야 한다.', async () => {
     const mockParams = {
@@ -21,9 +27,7 @@ describe('<PostDetailPage />', () => {
       postId: 'testPostId',
     };
 
-    await act(async () => {
-      render(<PostDetailPage params={mockParams} />);
-    });
+    await renderPostDetailPage(mockParams);
 
     expect(screen.getByText('Mocked Post Detail')).toBeInTheDocument();
     expect(screen.getByText('Mocked Comments Container')).toBeInTheDocument();
