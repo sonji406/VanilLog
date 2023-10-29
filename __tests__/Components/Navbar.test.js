@@ -3,18 +3,13 @@ import { Navbar } from '@src/components/Navbar';
 import { useSession } from 'next-auth/react';
 import axios from 'axios';
 
-jest.mock('next-auth/react');
-jest.mock('axios');
+const renderNavbar = () => render(<Navbar />);
 
 describe('<Navbar />', () => {
-  afterEach(() => {
-    jest.clearAllMocks();
-  });
-
   it('로그인하지 않은 사용자의 경우 로그인 링크가 렌더링 되어야 한다.', () => {
     useSession.mockReturnValue({ status: 'unauthenticated' });
 
-    render(<Navbar />);
+    renderNavbar();
 
     expect(screen.getByText('Login')).toBeInTheDocument();
   });
@@ -29,7 +24,7 @@ describe('<Navbar />', () => {
       data: {
         status: 200,
         data: {
-          profileImage: '/test-image.jpg',
+          profileImage: 'https://example.com/test.jpg',
           nickname: 'testUserNickname',
         },
       },
@@ -37,7 +32,7 @@ describe('<Navbar />', () => {
 
     axios.get.mockResolvedValueOnce(mockProfileResponse);
 
-    render(<Navbar />);
+    renderNavbar();
 
     await waitFor(() => {
       expect(screen.getByAltText('프로필 사진')).toBeInTheDocument();
@@ -53,7 +48,7 @@ describe('<Navbar />', () => {
 
     axios.get.mockRejectedValueOnce(new Error('API error'));
 
-    render(<Navbar />);
+    renderNavbar();
 
     await waitFor(() => {
       expect(
