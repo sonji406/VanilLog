@@ -3,15 +3,19 @@ import { generateMetadata as generateMetadataForUser } from '@src/app/posts/[[..
 import { generateMetadata as generateMetadataForPost } from '@src/app/post/[userId]/[postId]/page';
 import { METAINFO } from 'constants/metaInfo';
 
+const mockAxiosSuccess = (data) => {
+  axios.mockResolvedValueOnce({ data: { data } });
+};
+
+const mockAxiosFailure = () => {
+  axios.mockRejectedValueOnce(new Error('API Error'));
+};
+
 describe('generateMetadata for User', () => {
   it('유효한 사용자 ID에 대한 올바른 메타데이터가 생성되어야 한다.', async () => {
-    axios.mockResolvedValueOnce({
-      data: {
-        data: {
-          nickname: 'testUserNickname',
-          blogPosts: ['post1', 'post2'],
-        },
-      },
+    mockAxiosSuccess({
+      nickname: 'testUserNickname',
+      blogPosts: ['post1', 'post2'],
     });
 
     const metadata = await generateMetadataForUser({
@@ -25,7 +29,7 @@ describe('generateMetadata for User', () => {
   });
 
   it('에러 발생 시에는 기본 메타 데이터를 사용해야 한다.', async () => {
-    axios.mockRejectedValueOnce(new Error('API Error'));
+    mockAxiosFailure();
 
     const metadata = await generateMetadataForUser({
       params: { userId: ['testUserId'] },
@@ -40,14 +44,10 @@ describe('generateMetadata for User', () => {
 
 describe('generateMetadata for Post', () => {
   it('유효한 포스트 ID에 대한 올바른 메타데이터가 생성되어야 한다.', async () => {
-    axios.mockResolvedValueOnce({
-      data: {
-        data: {
-          title: 'testPostTitle',
-          content: {
-            blocks: [{ type: 'text', data: { text: 'testPostContent' } }],
-          },
-        },
+    mockAxiosSuccess({
+      title: 'testPostTitle',
+      content: {
+        blocks: [{ type: 'text', data: { text: 'testPostContent' } }],
       },
     });
 
@@ -62,7 +62,7 @@ describe('generateMetadata for Post', () => {
   });
 
   it('에러 발생 시에는 기본 메타 데이터를 사용해야 한다.', async () => {
-    axios.mockRejectedValueOnce(new Error('API Error'));
+    mockAxiosFailure();
 
     const metadata = await generateMetadataForPost({
       params: { postId: 'testPostId' },
