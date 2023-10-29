@@ -10,30 +10,18 @@ import CommentsContainer from '@src/components/Comment/CommentsContainer';
 import axios from 'axios';
 import { useComments } from '@utils/useComment';
 
-jest.mock('axios');
 jest.mock('@utils/useComment');
 
-describe('<CommentsContainer />', () => {
-  const mockPostId = 'testPostId';
-  const mockComments = [
-    {
-      _id: 'testCommentId1',
-      comment: 'testCommentContent1',
-      author: {
-        _id: 'testCommentAuthorId1',
-      },
-    },
-    {
-      _id: 'testCommentId2',
-      comment: 'testCommentContent2',
-      author: {
-        _id: 'testCommentAuthorId2',
-      },
-    },
-  ];
+const mockPostId = 'testPostId';
 
+const renderCommentsContainer = () =>
+  render(<CommentsContainer postId={mockPostId} />);
+
+describe('<CommentsContainer />', () => {
   beforeEach(() => {
-    axios.get.mockResolvedValue({ data: { status: 200, data: mockComments } });
+    axios.get.mockResolvedValue({
+      data: { status: 200, data: global.mockCommentData },
+    });
 
     useComments.mockReturnValue({
       commentText: '',
@@ -43,13 +31,9 @@ describe('<CommentsContainer />', () => {
     });
   });
 
-  afterEach(() => {
-    jest.clearAllMocks();
-  });
-
   it('댓글을 로딩하는 API 호출이 올바르게 이루어져야 한다.', async () => {
     await act(async () => {
-      render(<CommentsContainer postId={mockPostId} />);
+      renderCommentsContainer();
     });
 
     expect(axios.get).toHaveBeenCalledWith(`/api/v1/comment/${mockPostId}`);
@@ -72,7 +56,7 @@ describe('<CommentsContainer />', () => {
     });
 
     await act(async () => {
-      render(<CommentsContainer postId={mockPostId} />);
+      renderCommentsContainer();
     });
 
     const textarea = screen.getByPlaceholderText('댓글 내용을 입력하세요');
