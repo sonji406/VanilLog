@@ -4,11 +4,18 @@ import PostActions from '@src/components/PostDetail/PostActions';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 
-describe('<PostActions />', () => {
-  beforeEach(() => {
-    jest.clearAllMocks();
-  });
+const renderPostActions = (userId, postId, session, onShowDeleteModal) => {
+  return render(
+    <PostActions
+      userId={userId}
+      postId={postId}
+      session={session}
+      onShowDeleteModal={onShowDeleteModal}
+    />,
+  );
+};
 
+describe('<PostActions />', () => {
   it('로그인한 사용자가 자신의 포스트를 보면 삭제와 수정 버튼이 보여야 한다.', async () => {
     useSession.mockReturnValue({ data: { mongoId: 'testUserId' } });
     useRouter.mockReturnValue({
@@ -16,13 +23,11 @@ describe('<PostActions />', () => {
     });
 
     await act(async () => {
-      render(
-        <PostActions
-          userId='testUserId'
-          postId='testPostId'
-          session={{ mongoId: 'testUserId' }}
-          onShowDeleteModal={jest.fn()}
-        />,
+      renderPostActions(
+        'testUserId',
+        'testPostId',
+        { mongoId: 'testUserId' },
+        jest.fn(),
       );
     });
 
@@ -38,13 +43,11 @@ describe('<PostActions />', () => {
       push: jest.fn(),
     });
 
-    const { container } = render(
-      <PostActions
-        userId='anotherTestUserId'
-        postId='testPostId'
-        session={{ mongoId: 'testUserId' }}
-        onShowDeleteModal={jest.fn()}
-      />,
+    const { container } = renderPostActions(
+      'anotherTestUserId',
+      'testPostId',
+      { mongoId: 'testUserId' },
+      jest.fn(),
     );
 
     expect(container.firstChild).toBeNull();
