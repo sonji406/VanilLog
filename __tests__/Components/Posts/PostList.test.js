@@ -1,29 +1,39 @@
 import React from 'react';
-import { useRouter } from 'next/router';
-import { useSession } from 'next-auth/react';
 import { render, waitFor, screen } from '@testing-library/react';
 import { PostList } from '@src/components/Posts/PostList';
 import axios from 'axios';
 
+jest.mock('next/link', () => {
+  const MockNextLink = ({ children, href }) => {
+    return <a href={href}>{children}</a>;
+  };
+
+  MockNextLink.displayName = 'MockNextLink';
+
+  return MockNextLink;
+});
+
+jest.mock('next/navigation', () => ({
+  useSearchParams: () => {
+    return {
+      get: (param) => mockGetParams[param],
+    };
+  },
+}));
+
+const mockGetParams = {
+  q: 'searchQuery',
+  page: '2',
+  limit: '10',
+};
+
 const mockAxiosGet = (data) => {
-  axios.get.mockResolvedValue({
+  axios.get.mockResolvedValueOnce({
     data: {
       status: 200,
       ...data,
     },
   });
-};
-
-const renderPostListWithQuery = (query) => {
-  const mockRouter = {
-    push: jest.fn(),
-    query,
-  };
-
-  useRouter.mockReturnValue(mockRouter);
-  useSession.mockReturnValue({ data: null });
-
-  return render(<PostList blogUserId={null} />);
 };
 
 describe('<PostList /> - Pagination', () => {
@@ -33,12 +43,13 @@ describe('<PostList /> - Pagination', () => {
       totalPosts: 50,
     });
 
-    renderPostListWithQuery({ page: '2', limit: '10' });
+    render(<PostList blogUserId={null} />);
 
     await waitFor(() => expect(screen.getByText('2')).toBeInTheDocument());
 
-    const linkElement2 = screen.getByText('2').closest('a');
-    expect(linkElement2).toHaveAttribute('href', '/posts?page=2&limit=10');
+    const button = screen.getByText('2');
+    const parentAnchor = button.parentElement;
+    expect(parentAnchor).toHaveAttribute('href', '/posts/?page=2&limit=10');
   });
 });
 
@@ -64,7 +75,7 @@ describe('<PostList /> - Search Results', () => {
       totalPosts: mockSearchResults.length,
     });
 
-    renderPostListWithQuery({ q: 'searchQuery' });
+    render(<PostList blogUserId={null} />);
 
     await waitFor(() => {
       expect(screen.getByText('Search Result 1')).toBeInTheDocument();
@@ -78,7 +89,7 @@ describe('<PostList /> - Search Results', () => {
       totalPosts: 0,
     });
 
-    renderPostListWithQuery({ q: 'searchQuery' });
+    render(<PostList blogUserId={null} />);
 
     await waitFor(() => {
       expect(screen.getByText('검색 결과가 없습니다.')).toBeInTheDocument();
