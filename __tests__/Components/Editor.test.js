@@ -64,7 +64,7 @@ describe('<Editor />', () => {
       title: '',
       setError: setErrorMock,
       content: {
-        blocks: [{ type: 'paragraph', data: { text: 'Some content' } }],
+        blocks: [{ type: 'paragraph', data: { text: 'testDataContent' } }],
       },
     });
 
@@ -84,7 +84,7 @@ describe('<Editor />', () => {
     mockEditorJSInstance.save.mockResolvedValueOnce({ blocks: [] });
 
     await setupEditorComponent({
-      title: 'Some title',
+      title: 'testTitle',
       setError: setErrorMock,
       content: { blocks: [] },
     });
@@ -97,5 +97,45 @@ describe('<Editor />', () => {
     render(<Editor error={error} />);
 
     expect(screen.getByText(ERRORS.TITLE_CONTENT_REQUIRED)).toBeInTheDocument();
+  });
+
+  it('포스트 수정 시 에러가 발생하면 EDITOR_EDIT_FAILED 에러 메시지를 표시해야 한다.', async () => {
+    const setErrorMock = jest.fn();
+    await setupEditorComponent({
+      isModify: true,
+      setError: setErrorMock,
+    });
+
+    axios.put.mockRejectedValueOnce(new Error('Test Error'));
+
+    await clickSaveButton();
+
+    expect(setErrorMock).toHaveBeenCalledWith(ERRORS.EDITOR_EDIT_FAILED);
+
+    const error = ERRORS.EDITOR_EDIT_FAILED;
+    render(<Editor error={error} />);
+
+    const errorMessage = await screen.findByText(ERRORS.EDITOR_EDIT_FAILED);
+    expect(errorMessage).toBeInTheDocument();
+  });
+
+  it('새 포스트 저장 시 에러가 발생하면 EDITOR_SAVE_FAILED 에러 메시지를 표시해야 한다.', async () => {
+    const setErrorMock = jest.fn();
+    await setupEditorComponent({
+      setError: setErrorMock,
+      isModify: false,
+    });
+
+    axios.post.mockRejectedValueOnce(new Error('Test Error'));
+
+    await clickSaveButton();
+
+    expect(setErrorMock).toHaveBeenCalledWith(ERRORS.EDITOR_SAVE_FAILED);
+
+    const error = ERRORS.EDITOR_SAVE_FAILED;
+    render(<Editor error={error} />);
+
+    const errorMessage = await screen.findByText(ERRORS.EDITOR_SAVE_FAILED);
+    expect(errorMessage).toBeInTheDocument();
   });
 });
