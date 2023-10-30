@@ -49,4 +49,35 @@ describe('<Comment />', () => {
 
     expect(axios.delete).toHaveBeenCalled();
   });
+
+  it('댓글 수정 실패 시 에러 메시지를 표시해야 한다.', async () => {
+    axios.put.mockRejectedValueOnce(new Error('댓글 수정 실패 에러'));
+
+    fireEvent.click(screen.getByText('수정'));
+
+    const input = screen.getByRole('textbox');
+    fireEvent.change(input, {
+      target: { value: 'edited testCommentContent1' },
+    });
+
+    await act(async () => {
+      fireEvent.click(screen.getByText('확인'));
+    });
+
+    expect(
+      screen.getByText('댓글을 수정/삭제할 수 없습니다.'),
+    ).toBeInTheDocument();
+  });
+
+  it('댓글 삭제 실패 시 에러 메시지를 표시해야 한다.', async () => {
+    axios.delete.mockRejectedValueOnce(new Error('댓글 삭제 실패 에러'));
+
+    await act(async () => {
+      fireEvent.click(screen.getByText('삭제'));
+    });
+
+    expect(
+      screen.getByText('댓글을 수정/삭제할 수 없습니다.'),
+    ).toBeInTheDocument();
+  });
 });
