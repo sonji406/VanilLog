@@ -46,7 +46,7 @@ describe('<Editor />', () => {
     const pushMock = jest.fn();
     useRouter.mockReturnValue({ push: pushMock });
 
-    axios.post.mockResolvedValue({ data: { status: 'success' } });
+    axios.post.mockResolvedValue({ data: { status: 200 } });
 
     await setupEditorComponent();
 
