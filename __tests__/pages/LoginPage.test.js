@@ -9,16 +9,14 @@ jest.mock('@src/components/LoginButton', () => ({
   )),
 }));
 
-const renderLoginPage = () => {
-  act(() => {
-    render(<LoginPage />);
-  });
-};
-
 describe('<LoginPage />', () => {
-  it('로그인 페이지가 올바르게 렌더링 되어야 한다.', () => {
-    renderLoginPage();
+  beforeEach(() => {
+    act(() => {
+      render(<LoginPage />);
+    });
+  });
 
+  it('로그인 페이지가 올바르게 렌더링 되어야 한다.', () => {
     const logoText = screen.getByText('vanilLog');
     const loginButton = screen.getByTestId('mocked-login-button');
     const browseButton = screen.getByText('비회원으로 둘러보기');
@@ -29,8 +27,6 @@ describe('<LoginPage />', () => {
   });
 
   it('로그인 페이지 렌더링 및 구글 로그인 버튼이 나타나야 한다.', () => {
-    renderLoginPage();
-
     expect(LoginButton).toHaveBeenCalledWith({ loginCompany: 'google' }, {});
   });
 });

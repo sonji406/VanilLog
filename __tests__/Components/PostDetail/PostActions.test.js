@@ -16,12 +16,14 @@ const renderPostActions = (userId, postId, session, onShowDeleteModal) => {
 };
 
 describe('<PostActions />', () => {
-  it('로그인한 사용자가 자신의 포스트를 보면 삭제와 수정 버튼이 보여야 한다.', async () => {
+  beforeEach(() => {
     useSession.mockReturnValue({ data: { mongoId: 'testUserId' } });
     useRouter.mockReturnValue({
       push: jest.fn(),
     });
+  });
 
+  it('로그인한 사용자가 자신의 포스트를 보면 삭제와 수정 버튼이 보여야 한다.', async () => {
     await act(async () => {
       renderPostActions(
         'testUserId',
@@ -38,11 +40,6 @@ describe('<PostActions />', () => {
   });
 
   it('로그인한 사용자가 다른 사람의 포스트를 보면 삭제와 수정 버튼이 보이지 않아야 한다.', async () => {
-    useSession.mockReturnValue({ data: { mongoId: 'testUserId' } });
-    useRouter.mockReturnValue({
-      push: jest.fn(),
-    });
-
     const { container } = renderPostActions(
       'anotherTestUserId',
       'testPostId',

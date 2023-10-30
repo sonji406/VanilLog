@@ -20,6 +20,7 @@ describe('<ProfileBox />', () => {
 
   it('사용자 ID가 제공되면 사용자의 프로필 사진, 닉네임, 프로필 정보/수정 버튼이 렌더링 되어야 한다.', () => {
     renderProfileBox(global.mockProfileData, null);
+
     expect(screen.getByAltText('프로필 사진')).toBeInTheDocument();
     expect(screen.getByText('testUserNickname')).toBeInTheDocument();
     expect(screen.getByText('프로필 정보/수정')).toBeInTheDocument();

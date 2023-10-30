@@ -9,7 +9,8 @@ const renderConnectedSocial = () =>
 
 describe('<ConnectedSocial />', () => {
   it('연결된 소셜 컴포넌트가 올바르게 렌더링 되어야 한다.', () => {
-    renderConnectedSocial();
+    const { container } = renderConnectedSocial();
+    expect(container).toBeInTheDocument();
   });
 
   it('올바른 socialLoginType이 표시되어야 한다.', () => {

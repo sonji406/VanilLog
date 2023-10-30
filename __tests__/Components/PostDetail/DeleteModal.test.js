@@ -11,11 +11,6 @@ describe('<DeleteModal />', () => {
   const onClose = jest.fn();
   const onConfirm = jest.fn();
 
-  beforeEach(() => {
-    onClose.mockClear();
-    onConfirm.mockClear();
-  });
-
   it('isOpen이 false일 때 렌더링 되지 않아야 한다.', () => {
     renderDeleteModal(false, onClose, onConfirm);
 
