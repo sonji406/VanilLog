@@ -62,7 +62,7 @@ describe('<CommentsContainer />', () => {
     const textarea = screen.getByPlaceholderText('댓글 내용을 입력하세요');
     fireEvent.change(textarea, { target: { value: newComment.comment } });
 
-    const submitButton = screen.getByRole('button', { name: /댓글 작성/i });
+    const submitButton = screen.getByRole('button', { name: '댓글 작성' });
     fireEvent.click(submitButton);
 
     await waitFor(() => {
