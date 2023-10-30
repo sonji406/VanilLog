@@ -16,17 +16,13 @@ const renderBlogLink = () =>
   render(<BlogLink sessionId={mockUserData.sessionId} />);
 
 describe('<BlogLink />', () => {
-  let getByText, queryByText, findByText;
-
-  beforeEach(() => {
-    ({ getByText, queryByText, findByText } = renderBlogLink());
-  });
-
   it('블로그 링크 컴포넌트가 올바른 URL을 표시해야 한다.', () => {
+    const { getByText } = renderBlogLink();
     expect(getByText(blogLinkUrl)).toBeInTheDocument();
   });
 
   it('복사하기 버튼 클릭 시 내 블로그 링크가 복사되어야 한다.', async () => {
+    const { getByText, queryByText, findByText } = renderBlogLink();
     const copyButton = getByText('복사하기');
     expect(queryByText(successMessage)).toBeNull();
 
