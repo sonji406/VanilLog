@@ -32,9 +32,9 @@ const renderCommentsSection = (
 };
 
 describe('<CommentsSection />', () => {
-  let mockOnCommentChange = jest.fn();
-  let mockOnCommentSubmit = jest.fn();
-  let mockErrorMessage = null;
+  const mockOnCommentChange = jest.fn();
+  const mockOnCommentSubmit = jest.fn();
+  const mockErrorMessage = null;
 
   beforeEach(() => {
     useSession.mockReturnValue({ data: { mongoId: 'testUserId' } });

@@ -7,13 +7,9 @@ const mockUserData = {
 };
 
 describe('<NicknameEditor />', () => {
-  let toggleEditing, setNickname, updateNickname;
-
-  beforeEach(() => {
-    toggleEditing = jest.fn();
-    setNickname = jest.fn();
-    updateNickname = jest.fn();
-  });
+  const toggleEditing = jest.fn();
+  const setNickname = jest.fn();
+  const updateNickname = jest.fn();
 
   const renderNicknameEditor = (props) =>
     render(
