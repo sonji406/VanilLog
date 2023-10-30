@@ -13,16 +13,14 @@ describe('<Comment />', () => {
     useSession.mockReturnValue({ data: { mongoId: 'testCommentAuthorId1' } });
     axios.put.mockResolvedValue({ data: { status: 200 } });
     axios.delete.mockResolvedValue({ data: { status: 200 } });
+    renderComment();
   });
 
   it('댓글 컴포넌트가 올바르게 렌더링 되어야 한다.', () => {
-    renderComment();
-
     expect(screen.getByText('testCommentContent1')).toBeInTheDocument();
   });
 
   it('댓글 편집이 가능해야 한다.', async () => {
-    renderComment();
     fireEvent.click(screen.getByText('수정'));
 
     const input = screen.getByRole('textbox');
@@ -38,7 +36,6 @@ describe('<Comment />', () => {
   });
 
   it('댓글 편집 취소가 가능해야 한다.', () => {
-    renderComment();
     fireEvent.click(screen.getByText('수정'));
     fireEvent.click(screen.getByText('취소'));
 
@@ -46,7 +43,6 @@ describe('<Comment />', () => {
   });
 
   it('댓글 삭제가 가능해야 한다.', async () => {
-    renderComment();
     await act(async () => {
       fireEvent.click(screen.getByText('삭제'));
     });
