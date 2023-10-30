@@ -1,6 +1,7 @@
 import { usePathname } from 'next/navigation';
 import { useSession } from 'next-auth/react';
 import { render, screen, fireEvent } from '@testing-library/react';
+import { ERRORS } from 'constants/errors';
 import { SideNavbar } from '@src/components/SideNavbar/SideNavbar';
 import axios from 'axios';
 
@@ -41,7 +42,7 @@ describe('<SideNavbar />', () => {
     renderSideNavbar();
 
     expect(
-      await screen.findByText('프로필을 불러오는 중 문제가 발생했습니다.'),
+      await screen.findByText(ERRORS.PROFILE_LOADING_ERROR),
     ).toBeInTheDocument();
   });
 

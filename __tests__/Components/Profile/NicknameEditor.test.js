@@ -1,5 +1,6 @@
 import React from 'react';
 import { render, fireEvent } from '@testing-library/react';
+import { SUCCESS } from 'constants/success';
 import NicknameEditor from '@src/components/Profile/NicknameEditor';
 
 const mockUserData = {
@@ -40,7 +41,7 @@ describe('<NicknameEditor />', () => {
   });
 
   it('닉네임 변경이 완료되면 올바른 메시지가 나타나야 한다.', () => {
-    const message = '닉네임이 성공적으로 업데이트되었습니다';
+    const message = SUCCESS.PROFILE_PUT;
     const { getByText } = renderNicknameEditor({ message });
 
     expect(getByText(message)).toBeInTheDocument();

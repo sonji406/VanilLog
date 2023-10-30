@@ -1,5 +1,6 @@
 import { useSession } from 'next-auth/react';
 import { render, screen, waitFor } from '@testing-library/react';
+import { ERRORS } from 'constants/errors';
 import { Navbar } from '@src/components/Navbar';
 import axios from 'axios';
 
@@ -52,7 +53,7 @@ describe('<Navbar />', () => {
 
     await waitFor(() => {
       expect(
-        screen.getByText('프로필을 불러오는 중 문제가 발생했습니다.'),
+        screen.getByText(ERRORS.PROFILE_LOADING_ERROR),
       ).toBeInTheDocument();
     });
   });
