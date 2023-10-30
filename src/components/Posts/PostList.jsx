@@ -3,18 +3,18 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Link from 'next/link';
-import { useRouter } from 'next/router';
+import { useSearchParams } from 'next/navigation';
 import { useSession } from 'next-auth/react';
 import { PostItem } from './PostItem';
 import { postListHref } from '@utils/postListHref';
 import { ERRORS } from 'constants/errors';
 
 function PostList({ blogUserId }) {
-  const router = useRouter();
+  const params = useSearchParams();
 
-  const searchValue = router.query.q;
-  const page = router.query.page || 1;
-  const limit = router.query.limit || 10;
+  const searchValue = params.get('q');
+  const page = params.get('page') || 1;
+  const limit = params.get('limit') || 10;
 
   const { data } = useSession();
   const loggedInUserId = data?.mongoId;
