@@ -16,17 +16,13 @@ const renderBlogLink = () =>
   render(<BlogLink sessionId={mockUserData.sessionId} />);
 
 describe('<BlogLink />', () => {
-  const { getByText, queryByText, findByText } = renderBlogLink();
+  let getByText, queryByText, findByText;
 
   beforeEach(() => {
-    renderBlogLink();
+    ({ getByText, queryByText, findByText } = renderBlogLink());
   });
 
-  it('블로그 링크 컴포넌트가 올바르게 렌더링 되어야 한다.', () => {
-    renderBlogLink();
-  });
-
-  it('올바른 URL을 표시해야 한다.', () => {
+  it('블로그 링크 컴포넌트가 올바른 URL을 표시해야 한다.', () => {
     expect(getByText(blogLinkUrl)).toBeInTheDocument();
   });
 
