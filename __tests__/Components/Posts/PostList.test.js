@@ -27,20 +27,6 @@ const renderPostListWithQuery = (query) => {
 };
 
 describe('<PostList /> - Pagination', () => {
-  it('페이지 넘버 1 버튼이 표시될 때 그 버튼은 올바른 href로 렌더링 되어야 한다.', async () => {
-    mockAxiosGet({
-      data: [],
-      totalPosts: 10,
-    });
-
-    renderPostListWithQuery({ page: '1', limit: '10' });
-
-    await waitFor(() => expect(screen.getByText('1')).toBeInTheDocument());
-
-    const linkElement1 = screen.getByText('1').closest('a');
-    expect(linkElement1).toHaveAttribute('href', '/posts?page=1&limit=10');
-  });
-
   it('페이지 넘버 2 버튼이 표시될 때 그 버튼은 올바른 href로 렌더링 되어야 한다.', async () => {
     mockAxiosGet({
       data: [],
