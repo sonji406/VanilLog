@@ -4,7 +4,6 @@ import Home from '@src/app/page';
 
 jest.mock('@src/components/Posts/PostList', () => {
   return {
-    __esModule: true,
     PostList: () => <div>Mocked Post List</div>,
   };
 });

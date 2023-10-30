@@ -4,7 +4,6 @@ import { LoginButton } from '@src/components/LoginButton';
 import LoginPage from '@src/app/auth/login/page';
 
 jest.mock('@src/components/LoginButton', () => ({
-  __esModule: true,
   LoginButton: jest.fn(() => (
     <button data-testid='mocked-login-button'>Mocked Login Button</button>
   )),
