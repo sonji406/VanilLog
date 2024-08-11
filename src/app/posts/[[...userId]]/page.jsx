@@ -1,6 +1,7 @@
+import { Suspense } from 'react';
+import axios from 'axios';
 import { PostList } from '@src/components/Posts/PostList';
 import { METAINFO } from 'constants/metaInfo';
-import axios from 'axios';
 
 export async function generateMetadata({ params }) {
   const userId = params.userId ? params.userId[0] : '';
@@ -23,8 +24,8 @@ export async function generateMetadata({ params }) {
 export default function Posts({ params }) {
   const blogUserId = params.userId ? params.userId[0] : '';
   return (
-    <>
+    <Suspense>
       <PostList blogUserId={blogUserId} />
-    </>
+    </Suspense>
   );
 }

@@ -1,3 +1,4 @@
+import { Suspense } from 'react';
 import { PostList } from '@src/components/Posts/PostList';
 import { METAINFO } from 'constants/metaInfo';
 
@@ -8,8 +9,8 @@ export const metadata = {
 
 export default function Home() {
   return (
-    <>
+    <Suspense>
       <PostList />
-    </>
+    </Suspense>
   );
 }
