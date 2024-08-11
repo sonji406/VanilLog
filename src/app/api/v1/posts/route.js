@@ -7,6 +7,7 @@ import { ERRORS } from 'constants/errors';
 import { sendErrorResponse } from '@utils/response';
 import { validateObjectId } from '@utils/validateObjectId';
 
+export const maxDuration = 10;
 export const dynamic = 'force-dynamic';
 
 /**
