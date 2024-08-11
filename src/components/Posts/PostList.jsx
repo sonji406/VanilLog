@@ -10,7 +10,7 @@ import { postListHref } from '@utils/postListHref';
 import { ERRORS } from 'constants/errors';
 
 function PostList({ blogUserId }) {
-  const params = useSearchParams();
+  const [params] = useSearchParams();
 
   const searchValue = params.get('q');
   const page = params.get('page') || 1;
