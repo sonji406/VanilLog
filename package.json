@@ -16,6 +16,7 @@
     "@aws-sdk/client-s3": "^3.395.0",
     "@editorjs/editorjs": "^2.28.0",
     "@editorjs/image": "^2.8.1",
+    "@vercel/speed-insights": "^1.0.12",
     "axios": "^1.4.0",
     "dompurify": "^3.0.5",
     "eslint": "8.47.0",
