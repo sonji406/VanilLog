@@ -1,3 +1,4 @@
+import { SpeedInsights } from '@vercel/speed-insights/next';
 import { METAINFO } from 'constants/metaInfo';
 import { AuthSession } from './AuthSession';
 import './globals.css';
@@ -11,7 +12,10 @@ export default function RootLayout({ children }) {
   return (
     <html>
       <body>
-        <AuthSession>{children}</AuthSession>
+        <AuthSession>
+          {children}
+          <SpeedInsights />
+        </AuthSession>
       </body>
     </html>
   );
