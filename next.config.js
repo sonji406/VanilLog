@@ -1,7 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
-    domains: ['vanillog-bucket.s3.amazonaws.com', 'lh3.googleusercontent.com'],
+    domains: ['vanillog-buckets.s3.amazonaws.com', 'lh3.googleusercontent.com'],
   },
   async headers() {
     return [
