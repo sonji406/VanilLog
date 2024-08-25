@@ -1,4 +1,4 @@
-### VanilLog: 일상을 기록하는 가장 심플한 블로그 📓
+# VanilLog: 일상을 기록하는 가장 심플한 블로그 📔
 
 </br>
 
@@ -6,102 +6,7 @@
 
 **VanilLog**는 개인의 블로그 글을 관리하고 공유할 수 있는 플랫폼입니다. NextJS 13의 최신 기능과 함께, 사용자는 자신의 블로그에서 쉽고 빠르게 게시글을 작성하고 관리할 수 있습니다.
 
-<details>
-  <summary><b>📹 VanilLog 시연 영상</b></summary>
-  
-  - 메인화면
-    - 로그인하지 않은 경우, 포스트 조회 및 검색 기능만 이용할 수 있습니다.
-
-      https://github.com/Last-Survivors-3-8/VanilLog/assets/133579214/3fbb62af-5866-4475-a960-b60188ace9b4
-
-- 로그인
-
-  - 상단바의 'Login' 버튼이나 사이드바의 '로그인을 해주세요.' 버튼을 클릭해 로그인 화면으로 이동합니다.
-  - 구글 로그인 시 자동으로 회원가입 및 로그인됩니다.
-  - 가입 초기에 설정되는 닉네임과 프로필 이미지는, 연계된 구글 계정에서 가져온 닉네임과 이미지입니다.
-
-    https://github.com/Last-Survivors-3-8/VanilLog/assets/133579214/12613435-67ca-45fc-b934-68e65328e452
-
-- 포스트 작성하기
-
-  - 제목을 작성합니다.
-  - 내용에는 텍스트나 이미지를 추가합니다.
-  - '저장하기' 버튼을 클릭하여 포스트를 게시합니다.
-  - MyLog에서 작성한 포스트를 확인할 수 있습니다.
-
-    https://github.com/Last-Survivors-3-8/VanilLog/assets/133579214/a07c2006-49eb-4fff-9187-def48e283ce4
-
-- 포스트 수정하기
-
-  - 포스트 상세 페이지에서 '수정하기' 버튼을 클릭해 수정 화면으로 이동합니다.
-  - 제목이나 내용을 변경합니다.
-  - '저장하기' 버튼을 클릭하여 수정사항을 저장합니다.
-  - MyLog에서 수정된 포스트를 확인할 수 있습니다.
-
-    https://github.com/Last-Survivors-3-8/VanilLog/assets/133579214/b330b100-02da-49d6-bc12-3c01e83b1226
-
-- 포스트 삭제하기
-
-  - 포스트 상세 페이지에서 '삭제하기' 버튼을 클릭합니다.
-  - '확인' 버튼을 클릭하여 포스트를 삭제합니다.
-  - MyLog에서 삭제된 포스트를 확인할 수 있습니다.
-
-    https://github.com/Last-Survivors-3-8/VanilLog/assets/133579214/f9c4464e-0e58-4f38-b5ca-9b10d4977dd7
-
-- 댓글 작성
-
-  - 포스트 상세 페이지 하단에 댓글을 입력한 후 '댓글 작성' 버튼을 클릭합니다.
-  - 작성한 댓글을 확인할 수 있습니다.
-
-    https://github.com/Last-Survivors-3-8/VanilLog/assets/133579214/d469469f-c5b5-4cd9-a73f-34117fab5e62
-
-- 댓글 수정, 삭제
-
-  - 수정하고자 하는 댓글의 '수정' 버튼을 클릭합니다.
-  - 댓글을 수정한 후 '확인' 버튼을 클릭합니다.
-  - 수정된 댓글을 확인할 수 있습니다.
-  - 삭제하고자 하는 댓글의 '삭제' 버튼을 클릭합니다.
-  - 삭제된 댓글을 확인할 수 있습니다.
-
-    https://github.com/Last-Survivors-3-8/VanilLog/assets/133579214/fb0dafe6-e7a8-4624-8fc1-1e2e5cbcd420
-
-- 통합 검색
-
-  - 메인화면 내 우측 상단 검색란에 검색어를 입력한 후 엔터를 누릅니다.
-  - 검색어와 관련된 포스트들이 표시됩니다.
-
-    https://github.com/Last-Survivors-3-8/VanilLog/assets/133579214/7afeed5e-0872-4364-b6ea-e7c2ad6cdbce
-
-- 블로그내 검색
-
-  - 특정 블로그 내 우측 상단 검색란에 검색어를 입력한 후 엔터를 누릅니다.
-  - 해당 블로그 내에서 검색어와 관련된 포스트들이 표시됩니다.
-
-    https://github.com/Last-Survivors-3-8/VanilLog/assets/133579214/c476e3a2-07b0-4b1d-9d8a-4f37c1b4f38c
-
-- 프로필
-
-  - 좌측 상단의 햄버거 아이콘을 클릭합니다.
-  - 사이드바에서 '프로필 정보/수정' 버튼을 클릭합니다.
-
-    https://github.com/Last-Survivors-3-8/VanilLog/assets/133579214/1bda2d17-dd5f-49eb-9a7e-6aca16860fdc
-
-- 프로필 사진 변경
-
-  - '사진 업로드/변경' 버튼을 클릭합니다.
-  - 사진 변경란에서는 변경된 프로필 사진이 바로 반영되고, 상단바의 프로필 사진은 페이지를 새로고침하면 확인할 수 있습니다.
-
-    https://github.com/Last-Survivors-3-8/VanilLog/assets/133579214/a6ead064-c65b-4f63-9fac-995df25e7788
-
-- 닉네임 변경
-
-  - 내 닉네임에 있는 '변경하기' 버튼을 클릭합니다.
-  - 닉네임을 변경한 후 '저장' 버튼을 클릭합니다. (다른 유저와 중복되는 닉네임으로는 변경할 수 없습니다.)
-  - 내 닉네임란에서는 변경된 닉네임이 바로 반영되고, 상단바의 닉네임은 페이지를 새로고침하면 확인할 수 있습니다.
-
-    https://github.com/Last-Survivors-3-8/VanilLog/assets/133579214/19945ab7-fb05-4b41-812d-9c578a4a7219
-
-</details>
+> 📹 **시연 영상**: [VanilLog 시연 영상 링크](https://github.com/sonji406/VanilLog?tab=readme-ov-file#%EF%B8%8F-%EC%86%8C%EA%B0%9C)
 
 </br>
 
@@ -120,17 +25,17 @@
 ## 👀 목차
 
 [💡 프로젝트 동기](#-프로젝트-동기)
-  
-  &nbsp;&nbsp;[1. 학습 목표](#1-학습-목표)
-  
-  &nbsp;&nbsp;[2. 블로그 아이디어](#2-블로그-아이디어)
-  
-  &nbsp;&nbsp;[3. 웹 애플리케이션 'VanilLog'](#3-웹-애플리케이션-vanillog)
-  
+
+&nbsp;&nbsp;[1. 학습 목표](#1-학습-목표)
+
+&nbsp;&nbsp;[2. 블로그 아이디어](#2-블로그-아이디어)
+
+&nbsp;&nbsp;[3. 웹 애플리케이션 'VanilLog'](#3-웹-애플리케이션-vanillog)
+
 [🚧 도전 및 문제 해결](#-도전-및-문제-해결)
 
 &nbsp;&nbsp;[1. Next JS 13 + App Router](#1-next-js-13--app-router)
-    
+
 &nbsp;&nbsp;&nbsp;&nbsp;[1) 어떤 프레임워크를 사용해서 구현할까?](#1-어떤-프레임워크를-사용해서-구현할까)
 
 &nbsp;&nbsp;&nbsp;&nbsp;[2) 타 라이브러리와의 호환성 문제](#2-타-라이브러리와의-호환성-문제)
@@ -145,17 +50,7 @@
 
 &nbsp;&nbsp;&nbsp;&nbsp;[3) 해결 방안](#3-해결-방안-1)
 
-[📅 일정](#-일정)
-
-[🛠️ 기술 스택](#%EF%B8%8F-기술-스택)
-
-[🗝 세팅 방법](#-세팅-방법)
-
-[👥 팀 멤버](#-팀-멤버)
-
 [🔗 Repository 주소](#-repository-link)
-
-[📌 기타 사항](#-기타-사항)
 
 <br>
 
@@ -239,72 +134,8 @@ Next.js를 도입하면서, 운영사인 Vercel의 권고에 따라 최신 버�
 
 <br>
 
-## 📅 일정
-
-<details>
-  <summary><b>1주차</b></summary>
-
-- 아이디어 회의
-- 기술 스택 조사 및 선정
-- Git 작업 플로우 결정
-- 협업 규칙 정립
-- Mockup 제작 및 디자인 설계
-- DB 스키마 설계
-- API Docs 작업
-- 개발 일정 칸반 보드 작성
-- 개발 초기 세팅
-</details>
-
-<details>
-  <summary><b>2주차 ~</b></summary>
-
-- 웹 사이트 구현
-- 리팩토링 및 버그 픽스
-- 테스트 코드 작성
-- 팀 프로젝트 발표
-- 리드미 작성
-- 배포
-
-</details>
-
-<br>
-
-## 🗝 세팅 방법
-
-시작하기 전에, 루트 디렉토리에 .env 파일을 만들고 아래와 같이 설정해주세요.
-
-```env
-MONGODB_URI=                 # MongoDB 데이터베이스에 연결하기 위한 URI
-NEXTAUTH_URL=                # NextAuth가 사용할 콜백 URL 및 서버의 주소
-GOOGLE_CLIENT_ID=             # Google OAuth 인증을 위한 클라이언트 ID
-GOOGLE_CLIENT_SECRET=         # Google OAuth 인증을 위한 클라이언트 키
-NEXTAUTH_SECRET=             # NextAuth 세션을 암호화하기 위한 키
-AWS_ACCESS_KEY_ID=           # AWS 서비스에 액세스하기 위한 사용자의 액세스 키 ID
-AWS_SECRET_ACCESS_KEY=       # AWS 서비스에 액세스하기 위한 사용자의 액세스 키
-AWS_REGION=                  # AWS S3 버킷이 위치한 리전 정보
-AWS_S3_BUCKET_NAME=          # 이미지 등의 리소스를 저장할 AWS S3 버킷의 이름
-```
-
-<br>
-
-## 👥 팀 멤버
-
-문의 사항이 있으시다면, 아래의 이메일로 연락주세요.
-
-- 조시환: [acforcompany@gmail.com](mailto:acforcompany@gmail.com)
-- 손지은: [wkaqh24@gmail.com](mailto:wkaqh24@gmail.com)
-- 우지현: [xhrrl003@gmail.com](mailto:xhrrl003@gmail.com)
-
-<br>
-
 ## 🔗 Repository Link
 
 - [VanilLog Repository](https://github.com/Last-Survivors-3-8/VanilLog)
 
 <br>
-
-## 📌 기타 사항
-
-- **라이센스**
-
-  이 프로젝트는 [MIT 라이센스](LICENSE)를 따릅니다. 더 자세한 내용은 LICENSE 파일을 참고해주세요.
